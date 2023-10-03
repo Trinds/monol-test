@@ -14,7 +14,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::all();
+        return view('courses.index', ['courses' => $courses]);
     }
 
     /**
@@ -24,7 +25,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     /**
@@ -35,7 +36,13 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => ['required','string','max:255'],
+            'abbreviation' => ['required','string','max:10'],
+        ]);
+
+        Course::create($request->all());
+        return redirect()->route('courses.index')->with('success','Curso criado com sucesso!');
     }
 
     /**
@@ -46,7 +53,9 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        $course = Course::find($course->id);
+        
+        return view('courses.index', ['course' => $course]);
     }
 
     /**
