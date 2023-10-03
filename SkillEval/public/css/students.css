@@ -9,16 +9,30 @@
     display: flex;
     flex-direction: column;
     padding: 2rem;
-    gap: 1rem;
+    gap: .2rem;
     margin-right: 5rem;
-}
+    align-content: center;
+    justify-content: center;
 
-.student-card h1 {
-    font-size: 1.75rem;
-    line-height: 2rem;
-    color: #787878;
-    font-weight: 500;
-    text-align: center;
+    & h1 {
+        font-size: 1.75rem;
+        line-height: 2rem;
+        color: #787878;
+        font-weight: 500;
+        text-align: center;
+    }
+    & input{
+        padding: .5rem;
+        border-radius: 0.5rem;
+        background-color: var(--platinum);
+        width: 20rem;
+    }
+
+    & label{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
 .user-img{
@@ -47,16 +61,14 @@ td i{
 .chart-container{
     grid-area: chart;
     min-width: 30rem;
-    max-width: 100%;  /* Ensure it doesn't grow beyond the parent's width */
-    max-height: 100%; /* Ensure it doesn't grow beyond the parent's height */
-    width: auto;      /* Allow the width to adjust */
-    height: auto;
+    max-width: 50rem;
+    max-height: 100%;
 }
 
 .student-eval-chart
 {
-    max-width: 100%;  /* Ensure it doesn't grow beyond the parent's width */
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
 
 }
 
