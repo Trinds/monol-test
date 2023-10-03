@@ -1,4 +1,4 @@
-<aside class="sidebar">
+<aside class="side-menu">
 
     <div class="app-title">
         <svg width="6" height="39" viewBox="0 0 6 39" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,10 +14,10 @@
     </ul>
 
     <ul id="menu">
-        <li id="toHome"><div class="icon"><i class="fa fa-home"></i></div>Início</li>
-        <li id="toCourses"><div class="icon"><i class="fa-regular fa-bookmark"></i></div>Cursos</li>
-        <li id="toStudents"><div class="icon"><i class="fa-solid fa-user-graduate"></i></div>Formandos</li>
-        <li id="toClassrooms"><div class="icon"><i class="fa-solid fa-users"></i></div>Turmas</li>
+        <li onclick="goToHome()" id="toHome"><div class="icon"><i class="fa fa-home"></i></div>Início</li>
+        <li onclick="goToCourses()" id="toCourses"><div class="icon"><i class="fa-regular fa-bookmark"></i></div>Cursos</li>
+        <li onclick="goToStudents()" id="toStudents"><div class="icon"><i class="fa-solid fa-user-graduate"></i></div>Formandos</li>
+        <li onclick="goToClassrooms()" id="toClassrooms"><div class="icon"><i class="fa-solid fa-users"></i></div>Turmas</li>
         <li id="toReports"><div class="icon"><i class="fa fa-flag"></i></div>Relatórios</li>
         <li id="toEvaluations"><div class="icon"><i class="fa-solid fa-check"></i></div>Avaliações</li>
     </ul>
@@ -26,3 +26,18 @@
         <li id="toLogout">SAIR<div class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></div></li>
     </ul>
 </aside>
+
+<script type="text/javascript">
+    function goToHome(){
+        location.href = "{{route('home')}}"
+    }
+    function goToCourses(){
+        location.href = "{{route('courses.index')}}"
+    }
+    function goToStudents(){
+        location.href = "{{route('students.index')}}"
+    }
+    {{--function goToClassrooms(){--}}
+    {{--    location.href = "{{route('classrooms.index')}}"--}}
+    {{--}--}}
+</script>

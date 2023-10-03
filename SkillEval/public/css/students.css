@@ -1,0 +1,76 @@
+.container {    
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+}
+
+.student-card {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    margin-right: 5rem;
+}
+
+.student-card h1 {
+    font-size: 1.75rem;
+    line-height: 2rem;
+    color: #787878;
+    font-weight: 500;
+    text-align: center;
+}
+
+.user-img{
+    display: block;       
+    margin: 0 auto;
+    max-width: 10rem;
+}
+
+td i{
+    margin: 0 10px;
+}
+
+
+.grid-container{
+    display: grid;
+    grid-template-areas:
+"chart details"
+"evaluations evaluations";
+    gap: 2rem;
+    padding: 5rem;
+}
+
+.details-container{
+    grid-area: details;
+}
+
+.chart-container{
+    grid-area: chart;
+    min-width: 30rem;
+    max-width: 100%;  /* Ensure it doesn't grow beyond the parent's width */
+    max-height: 100%; /* Ensure it doesn't grow beyond the parent's height */
+    width: auto;      /* Allow the width to adjust */
+    height: auto; 
+}
+
+.student-eval-chart
+{
+    max-width: 100%;  /* Ensure it doesn't grow beyond the parent's width */
+    max-height: 100%;
+
+}
+
+
+
+.evaluations-container{
+    grid-area: evaluations;
+}
+
+
+  td i:hover {
+    color: #fff;
+    cursor: pointer;
+  }
+
+

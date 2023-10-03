@@ -1,4 +1,4 @@
-
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
 /*!
  * Bootstrap v4.6.2 (https://getbootstrap.com/)
@@ -4536,7 +4536,7 @@ input[type=button].btn-block {
   display: block;
 }
 
-.sidebar {
+.navbar {
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -4545,12 +4545,12 @@ input[type=button].btn-block {
   padding: 0.5rem 1rem;
 }
 
-.sidebar .container,
-.sidebar .container-fluid,
-.sidebar .container-sm,
-.sidebar .container-md,
-.sidebar .container-lg,
-.sidebar .container-xl {
+.navbar .container,
+.navbar .container-fluid,
+.navbar .container-sm,
+.navbar .container-md,
+.navbar .container-lg,
+.navbar .container-xl {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -10892,7 +10892,7 @@ a.text-dark:focus {
     min-width: 992px !important;
   }
 
-  .sidebar {
+  .navbar {
     display: none;
   }
 
