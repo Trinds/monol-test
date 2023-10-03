@@ -1,10 +1,18 @@
 @extends('master.main')
 
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script type="module" src="{{asset('js/createStudentChart.js')}}"></script>
+@endsection
+@section('styles')
+    <link rel="stylesheet" href="{{asset('css/students.css')}}">
+@endsection
+
 @section('content')
 
     <div class="grid-container">
         <div class="chart-container">
-            @component('components.students.evaluations-chart' , ['studentEvaluations'=>$student->evaluations])
+            @component('components.students.evaluations-chart' /*, ['studentEvaluations'=>$student->evaluations]*/)
             @endcomponent
         </div>
 

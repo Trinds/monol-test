@@ -1,8 +1,8 @@
-.container {    
+.container {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 100vh; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .student-card {
@@ -22,7 +22,7 @@
 }
 
 .user-img{
-    display: block;       
+    display: block;
     margin: 0 auto;
     max-width: 10rem;
 }
@@ -30,7 +30,6 @@
 td i{
     margin: 0 10px;
 }
-
 
 .grid-container{
     display: grid;
@@ -51,7 +50,7 @@ td i{
     max-width: 100%;  /* Ensure it doesn't grow beyond the parent's width */
     max-height: 100%; /* Ensure it doesn't grow beyond the parent's height */
     width: auto;      /* Allow the width to adjust */
-    height: auto; 
+    height: auto;
 }
 
 .student-eval-chart
@@ -61,16 +60,13 @@ td i{
 
 }
 
-
-
 .evaluations-container{
     grid-area: evaluations;
 }
 
-
-  td i:hover {
+td i:hover {
     color: #fff;
     cursor: pointer;
-  }
+}
 
 

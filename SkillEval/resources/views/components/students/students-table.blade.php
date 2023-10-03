@@ -13,9 +13,9 @@
                 <td>{{ $student->name }}</td>
                 <td>{{ $student->email }}</td>
                 <td>
-                    <a href="{{ route('courses.show', $student->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"  data-toggle="modal" data-target="#showModal"></i></a>
-                    <i class="fa-solid fa-pencil editBtn"></i>
-                    <i class="fa-regular fa-trash-can removeBtn"></i>
+                    <a href="{{ route('students.show', $student->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
+                    <a href="{{ route('students.edit', $student->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>
+                    <a href="{{ route('students.destroy', $student->id) }}"><i class="fa-regular fa-trash-can removeBtn"></i></a>
                 </td>
             </tr>
         @endforeach
