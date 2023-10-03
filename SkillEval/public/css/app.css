@@ -4536,7 +4536,7 @@ input[type=button].btn-block {
   display: block;
 }
 
-.navbar {
+.sidebar {
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -4545,12 +4545,12 @@ input[type=button].btn-block {
   padding: 0.5rem 1rem;
 }
 
-.navbar .container,
-.navbar .container-fluid,
-.navbar .container-sm,
-.navbar .container-md,
-.navbar .container-lg,
-.navbar .container-xl {
+.sidebar .container,
+.sidebar .container-fluid,
+.sidebar .container-sm,
+.sidebar .container-md,
+.sidebar .container-lg,
+.sidebar .container-xl {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -10892,7 +10892,7 @@ a.text-dark:focus {
     min-width: 992px !important;
   }
 
-  .navbar {
+  .sidebar {
     display: none;
   }
 
