@@ -55,7 +55,7 @@ class CourseController extends Controller
     {
         $course = Course::find($course->id);
         
-        return view('courses.index', ['course' => $course]);
+        return view('courses.show', ['course' => $course]);
     }
 
     /**
@@ -66,7 +66,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('courses.edit',['course' => $course]);
     }
 
     /**
@@ -78,7 +78,8 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $course->update($request->all());
+        return redirect()->route('courses.index')->with('success','Curso atualizado com sucesso!');
     }
 
     /**
@@ -89,6 +90,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+            
+            $course->delete();
+            return redirect()->route('courses.index')->with('success','Curso apagado com sucesso!');
     }
 }

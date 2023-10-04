@@ -14,7 +14,8 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        //
+        $classrooms=Classroom::all();   
+        return view('classrooms.index', ['classrooms'=>$classrooms]);
     }
 
     /**
@@ -24,7 +25,8 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        //
+        $courses = \App\Course::all();
+        return view('classrooms.create', ['courses'=>$courses]);
     }
 
     /**
@@ -35,7 +37,15 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'edition' => ['required','string','max:255'],
+            'course_id' => ['required','integer'],
+            'start_date' => ['required','date'],
+            'end_date' => ['required','date'],
+        ]);
+
+        Classroom::create($request->all());
+        return redirect()->route('classrooms.index')->with('success','Turma criada com sucesso!');
     }
 
     /**
@@ -46,7 +56,8 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        //
+            
+            return view('classrooms.show', ['classroom'=>$classroom]);
     }
 
     /**
@@ -57,7 +68,9 @@ class ClassroomController extends Controller
      */
     public function edit(Classroom $classroom)
     {
-        //
+            
+            $courses = \App\Course::all();
+            return view('classrooms.edit', ['classroom'=>$classroom, 'courses'=>$courses]);
     }
 
     /**
@@ -69,7 +82,16 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, Classroom $classroom)
     {
-        //
+            
+            $this->validate($request,[
+                'edition' => ['required','string','max:255'],
+                'course_id' => ['required','integer'],
+                'start_date' => ['required','date'],
+                'end_date' => ['required','date'],
+            ]);
+    
+            $classroom->update($request->all());
+            return redirect()->route('classrooms.index')->with('success','Turma atualizada com sucesso!');
     }
 
     /**
@@ -80,6 +102,7 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        //
+                $classroom->delete();
+                return redirect()->route('classrooms.index')->with('success','Turma excluída com sucesso!');
     }
 }

@@ -3,10 +3,8 @@
 
 @section('content')
 
-@component('components.courses.edit-form', ['course' => $course])
+@component('components.classrooms.add-form', ['courses' => $courses])
     
 @endcomponent
-
-
 
 @endsection
