@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evaluation extends Model
 {
+    public $incrementing=false;
+
     protected $primaryKey = ['student_id', 'test_id'];
+
     protected $fillable = [
-        'student_id', 
-        'test_id',    
-        'score',      
+        'student_id',
+        'test_id',
+        'score',
     ];
     public function test()
     {

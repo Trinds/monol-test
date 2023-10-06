@@ -4,7 +4,7 @@
 <div class="table-container">
     <table class="coursesTable">
         <thead>
-        <tr>
+        <tr class="table-header">
             <th scope="col">Curso</th>
             <th scope="col">Edição</th>
             <th scope="col">Data de Começo</th>

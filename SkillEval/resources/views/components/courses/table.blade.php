@@ -3,7 +3,7 @@
 </div>
 <div class="table-container">
     <table id="coursesTable">
-        <tr>
+        <tr class="table-header">
             <th scope="col">Sigla</th>
             <th scope="col">Nome</th>
             <th scope="col"></th>

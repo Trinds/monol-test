@@ -9,21 +9,31 @@ class EvaluationSeeder extends Seeder
      *
      * @return void
      */
+//    public function run()
+//    {
+//        $students = App\Student::all();
+//        $testIds = range(1, 6);
+//
+//        foreach ($students as $student) {
+//            shuffle($testIds);
+//            $selectedTestIds = array_slice($testIds, 0, 6);
+//
+//            foreach ($selectedTestIds as $testId) {
+//                factory(App\Evaluation::class)->create([
+//                    'student_id' => $student->id,
+//                    'test_id' => $testId,
+//                ]);
+//            }
+//        }
+//    }
     public function run()
     {
         $students = App\Student::all();
-        $testIds = range(1, 6);
-    
         foreach ($students as $student) {
-            shuffle($testIds); 
-            $selectedTestIds = array_slice($testIds, 0, 6); 
-    
-            foreach ($selectedTestIds as $testId) {
                 factory(App\Evaluation::class)->create([
                     'student_id' => $student->id,
-                    'test_id' => $testId,
+                    'test_id' =>  rand(1,6),
                 ]);
-            }
         }
     }
 }

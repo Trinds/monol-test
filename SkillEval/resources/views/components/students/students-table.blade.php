@@ -3,15 +3,19 @@
 </div>
 <div class="table-container">
     <table id="studentsTable">
-        <tr>
-            <th scope="col">Sigla</th>
+        <tr class="table-header">
             <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Data de Nascimento</th>
+            <th scope="col">Turma</th>
             <th scope="col"></th>
         </tr>
         @foreach ($students as $student)
             <tr class="table-row">
                 <td>{{ $student->name }}</td>
                 <td>{{ $student->email }}</td>
+                <td>{{ $student->birth_date }}</td>
+                <td>{{ $student->classroom->course->abbreviation . $student->classroom->edition }}</td>
                 <td>
                     <a href="{{ route('students.show', $student->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
                     <a href="{{ route('students.edit', $student->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>
