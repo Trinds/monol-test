@@ -28,3 +28,6 @@ Route::resource('students', 'StudentController');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('/classrooms/{classroom}/evaluations/create', 'EvaluationController@createByClassroom');
+Route::post('/classrooms/{classroom}/evaluations', 'EvaluationController@store')->name('evaluations.store');

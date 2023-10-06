@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Student;
+use App\Test;
+use App\Classroom;
 use App\Evaluation;
 use Illuminate\Http\Request;
 
@@ -27,16 +30,50 @@ class EvaluationController extends Controller
         //
     }
 
+    public function createByClassroom(Classroom $classroom)
+    {
+        $students = $classroom->students;
+        $evaluations = Evaluation::all();
+        $tests = Test::all();
+
+        return view('evaluations.classroomCreate', compact('classroom', 'students', 'evaluations', 'tests'));
+    }
+    
+
+    
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function store(Request $request, Classroom $classroom)
     {
-        //
+        $selectedTestId = $request->input('test_id');
+
+        foreach ($request->input('score') as $studentId => $score) {
+            $student = Student::findOrFail($studentId);
+
+
+            $evaluation = Evaluation::updateOrCreate(
+                [
+                    'student_id' => $student->id,
+                    'test_id' => $selectedTestId,
+                ],
+                [
+                    'score' => $score,
+                ]
+            );
+
+
+        }
+
+        return redirect()->route('classrooms.show', ['classroom' => $classroom])
+            ->with('success', 'Avaliações guardadas com sucesso!');
     }
+
 
     /**
      * Display the specified resource.
