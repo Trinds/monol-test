@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MessDetectorOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCSFixerOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCodeSnifferOptionsConfiguration">
+    <option name="highlightLevel" value="WARNING" />
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/opis/closure" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/composer" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/asm89/stack-cors" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/fruitcake/laravel-cors" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/dragonmantank/cron-expression" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/psy/psysh" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/fideloper/proxy" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/nunomaduro/collision" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/filp/whoops" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/fzaninotto/faker" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/mockery/mockery" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/facade/flare-client-php" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/laravel/tinker" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/facade/ignition-contracts" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/facade/ignition" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/laravel/framework" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-iconv" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/ramsey/collection" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/league/commonmark" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/SkillEval/vendor/sebastian/comparator" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/SkillEval/phpunit.xml" custom_loader_path="$PROJECT_DIR$/SkillEval/vendor/autoload.php" use_configuration_file="true" />
+    </phpunit_settings>
+  </component>
+  <component name="PsalmOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+</project>
