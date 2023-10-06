@@ -13,13 +13,13 @@
 'route'=>'students.index'])
         @endcomponent
 
-{{--        @component('components.dashboard.dashboard-card',--}}
-{{--['backgroundClass'=>'background-gradient-light-blue',--}}
-{{--'count'=>$classroomsCount,--}}
-{{--'name'=>'Turmas',--}}
-{{--'iconClass'=>'fa-solid fa-users fa-2xl',--}}
-{{--'route'=>'classrooms.index'])--}}
-{{--        @endcomponent--}}
+        @component('components.dashboard.dashboard-card',
+['backgroundClass'=>'background-gradient-light-blue',
+'count'=>$classroomsCount,
+'name'=>'Turmas',
+'iconClass'=>'fa-solid fa-users fa-2xl',
+'route'=>'classrooms.index'])
+        @endcomponent
 
         @component('components.dashboard.dashboard-card',
 ['backgroundClass'=>'background-gradient-dark-orange',

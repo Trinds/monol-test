@@ -14,8 +14,9 @@
             <p>{{ Auth::user()->name }}</p>
         </li>
         <li id="userRole">
-            <p>{{ Auth::user()->email }}</p> 
-            {{-- depois metemos o role aqui quando eu chegar a essa parte ass: pauly --}}
+            @foreach(Auth::user()->roles as $role)
+            <p>{{ $role->name }}</p>
+            @endforeach
         </li>
         @endif
     </ul>
@@ -29,7 +30,7 @@
     </ul>
 
     <ul id="sair">
-        <li id="toLogout" 
+        <li id="toLogout"
         onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">
             SAIR
@@ -38,12 +39,12 @@
             </div>
         </li>
     </ul>
-    
+
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
 
-    
+
 </aside>
 
 
