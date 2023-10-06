@@ -15,7 +15,7 @@ class CreateTestsTable extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id');
+            $table->foreignId('type_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->timestamps();
             $table->softDeletes();

@@ -54,7 +54,7 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         $course = Course::find($course->id);
-        
+
         return view('courses.show', ['course' => $course]);
     }
 
@@ -90,7 +90,6 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-            
             $course->delete();
             return redirect()->route('courses.index')->with('success','Curso apagado com sucesso!');
     }

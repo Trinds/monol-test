@@ -1,8 +1,8 @@
-.container {    
+.container {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 100vh; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     padding: 20px;
 }
 
@@ -13,31 +13,23 @@
     gap: 1rem;
     border: 1px solid #ccc;
     border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     min-width: 500px;
 }
 
-
-td i{
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
 form {
-
-    
     width: 100%;
     margin: 10px auto;
     padding: 10px 20px;
     background: #f4f7f8;
     border-radius: 8px;
   }
-  
+
   h1 {
     margin: 0 0 30px 0;
     text-align: center;
   }
-  
+
   input[type="text"],
   input[type="password"],
   input[type="date"],
@@ -60,13 +52,13 @@ form {
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     margin-bottom: 10px;
   }
-  
+
   select {
     padding: 6px;
     height: 32px;
     border-radius: 2px;
   }
-  
+
   button {
     padding: 19px 39px 18px 39px;
     color: #FFF;
@@ -79,29 +71,29 @@ form {
     border-width: 1px 1px 3px;
     box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
   }
-  
+
   fieldset {
     margin-bottom: 30px;
     border: none;
     margin : 10px;
   }
-  
+
   legend {
     font-size: 1.4em;
     margin-bottom: 10px;
   }
-  
+
   label {
     display: block;
     margin-bottom: 8px;
     margin-top : 8px;
   }
-  
+
   label.light {
     font-weight: 300;
     display: inline;
   }
-  
+
   .number {
     background-color:#F2931F;
     color: #fff;
@@ -116,12 +108,11 @@ form {
     border-radius: 100%;
     align-content: center;
   }
-  
+
   @media screen and (min-width: 480px) {
-  
+
     form {
       max-width: 500px;
     }
-  
+
   }
-  
