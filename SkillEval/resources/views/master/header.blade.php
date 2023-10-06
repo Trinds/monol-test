@@ -9,10 +9,16 @@
     <ul id="userInfo">
         <li><div><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1974&amp;q=80" alt=""></div>
         </li>
-        <li id="userName">Silvia Milhazes</li>
-        <li id="userRole">Secretária</li>
+        @if (Auth::user())
+        <li id="userName">
+            <p>{{ Auth::user()->name }}</p>
+        </li>
+        <li id="userRole">
+            <p>{{ Auth::user()->email }}</p> 
+            {{-- depois metemos o role aqui quando eu chegar a essa parte ass: pauly --}}
+        </li>
+        @endif
     </ul>
-
     <ul id="menu">
         <li onclick="goToHome()" id="toHome"><div class="icon"><i class="fa fa-home"></i></div>Início</li>
         <li onclick="goToCourses()" id="toCourses"><div class="icon"><i class="fa-regular fa-bookmark"></i></div>Cursos</li>
@@ -23,8 +29,21 @@
     </ul>
 
     <ul id="sair">
-        <li id="toLogout">SAIR<div class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></div></li>
+        <li id="toLogout" 
+        onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();">
+            SAIR
+            <div class="icon">
+                <i class="fa-solid fa-arrow-right-from-bracket" ></i>
+            </div>
+        </li>
     </ul>
+    
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
+    
 </aside>
 
 <script type="text/javascript">
@@ -37,7 +56,7 @@
     function goToStudents(){
         location.href = "{{route('students.index')}}"
     }
-    {{--function goToClassrooms(){--}}
-    {{--    location.href = "{{route('classrooms.index')}}"--}}
-    {{--}--}}
+    function goToClassrooms(){
+        location.href = "{{route('classrooms.index')}}"
+    }
 </script>
