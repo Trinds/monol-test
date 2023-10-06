@@ -27,6 +27,7 @@
     </ul>
 </aside>
 
+
 <script type="text/javascript">
     function goToHome(){
         location.href = "{{route('home')}}"
