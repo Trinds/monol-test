@@ -14,8 +14,8 @@ class CreateEvaluationsTable extends Migration
     public function up()
     {
         Schema::create('evaluations', function (Blueprint $table) {
-            $table->foreignId('student_id');
-            $table->foreignId('test_id');
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('test_id')->constrained()->onDelete('cascade');
             $table->double('score');
             $table->timestamps();
             $table->softDeletes();
