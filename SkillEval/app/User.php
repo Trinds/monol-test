@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\HasRoles;
-
+use App\Role;
 
 
 class User extends Authenticatable
@@ -21,11 +21,18 @@ class User extends Authenticatable
 
     protected $hidden =
     [
-        'password', 'remember_token',
+        'password'
     ];
 
     public function roles()
     {
         return $this->belongsToMany('App\Role');
+    }
+
+    public function assignRoles($roles)
+    {
+        $roles = Role::whereIn('name', $roles)->get();  
+
+        $this->roles()->attach($roles); 
     }
 }

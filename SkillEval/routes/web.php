@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +27,9 @@ Route::resource('courses', 'CourseController');
 Route::resource('classrooms', 'ClassroomController');
 Route::resource('students', 'StudentController');
 
-Route::post('/login', 'Auth\LoginController@login')->name('login');
+// Route::post('/login', 'Auth\LoginController@login')->name('login');
 
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+// Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('/classrooms/{classroom}/evaluations/create', 'EvaluationController@createByClassroom');
-Route::post('/classrooms/{classroom}/evaluations', 'EvaluationController@store')->name('evaluations.store');
+
+Auth::routes();

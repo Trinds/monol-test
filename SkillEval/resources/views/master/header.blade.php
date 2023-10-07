@@ -6,20 +6,23 @@
         </svg>
         <p>ATEC SkillEval</p>
     </div>
-    <ul id="userInfo">
-        <li><div><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1974&amp;q=80" alt=""></div>
-        </li>
-        @if (Auth::user())
-        <li id="userName">
-            <p>{{ Auth::user()->name }}</p>
-        </li>
-        <li id="userRole">
-            @foreach(Auth::user()->roles as $role)
-            <p>{{ $role->name }}</p>
-            @endforeach
-        </li>
-        @endif
-    </ul>
+<ul id="userInfo">
+    <li>
+        <div>
+            <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }} Profile Image">
+        </div>
+    </li>
+    @if (Auth::user())
+    <li id="userName">
+        <p>{{ Auth::user()->name }}</p>
+    </li>
+    <li id="userRole">
+        @foreach(Auth::user()->roles as $role)
+        <p>{{ $role->name }} </p>
+        @endforeach
+    </li>
+    @endif
+</ul>
     <ul id="menu">
         <li onclick="goToHome()" id="toHome"><div class="icon"><i class="fa fa-home"></i></div>Início</li>
         <li onclick="goToCourses()" id="toCourses"><div class="icon"><i class="fa-regular fa-bookmark"></i></div>Cursos</li>
