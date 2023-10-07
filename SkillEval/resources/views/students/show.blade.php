@@ -12,7 +12,7 @@
 
     <div class="grid-container">
         <div class="chart-container">
-            @component('components.students.evaluations-chart' /*, ['studentEvaluations'=>$student->evaluations]*/)
+            @component('components.students.evaluations-chart' , ['studentEvaluations'=>$student->evaluations])
             @endcomponent
         </div>
 

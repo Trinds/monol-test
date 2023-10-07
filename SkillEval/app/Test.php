@@ -15,4 +15,9 @@ class Test extends Model
     {
         return $this->belongsTo('App\Type');
     }
+
+    public function evaluations()
+    {
+        return $this->hasMany('App\Evaluation');
+    }   
 }

@@ -49,30 +49,9 @@ class EvaluationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request, Classroom $classroom)
-    {
-        $selectedTestId = $request->input('test_id');
-
-        foreach ($request->input('score') as $studentId => $score) {
-            $student = Student::findOrFail($studentId);
-
-
-            $evaluation = Evaluation::updateOrCreate(
-                [
-                    'student_id' => $student->id,
-                    'test_id' => $selectedTestId,
-                ],
-                [
-                    'score' => $score,
-                ]
-            );
-
-
-        }
-
-        return redirect()->route('classrooms.show', ['classroom' => $classroom])
-            ->with('success', 'Avaliações guardadas com sucesso!');
-    }
+public function store(Request $request, Classroom $classroom)
+{
+}
 
 
     /**

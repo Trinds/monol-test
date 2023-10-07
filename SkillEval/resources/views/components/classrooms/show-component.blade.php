@@ -5,6 +5,10 @@
     <h5>{{$classroom->course->name}}</h5>
     <h6>Começo: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
 </div>
+<div class="chart-container">
+    @component('components.classrooms.classroom-chart', ['classroom'=>$classroom])
+    @endcomponent
+</div>
 <div class="row">
     @if ($classroom->students->count() == 0)
     <div class="alert alert-info" role="alert">

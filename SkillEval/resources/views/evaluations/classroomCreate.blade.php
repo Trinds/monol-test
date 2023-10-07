@@ -7,14 +7,6 @@
 
     <form method="POST" action="{{ route('evaluations.store', ['classroom' => $classroom]) }}">
         @csrf
-        <div class="form-group">
-            <label for="test">Teste</label>
-            <select name="test_id" id="test" class="form-control">
-                @foreach ($tests as $test)
-                    <option value="{{ $test->id }}">{{ $test->type->type }}</option>
-                @endforeach
-            </select>
-        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -26,7 +18,9 @@
                 @foreach ($classroom->students as $student)
                     <tr>
                         <td>{{$student->name}}</td>
-                        <td><input type="number" name="score[{{$student->id}}]" id="score" class="form-control"></td>
+                        <td>
+                            <input type="number" name="evaluations[{{$student->id}}][test_ids][]" class="form-control" min="0" max="20" step="0.1">
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
