@@ -79,11 +79,11 @@ class ResetPasswordNotification extends Notification
         ->subject(Lang::get('Pedido de redefinição de senha'))
         ->greeting(Lang::get('Redefinição de senha'))
         ->line(Lang::get('
-        Esta a receber este e-mail porque recebemos um pedido de recuperação de password para a sua conta.'))
-        ->action(Lang::get('Redifinir senha'), $url)
-        ->line(Lang::get('O link para a redefinição irá expirar em.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'minutos')]))
+        Está a receber este e-mail porque foi feito um pedido de recuperação de password para a sua conta.'))
+        ->action(Lang::get('Redefinir senha'), $url)
+        ->line(Lang::get('O link para a redefinição irá expirar em 60 minutos'))
         ->line(Lang::get('Se não pediu uma redefinição de senha, ignore este e-mail..'))
-        ->salutation(Lang::get('Os melhores cumprimentos, SkillEval Team'));
+        ->salutation(Lang::get('Os melhores cumprimentos, SkillEval team'));
     }
 
     /**
