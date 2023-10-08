@@ -20,6 +20,7 @@
                 @csrf
                 <label>
                     <p class="login-form-input-name">Email</p>
+                </label>
                     <input id="email" type="email" placeholder="Email" class="login-form-input-field form-control"
                         name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
                     @error('email')
@@ -27,7 +28,6 @@
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                </label>
                 <label>
                     <p class="login-form-input-name">Password</p>
                     <input id="password" type="password" placeholder="Password" class="login-form-input-field form-control"
