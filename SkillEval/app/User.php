@@ -8,6 +8,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\HasRoles;
 use App\Role;
+use App\Notifications\ResetPasswordNotification;
+
+use App\Mail\ResetPassword;
+
+
 
 
 class User extends Authenticatable
@@ -34,5 +39,10 @@ class User extends Authenticatable
         $roles = Role::whereIn('name', $roles)->get();  
 
         $this->roles()->attach($roles); 
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 }
