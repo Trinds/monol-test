@@ -7,12 +7,14 @@
         <p>ATEC SkillEval</p>
     </div>
 <ul id="userInfo">
+    @if (Auth::user())
     <li>
+        @if(Auth::user()->image !== null)
         <div>
             <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }} Profile Image">
         </div>
+        @endif
     </li>
-    @if (Auth::user())
     <li id="userName">
         <p>{{ Auth::user()->name }}</p>
     </li>

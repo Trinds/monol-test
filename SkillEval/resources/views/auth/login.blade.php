@@ -34,7 +34,12 @@
                         name="password" required autocomplete="off">
                 </label>
                 <button type="submit" class="login-form-submit-button">Login</button>
-                <span class="login-form-forgot-password"><a href="#">Esqueceu-se da password?</a></span>
+        
+                <div class="forgot-password-link">
+                    <a href="{{ route('password.request') }}">Esqueceu-se da password?</a>
+                </div>
+
+
             </form>
         </div>
     </div>

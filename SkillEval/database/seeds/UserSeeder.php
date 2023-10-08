@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
+
 
 class UserSeeder extends Seeder
 {
+    use Notifiable;
     /**
      * Run the database seeds.
      *
