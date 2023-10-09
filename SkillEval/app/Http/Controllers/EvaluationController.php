@@ -30,17 +30,17 @@ class EvaluationController extends Controller
         //
     }
 
-    public function createByClassroom(Classroom $classroom)
+    public function createForStudent(Student $student)
     {
-        $students = $classroom->students;
-        $evaluations = Evaluation::all();
+      
         $tests = Test::all();
 
-        return view('evaluations.classroomCreate', compact('classroom', 'students', 'evaluations', 'tests'));
+        return view('evaluations.create-for-student', 
+            compact('student', 'tests'));
     }
-    
 
-    
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -49,9 +49,30 @@ class EvaluationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-public function store(Request $request, Classroom $classroom)
+     public function storeForStudent(Request $request, Student $student)
 {
+    $request->validate([
+        'test_id' => 'required',
+        'score' => 'required|numeric|min:0|max:20'
+    ]);
+
+    $evaluation = new Evaluation([
+        'test_id' => $request->input('test_id'),
+        'score' => $request->input('score'),
+        'student_id' => $request->input('student_id')
+    ]);
+
+    $evaluation->save();
+
+    $student = Student::findOrFail($request->input('student_id'));
+
+
+    return redirect()->route('students.show', ['student' => $student->id]);
+
+
 }
+
+     
 
 
     /**

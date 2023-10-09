@@ -10,6 +10,14 @@
 
 @section('content')
 
+    <div class="title">
+        <h1>Detalhes do Aluno</h1>  
+    </div>
+
+    <div class="add-evaluation">
+        <a href="{{ route('evaluations.create.student', $student->id) }}">Adicionar Avaliação<i class="fa-solid fa-plus-circle addBtn"></i></a>
+    </div>
+
     <div class="grid-container">
         <div class="chart-container">
             @component('components.students.evaluations-chart' , ['studentEvaluations'=>$student->evaluations])
@@ -22,24 +30,33 @@
         </div>
 {{--        transformar tabela ou lista de avaliações em componente--}}
         <div class="evaluations-container">
+            <h1>Historico de avaliações</h1>
             <div class="table-container">
                 <table>
-                    <caption>Avaliações</caption>
-                    <tr>
-                        <th scope="col">Sigla</th>
-                        <th scope="col">Nome</th>
-                        <th></th>
+                    <thead>
+                    <tr class="table-header">
+                        <th scope="col">ID</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Nota</th>
+                        <th scope="col">Data</th>
                     </tr>
-
-                    <tr class="table-row">
-                        <td>TPSI</td>
-                        <td>Curso Programacao e Sistemas de Informacao</td>
-                        <td>
-                            <i class="fa-solid fa-magnifying-glass detailsBtn"></i>
-                            <i class="fa-solid fa-pencil editBtn"></i>
-                            <i class="fa-regular fa-trash-can removeBtn"></i>
-                        </td>
-                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($student->evaluations as $evaluation)
+                        <tr class="table-row">
+                            <td>{{$evaluation->test->id}}</td>
+                            <td>{{$evaluation->test->type->type}}</td>
+                            <td>{{$evaluation->score}}</td>
+                            <td>
+                                @if($evaluation->test->date)
+                                {{date('d/m/Y', strtotime($evaluation->test->date))}}
+                                @else
+                                    Não realizado
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
