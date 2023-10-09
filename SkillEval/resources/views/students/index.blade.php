@@ -12,7 +12,8 @@
         <select class="form-control" id="classroomFilter" name="classroomFilter" onchange="this.form.submit()">
             <option value="0">Escolha</option>
             @foreach ($classrooms as $classroom)
-                <option value={{$classroom->id}} {{Input::old('classroom')}}>{{$classroom->course->abbreviation . $classroom->edition}}</option>
+            <option value={{$classroom->id}} {{old('classroom')}}>{{$classroom->course->abbreviation . $classroom->edition}}</option>
+
             @endforeach
         </select>
     </form>

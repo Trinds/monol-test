@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Student;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 class StudentController extends Controller
 {
     /**
@@ -28,7 +29,9 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $courses=\App\Course::all();
+        $classrooms=\App\Classroom::all();
+        return view('students.create', ['courses'=>$courses, 'classrooms'=>$classrooms]);
     }
 
     /**
@@ -39,7 +42,19 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'student_number' => ['required','string','max:255'],
+            'classroom_id' => ['required','integer'],
+            'email' => ['required','email','max:255'],
+            'name' => ['required','string','max:255'],
+            'birth_date' => ['required','date', function($atribute, $value, $fail){
+                if($value > now())
+                    $fail('A data de nascimento não pode ser superior à data atual.');
+            }],
+            'image' => ['nullable','image','max:2048']
+        ]);
+        Student::create($request->all());
+        return redirect()->route('students.index')->with('success','Estudante criado com sucesso!');
     }
 
     /**

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class Student extends Model
 {
+    protected $fillable = [
+        'student_number', 'classroom_id', 'email', 'name', 'birth_date', 'image'
+    ];
     public function classroom()
     {
         return $this->belongsTo('App\Classroom');
