@@ -14,14 +14,14 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Student::filterByClassroom($request->get('classroomFilter'));
-        $query = Student::searchStudents($query, $request->get('searchParam'));
+        $query = Student::query()
+            ->filterByClassroom($request->get('classroomFilter'))
+            ->searchStudents($request->get('searchParam'));
 
-            return view('students.index', [
-                'students'=>$query,
-                'classrooms'=>Classroom::all()->sortBy('name')
-            ]
-            );
+        return view('students.index', [
+            'students' => $query->get(),
+            'classrooms' => Classroom::all()->sortBy('name')
+        ]);
     }
 
     /**

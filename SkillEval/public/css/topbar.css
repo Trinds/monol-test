@@ -1,7 +1,21 @@
-.top-bar, .top-bar>form{
+.top-bar{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 1.25rem;
+
+    & form{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 3rem;
+
+        & div{
+            display: flex;
+            gap: 1rem;
+            align-items: baseline;
+        }
+    }
 }
 
 .top-bar i{

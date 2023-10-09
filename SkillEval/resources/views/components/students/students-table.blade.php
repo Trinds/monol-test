@@ -14,7 +14,7 @@
             <tr class="table-row">
                 <td>{{ $student->name }}</td>
                 <td>{{ $student->email }}</td>
-                <td>{{ $student->birth_date }}</td>
+                <td>{{ date('d-m-Y', strtotime($student->birth_date)) }}</td>
                 <td>{{ $student->classroom->course->abbreviation . $student->classroom->edition }}</td>
                 <td>
                     <a href="{{ route('students.show', $student->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>

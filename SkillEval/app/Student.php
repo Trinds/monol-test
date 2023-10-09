@@ -17,13 +17,17 @@ class Student extends Model
         return $this->hasMany('App\Evaluation');
     }
 
-    public static function filterByClassroom($classroom_id)
+    public function scopeFilterByClassroom($query, $classroom_id)
     {
-        return isset($classroom_id) ? Student::all()->where('classroom_id', '=', $classroom_id) : Student::all();
+        return $classroom_id && $classroom_id > 0 ?
+            $query->where('classroom_id', $classroom_id)
+            : $query;
     }
 
-    public static function searchStudents($query, $searchParam)
+    public function scopeSearchStudents($query, $searchParam)
     {
-            return isset($searchParam) ? $query->where('name', 'LIKE', '%' . $searchParam . '%')->get() : $query;
+        return $searchParam ?
+            $query->where(strtolower('name'), 'LIKE', '%' . strtolower($searchParam) . '%')
+            : $query;
     }
 }

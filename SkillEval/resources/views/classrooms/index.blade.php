@@ -6,7 +6,11 @@
 
 @section('content')
 
-    @component('components.topbar',['dir'=>route('classrooms.create'), 'createBtnName'=>'Turma'])
+    @component('components.topbar',[
+    'dir'=>route('classrooms.create'),
+    'createBtnName'=>'Turma',
+    'formAction'=>'/classrooms'
+    ])
     @endcomponent
 
     @component('components.classrooms.table', ['classrooms' => $classrooms])
