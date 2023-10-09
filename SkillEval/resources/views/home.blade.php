@@ -10,7 +10,7 @@
 'count'=>$studentsCount,
 'name'=>'Formandos',
 'iconClass'=>'fa-solid fa-user-graduate fa-2xl',
-'route'=>'students.index'])
+'dir'=> route('students.index')])
         @endcomponent
 
         @component('components.dashboard.dashboard-card',
@@ -18,7 +18,7 @@
 'count'=>$classroomsCount,
 'name'=>'Turmas',
 'iconClass'=>'fa-solid fa-users fa-2xl',
-'route'=>'classrooms.index'])
+'dir'=>route('classrooms.index')])
         @endcomponent
 
         @component('components.dashboard.dashboard-card',
@@ -26,7 +26,7 @@
 'count'=>$coursesCount,
 'name'=>'Cursos',
 'iconClass'=>'fa-regular fa-bookmark fa-2xl',
-'route'=>'courses.index'])
+'dir'=>route('courses.index')])
         @endcomponent
 
 {{--        @component('components.dashboard.dashboard-card',--}}

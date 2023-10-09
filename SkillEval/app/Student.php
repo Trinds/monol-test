@@ -27,8 +27,11 @@ class Student extends Model
 
     public static function filterByClassroom($classroom_id)
     {
-        if($classroom_id)
-            return Student::all()->where('classroom_id', '=', $classroom_id);
-        return Student::all();
+        return isset($classroom_id) ? Student::all()->where('classroom_id', '=', $classroom_id) : Student::all();
+    }
+
+    public static function searchStudents($query, $searchParam)
+    {
+            return isset($searchParam) ? $query->where('name', 'LIKE', '%' . $searchParam . '%')->get() : $query;
     }
 }
