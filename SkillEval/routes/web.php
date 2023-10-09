@@ -31,5 +31,8 @@ Route::resource('students', 'StudentController');
 
 // Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('evaluations/create/{student}', 'EvaluationController@createForStudent')->name('evaluations.create.student');
+Route::post('evaluations/store/student', 'EvaluationController@storeForStudent')->name('evaluations.store.student');
+
 
 Auth::routes();
