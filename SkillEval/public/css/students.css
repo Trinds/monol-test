@@ -33,6 +33,11 @@
         justify-content: space-between;
         align-items: center;
     }
+    & img, & i{
+        width: 5rem;
+        font-size: 5rem;
+        margin: 1rem auto;
+    }
 }
 
 .user-img{

@@ -1,4 +1,4 @@
-<div class="dashboard-card {{$backgroundClass}}" onclick="handleClick()">
+<div class="dashboard-card {{$backgroundClass}}" onclick="location.href = '{{$dir}}'">
     <div class="left">
         <h1>{{$count}}</h1>
         <p>{{$name}}</p>
@@ -7,9 +7,3 @@
         <i class="{{$iconClass}}"></i>
     </div>
 </div>
-
-<script type="text/javascript">
-    function handleClick(){
-        location.href = "{{route($route)}}"
-    }
-</script>
