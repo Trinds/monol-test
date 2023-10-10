@@ -3,19 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
+use App\Course;
 use Illuminate\Http\Request;
-
 class ClassroomController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $classrooms=Classroom::all();   
-        return view('classrooms.index', ['classrooms'=>$classrooms]);
+
+        isset($request->filter) || isset($request->searchParam)
+            ? $classrooms = Classroom::query()
+            ->join('courses', 'courses.id', '=', 'classrooms.course_id')
+            ->where(function ($query) use ($request) {
+                $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
+                    ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
+            })
+            ->where('classrooms.course_id', $request->filter)
+            ->get()
+            :
+            $classrooms = Classroom::all();
+
+        return view('classrooms.index', [
+            'classrooms'=>$classrooms,
+            'courses'=>Course::all()
+        ]);
     }
 
     /**
@@ -56,7 +71,7 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-            
+
             return view('classrooms.show', ['classroom'=>$classroom]);
     }
 
@@ -68,7 +83,7 @@ class ClassroomController extends Controller
      */
     public function edit(Classroom $classroom)
     {
-            
+
             $courses = \App\Course::all();
             return view('classrooms.edit', ['classroom'=>$classroom, 'courses'=>$courses]);
     }
@@ -82,14 +97,14 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, Classroom $classroom)
     {
-            
+
             $this->validate($request,[
                 'edition' => ['required','string','max:255'],
                 'course_id' => ['required','integer'],
                 'start_date' => ['required','date'],
                 'end_date' => ['required','date'],
             ]);
-    
+
             $classroom->update($request->all());
             return redirect()->route('classrooms.index')->with('success','Turma atualizada com sucesso!');
     }

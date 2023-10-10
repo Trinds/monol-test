@@ -4,6 +4,7 @@
 <div class="table-container">
     <table id="studentsTable">
         <tr class="table-header">
+            <th></th>
             <th scope="col">Nome</th>
             <th scope="col">Email</th>
             <th scope="col">Data de Nascimento</th>
@@ -12,9 +13,10 @@
         </tr>
         @foreach ($students as $student)
             <tr class="table-row">
+                <td><img src="{{ $student->image }}" alt="Foto"></td>
                 <td>{{ $student->name }}</td>
                 <td>{{ $student->email }}</td>
-                <td>{{ $student->birth_date }}</td>
+                <td>{{ date('d-m-Y', strtotime($student->birth_date)) }}</td>
                 <td>{{ $student->classroom->course->abbreviation . $student->classroom->edition }}</td>
                 <td>
                     <a href="{{ route('students.show', $student->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>

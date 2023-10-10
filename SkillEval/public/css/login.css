@@ -18,10 +18,13 @@
     display: flex;
     flex-direction: column;
     row-gap: 1.25rem;
+
 }
 
 .login-form label{
-    display: block;
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
 }
 
 .login-form-input-name{
@@ -60,4 +63,5 @@
     line-height: 1rem;
     text-align: center;
     color: rgb(78 78 78);
+    align-self: center;
 }

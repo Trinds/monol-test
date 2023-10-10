@@ -8,7 +8,14 @@ use Illuminate\Http\Request;
 class Student extends Model
 {
     protected $fillable = [
-        'student_number', 'classroom_id', 'email', 'name', 'birth_date', 'image'
+
+        'name',
+        'classroom_id',
+        'student_number',
+        'email',
+        'birth_date',
+        'image'
+
     ];
     public function classroom()
     {
@@ -18,12 +25,5 @@ class Student extends Model
     public function evaluations()
     {
         return $this->hasMany('App\Evaluation');
-    }
-
-    public static function filterByClassroom($classroom_id)
-    {
-        if($classroom_id)
-            return Student::all()->where('classroom_id', '=', $classroom_id);
-        return Student::all();
     }
 }

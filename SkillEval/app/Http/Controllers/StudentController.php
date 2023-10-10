@@ -15,11 +15,18 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-            return view('students.index', [
-                'students'=>Student::filterByClassroom($request->get('classroomFilter')),
-                'classrooms'=>Classroom::all()->sortBy('name')
-            ]
-            );
+        isset($request->filter) || isset($request->searchParam)
+            ? $students = Student::query()
+            ->where('classroom_id',$request->filter)
+            ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+            ->get()
+            :
+            $students = Student::all();
+
+        return view('students.index', [
+            'students' => $students,
+            'classrooms' => Classroom::all()->sortBy('name')
+        ]);
     }
 
     /**

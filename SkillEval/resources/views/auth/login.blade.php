@@ -18,24 +18,22 @@
             </div>
             <form class="login-form" method="POST" action="{{ route('login') }}">
                 @csrf
-                <label>
-                    <p class="login-form-input-name">Email</p>
-                </label>
+                <label class="login-form-input-name" for="email">Email
                     <input id="email" type="email" placeholder="Email" class="login-form-input-field form-control"
                         name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
+                </label>
                     @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                <label>
-                    <p class="login-form-input-name">Password</p>
+                <label class="login-form-input-name" for="password">Password
                     <input id="password" type="password" placeholder="Password" class="login-form-input-field form-control"
                         name="password" required autocomplete="off">
                 </label>
                 <button type="submit" class="login-form-submit-button">Login</button>
-        
-                <div class="forgot-password-link">
+
+                <div class="link-span">
                     <a href="{{ route('password.request') }}">Esqueceu-se da password?</a>
                 </div>
 

@@ -16,20 +16,23 @@ use App\Http\Controllers\Auth\RegisterController;
 */
 
 Route::get('/', function () {
-    return view('master.main');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('courses', 'CourseController');	
+Route::resource('courses', 'CourseController');
 Route::resource('classrooms', 'ClassroomController');
 Route::resource('students', 'StudentController');
 
 // Route::post('/login', 'Auth\LoginController@login')->name('login');
 
 // Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('evaluations/create/{student}', 'EvaluationController@createForStudent')->name('evaluations.create.student');
+Route::post('evaluations/store/student', 'EvaluationController@storeForStudent')->name('evaluations.store.student');
 
 
 Auth::routes();
