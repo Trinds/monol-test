@@ -30,6 +30,17 @@
         <li onclick="goToCourses()" id="toCourses"><div class="icon"><i class="fa-regular fa-bookmark"></i></div>Cursos</li>
         <li onclick="goToClassrooms()" id="toClassrooms"><div class="icon"><i class="fa-solid fa-users"></i></div>Turmas</li>
         <li onclick="goToStudents()" id="toStudents"><div class="icon"><i class="fa-solid fa-user-graduate"></i></div>Formandos</li>
+
+        @Auth
+            @if (Auth::user()->roles->contains('name', 'admin'))
+        <li onclick="goToUsers()" id="toUsers">
+            <div class="icon">
+                <i class="fa-solid fa-users"></i>
+            </div>Utlizadores
+        </li>
+        @endif
+        @endauth
+        
         <li id="toReports"><div class="icon"><i class="fa fa-flag"></i></div>Relatórios</li>
         <li id="toEvaluations"><div class="icon"><i class="fa-solid fa-check"></i></div>Avaliações</li>
     </ul>
@@ -65,5 +76,9 @@
     }
     function goToClassrooms(){
         location.href = "{{route('classrooms.index')}}"
+    }
+
+    function goToUsers(){
+        location.href = "{{route('users.index')}}"
     }
 </script>

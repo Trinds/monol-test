@@ -36,3 +36,13 @@ Route::post('evaluations/store/student', 'EvaluationController@storeForStudent')
 
 
 Auth::routes();
+
+
+Route::get('/users', 'UserController@index')->name('users.index');
+Route::get('/users/{user}', 'UserController@show')->name('users.show');
+Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit');
+Route::put('/users/{user}', 'UserController@update')->name('users.update');
+Route::delete('/users/{user}', 'UserController@destroy')->name('users.destroy');
+
+
+Route::get('/users/create', 'Auth\RegisterController@showRegistrationForm')->name('users.create');
