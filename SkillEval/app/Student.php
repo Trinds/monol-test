@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 class Student extends Model
 {
     protected $fillable = [
+
         'name',
         'classroom_id',
         'student_number',
         'email',
         'birth_date',
         'image'
+
     ];
     public function classroom()
     {

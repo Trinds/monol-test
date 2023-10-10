@@ -7,6 +7,7 @@
 
 @section('content')
 
+
     @component('components.topbar',[
     'dir'           => 'students',
     'createBtnName' => 'Aluno',
@@ -14,6 +15,7 @@
     'filterName'    => 'Turma'
      ])
     @endcomponent
+
 
 
     @component('components.students.students-table', ['students' => $students] )

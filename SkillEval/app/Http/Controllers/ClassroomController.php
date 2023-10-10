@@ -14,6 +14,7 @@ class ClassroomController extends Controller
      */
     public function index(Request $request)
     {
+
         isset($request->filter) || isset($request->searchParam)
             ? $classrooms = Classroom::query()
             ->join('courses', 'courses.id', '=', 'classrooms.course_id')
