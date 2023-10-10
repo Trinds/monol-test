@@ -14,7 +14,7 @@ class StudentSeeder extends Seeder
        $classrooms = App\Classroom::all();
 
          foreach ($classrooms as $classroom) {
-              factory(App\Student::class, 10)->create([
+              factory(App\Student::class, 20)->create([
                 'classroom_id' => $classroom->id,
               ]);
          }

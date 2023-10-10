@@ -29,11 +29,19 @@ class EvaluationSeeder extends Seeder
     public function run()
     {
         $students = App\Student::all();
+
         foreach ($students as $student) {
+
+            for ($i = 1; $i < 7; $i++) 
+            {
                 factory(App\Evaluation::class)->create([
+
                     'student_id' => $student->id,
-                    'test_id' =>  rand(1,6),
+                    'test_id' =>  $i,
+
                 ]);
+            }
+
         }
     }
 }

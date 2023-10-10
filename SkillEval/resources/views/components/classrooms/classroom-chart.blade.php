@@ -4,39 +4,53 @@
     var ctx = document.getElementById('barChart').getContext('2d');
 
     var studentNames = [];
-    var testLabels = [];
-    var scores = [];
+    var tecnicoAverages = [];
+    var psiquicoAverages = [];
 
     @foreach ($classroom->students as $student)
         studentNames.push('{{$student->name}}');
 
-        var studentTestLabels = [];
-        var studentScores = [];
+        var studentTecnicoScores = [];
+        var studentPsiquicoScores = [];
 
         @foreach ($student->evaluations as $evaluation)
-            studentTestLabels.push('{{$evaluation->test->type->type}}');
-            studentScores.push({{$evaluation->score}});
+            // Check the test type and add to the respective arrays
+            if ('{{$evaluation->test->type->type}}' === 'Tecnico') {
+                studentTecnicoScores.push({{$evaluation->score}});
+            } else if ('{{$evaluation->test->type->type}}' === 'Psiquico') {
+                studentPsiquicoScores.push({{$evaluation->score}});
+            }
         @endforeach
 
-        testLabels.push(studentTestLabels);
-        scores.push(studentScores);
+        // Calculate the average for each type of test
+        var tecnicoAverage = studentTecnicoScores.reduce((acc, score) => acc + score, 0) / studentTecnicoScores.length;
+        var psiquicoAverage = studentPsiquicoScores.reduce((acc, score) => acc + score, 0) / studentPsiquicoScores.length;
+
+        tecnicoAverages.push(tecnicoAverage);
+        psiquicoAverages.push(psiquicoAverage);
     @endforeach
 
-    var datasets = [];
-    for (var i = 0; i < studentNames.length; i++) {
-        datasets.push({
-            label: studentNames[i],
-            data: scores[i],
-            backgroundColor: scores[i].map(score => (score >= 10) ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'),
-            borderColor: scores[i].map(score => (score >= 10) ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)'),
-            borderWidth: 1
-        });
-    }
+    var datasets = [
+        {
+            label: 'Tecnico',
+            data: tecnicoAverages,
+            backgroundColor: 'rgb(48, 133, 195)',
+            borderColor: tecnicoAverages.map(average => average > 9 ? 'green' : 'red'), // Conditionally set border color
+            borderWidth: 3
+        },
+        {
+            label: 'Psiquico',
+            data: psiquicoAverages,
+            backgroundColor: 'rgb(249, 148, 23)',
+            borderColor: psiquicoAverages.map(average => average > 9 ? 'green' : 'red'), // Conditionally set border color
+            borderWidth: 3
+        }
+    ];
 
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: testLabels[0], 
+            labels: studentNames,
             datasets: datasets
         },
         options: {
@@ -52,13 +66,9 @@
             plugins: {
                 tooltip: {
                     callbacks: {
-                        title: function(tooltipItem) {
-                            // Display the test type when hovering over the bars
-                            return testLabels[tooltipItem[0].datasetIndex][tooltipItem[0].index];
-                        },
-                        label: function(tooltipItem) {
-                            // Display the student's name and score
-                            return studentNames[tooltipItem.datasetIndex] + ': Nota - ' + tooltipItem.formattedValue;
+                        label: function(tooltipItem, data) {
+                            var datasetLabel = data.datasets[tooltipItem.datasetIndex].label;
+                            return datasetLabel + ': Nota - ' + tooltipItem.formattedValue;
                         }
                     }
                 }
