@@ -1,19 +1,25 @@
-$(document).ready(function () {
-    var selectedCourseId = $("#course_id").val();
+document.addEventListener('DOMContentLoaded', function () {
+    var courseSelect = document.getElementById('course_id');
+    var classroomSelect = document.getElementById('classroom_id');
 
-    $("#classroom_id option").hide();
+    function updateClassrooms() {
+        var selectedCourseId = courseSelect.value;
+        
+        for (var i = 0; i < classroomSelect.options.length; i++) {
+            classroomSelect.options[i].style.display = 'none';
+        }
 
-    $("#classroom_id option[data-course=" + selectedCourseId + "]").show();
+        for (var i = 0; i < classroomSelect.options.length; i++) {
+            var option = classroomSelect.options[i];
+            if (option.getAttribute('data-course') === selectedCourseId) {
+                option.style.display = 'block';
+            }
+        }
 
-    $("#classroom_id option[data-course=" + selectedCourseId + "]:first").prop("selected", true);
-
-    $("#course_id").change(function () {
-        var selectedCourseId = $(this).val();
-
-        $("#classroom_id option").hide();
-
-        $("#classroom_id option[data-course=" + selectedCourseId + "]").show();
-
-        $("#classroom_id option[data-course=" + selectedCourseId + "]:first").prop("selected", true);
-    });
+        if (classroomSelect.options[classroomSelect.selectedIndex].style.display === 'none') {
+            classroomSelect.value = '';
+        }
+    }
+    courseSelect.addEventListener('change', updateClassrooms);
+    updateClassrooms();
 });
