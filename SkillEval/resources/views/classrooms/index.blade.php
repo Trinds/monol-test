@@ -7,9 +7,10 @@
 @section('content')
 
     @component('components.topbar',[
-    'dir'=>route('classrooms.create'),
-    'createBtnName'=>'Turma',
-    'formAction'=>'/classrooms'
+    'dir'           => 'classrooms',
+    'createBtnName' => 'Turma',
+    'courses'       => $courses,
+    'filterName'    => 'Curso'
     ])
     @endcomponent
 

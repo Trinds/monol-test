@@ -8,9 +8,8 @@
 @section('content')
 
     @component('components.topbar',[
-    'dir'=>route('courses.create'),
+    'dir'=>'courses',
     'createBtnName'=>'Curso',
-    'formAction'=>'/courses'
     ])
     @endcomponent
 

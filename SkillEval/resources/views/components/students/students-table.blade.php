@@ -4,6 +4,7 @@
 <div class="table-container">
     <table id="studentsTable">
         <tr class="table-header">
+            <th></th>
             <th scope="col">Nome</th>
             <th scope="col">Email</th>
             <th scope="col">Data de Nascimento</th>
@@ -12,6 +13,7 @@
         </tr>
         @foreach ($students as $student)
             <tr class="table-row">
+                <td><img src="{{ $student->image }}" alt="Foto"></td>
                 <td>{{ $student->name }}</td>
                 <td>{{ $student->email }}</td>
                 <td>{{ date('d-m-Y', strtotime($student->birth_date)) }}</td>

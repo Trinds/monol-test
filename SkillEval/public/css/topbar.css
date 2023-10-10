@@ -6,7 +6,7 @@
 
     & form{
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         gap: 3rem;
 
@@ -27,7 +27,6 @@
 
 .search-input{
     display: flex;
-    align-self: flex-end;
     column-gap: 1.25rem;
     align-items: center;
 }

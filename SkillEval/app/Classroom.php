@@ -9,7 +9,7 @@ class Classroom extends Model
     protected $fillable = [
         'edition', 'course_id', 'start_date', 'end_date',
     ];
- 
+
     public function course()
     {
         return $this->belongsTo('App\Course');

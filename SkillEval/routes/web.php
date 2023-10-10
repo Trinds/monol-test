@@ -16,14 +16,14 @@ use App\Http\Controllers\Auth\RegisterController;
 */
 
 Route::get('/', function () {
-    return view('master.main');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('courses', 'CourseController');	
+Route::resource('courses', 'CourseController');
 Route::resource('classrooms', 'ClassroomController');
 Route::resource('students', 'StudentController');
 
