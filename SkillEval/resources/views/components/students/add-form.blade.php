@@ -1,32 +1,34 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('js/createStudentForm.js') }}"></script>
 <div class="container">        
     <form action="{{ url('students') }}" method="POST">
         @csrf
         <h1>Adicionar Aluno</h1>
 
         <fieldset>
-        <legend><span class="number">1</span> Informação do Curso</legend>
-        <label for="course_id">Curso:</label>
-        <select name="course_id" id="course_id" class="form-control">
-            @foreach ($courses as $course)
-                <option value="{{$course->id}}">{{$course->abbreviation}}</option>
-            @endforeach
-        </select>
+            <legend><span class="number">1</span> Informação do Curso</legend>
+            <label for="course_id">Curso:</label>
+            <select name="course_id" id="course_id" class="form-control">
+                @foreach ($courses as $course)
+                    <option value="{{$course->id}}">{{$course->abbreviation}}</option>
+                @endforeach
+            </select>
         </fieldset>
 
         <fieldset>
-        <legend><span class="number">2</span> Informação da Turma</legend>
-        <label for="classroom_id">Turma:</label>
-        <select name="classroom_id" id="classroom_id" class="form-control">
-        @foreach ($classrooms as $classroom)
-            <option value="{{$classroom->id}}" data-course="{{$classroom->course_id}}">{{$classroom->edition}}</option>
-        @endforeach
-        </select>
+            <legend><span class="number">2</span> Informação da Turma</legend>
+            <label for="classroom_id">Turma:</label>
+            <select name="classroom_id" id="classroom_id" class="form-control">
+                @foreach ($classrooms as $classroom)
+                    <option value="{{$classroom->id}}" data-course="{{$classroom->course_id}}">{{$classroom->edition}}</option>
+                @endforeach
+            </select>
         </fieldset>
 
         <fieldset>
             <legend><span class="number">3</span> Informação do Aluno</legend>
 
-            <label for="student_number">Edição:</label>
+            <label for="student_number">Numero de Formando:</label>
             <input type="text" id="student_number" name="student_number" class="form-control"
             placeholder="Numero do Formando"
             @error('student_number')
@@ -88,4 +90,3 @@
         </div>
     </form>
 </div>
-
