@@ -16,9 +16,13 @@
             @foreach($users as $user)
             <tr class="table-row">
                 <td>
-                    <!-- If user has an image, render it -->
+                 
                     @if($user->image !== null)
-                    <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }} Profile Image">
+                    <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }} Profile Image"
+                    style="border-radius: 50%; width: 50px; height: 50px;" />
+                    @else
+                
+                    <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image" style="border-radius: 50%; width: 50px; height: 50px;" />
                     @endif
                 </td>
                 <td>

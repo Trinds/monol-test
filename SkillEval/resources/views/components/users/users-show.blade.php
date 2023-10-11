@@ -7,7 +7,9 @@
               <div class="col-md-4 gradient-custom text-center text-white"
                 style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                 @if ($user->image !== null)
-                <img src="{{ asset('storage/' . $user->image) }}" alt="Avatar" class="img-fluid my-5" style="width: 120px;" />
+                <img src="{{ asset('storage/' . $user->image) }}" alt="Avatar" class="img-fluid my-5" style='border-radius: 50%; width: 120px; height: 120px;'/>
+                @else
+                <img src="{{ asset('imgs/defaultuser.png') }}" alt="Avatar" class="img-fluid my-5" style="width: 120px;" />
                 @endif
                 <h5>{{$user->name}}</h5>
                 @foreach($user->roles as $role)
