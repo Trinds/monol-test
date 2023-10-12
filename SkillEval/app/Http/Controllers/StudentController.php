@@ -38,7 +38,7 @@ class StudentController extends Controller
 
         return view('students.index', [
             'students' => $students,
-            'classrooms' => Classroom::all()->sortBy('name')
+            'classrooms' => Classroom::all()->sortBy('course_id')
         ]);
     }
 

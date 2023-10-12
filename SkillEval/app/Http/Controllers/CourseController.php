@@ -14,8 +14,8 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
-        isset($request->searchParam)
-            ? $courses = Course::query()
+        isset($request->searchParam) ?
+            $courses = Course::query()
             ->where(strtoupper('abbreviation'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
             ->orWhere(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
             ->get()

@@ -14,22 +14,36 @@ class ClassroomController extends Controller
      */
     public function index(Request $request)
     {
+        $classrooms = Classroom::all();
 
-        isset($request->filter) || isset($request->searchParam)
-            ? $classrooms = Classroom::query()
-            ->join('courses', 'courses.id', '=', 'classrooms.course_id')
-            ->where(function ($query) use ($request) {
-                $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
-                    ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
-            })
-            ->where('classrooms.course_id', $request->filter)
-            ->get()
-            :
-            $classrooms = Classroom::all();
+        if ( isset($request->filter) && $request->filter != "" ){
+            if ( isset($request->searchParam) ){
+                $classrooms = Classroom::query()
+                    ->select(['*'])
+                    ->whereHas('course', function ($query) use ($request){
+                        $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
+                            ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
+                    })->where('classrooms.course_id', $request->filter)
+                    ->get();
+            }
+            else {
+                $classrooms = Classroom::query()
+                    ->where('classrooms.course_id', $request->filter)
+                    ->get();
+            }
+        }
+        else {
+            $classrooms = Classroom::query()
+                ->select(['*'])
+                ->whereHas('course', function ($query) use ($request){
+                    $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
+                        ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
+                })->get();
+        }
 
         return view('classrooms.index', [
             'classrooms'=>$classrooms,
-            'courses'=>Course::all()
+            'courses'=>Course::all()->sortBy('name')
         ]);
     }
 

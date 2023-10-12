@@ -42,7 +42,7 @@ class CourseSeeder extends Seeder
             ]
         );
 
-        
+
         DB::table('courses')->insert(
             [
                 'name' => 'Técnico/a Especialista em Automação Robótica e Controlo Industrial',
@@ -52,10 +52,10 @@ class CourseSeeder extends Seeder
                 'deleted_at' => null,
             ]
         );
-        
+
         DB::table('courses')->insert(
             [
-                'name' => ' Técnico/a Especialista em Tecnologias e Programação de Sistemas de Informação',
+                'name' => 'Técnico/a Especialista em Tecnologias e Programação de Sistemas de Informação',
                 'abbreviation' => 'TPSI',
                 'created_at' => now(),
                 'updated_at' => now(),
