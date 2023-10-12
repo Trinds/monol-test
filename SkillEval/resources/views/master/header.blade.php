@@ -35,12 +35,12 @@
             @if (Auth::user()->roles->contains('name', 'admin'))
         <li onclick="goToUsers()" id="toUsers">
             <div class="icon">
-                <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-id-card"></i>
             </div>Utlizadores
         </li>
         @endif
         @endauth
-        
+
         <li id="toReports"><div class="icon"><i class="fa fa-flag"></i></div>Relatórios</li>
         <li id="toEvaluations"><div class="icon"><i class="fa-solid fa-check"></i></div>Avaliações</li>
     </ul>

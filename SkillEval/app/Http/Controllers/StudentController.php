@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Student;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 class StudentController extends Controller
 {
     /**
@@ -15,13 +14,27 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        isset($request->filter) || isset($request->searchParam)
-            ? $students = Student::query()
-            ->where('classroom_id',$request->filter)
-            ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-            ->get()
-            :
-            $students = Student::all();
+        $students = Student::all();
+
+        if ( isset($request->filter) && $request->filter != "" ){
+            if ( isset($request->searchParam) ){
+                $students = Student::query()
+                    ->where('classroom_id',$request->filter)
+                    ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                    ->get();
+            }
+            else{
+                $students = Student::query()
+                    ->where('classroom_id',$request->filter)->get();
+            }
+        }
+        else{
+            if ( isset($request->searchParam) ){
+                $students = Student::query()
+                    ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                    ->get();
+            }
+        }
 
         return view('students.index', [
             'students' => $students,
@@ -32,7 +45,7 @@ class StudentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -45,7 +58,7 @@ class StudentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -68,7 +81,7 @@ class StudentController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show(Student $student)
     {

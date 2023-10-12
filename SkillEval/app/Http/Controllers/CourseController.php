@@ -44,8 +44,8 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => ['required','string','max:255'],
-            'abbreviation' => ['required','string','max:10'],
+            'name'          => ['required','string','max:255'],
+            'abbreviation'  => ['required','string','max:10'],
         ]);
 
         Course::create($request->all());

@@ -8,7 +8,7 @@
         <div>
             <label for="filter">{{$filterName}}</label>
             <select class="form-control" id="filter" name="filter" onchange="this.form.submit()">
-                <option onselect="{{ route($dir.'.index') }}" value="0">Todos/as</option>
+                <option onselect="{{ route($dir.'.index') }}" value="">Todos/as</option>
                 @if( isset($classrooms) && $dir=='students' )
                     @foreach ($classrooms as $classroom)
                         <option value={{ $classroom->id }} {{ request('filter') == $classroom->id ? 'selected' : '' }}>{{ $classroom->course->abbreviation . $classroom->edition }}</option>

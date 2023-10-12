@@ -38,7 +38,7 @@
                     'backgroundClass' => 'background-gradient-dark-blue',
                     'count' => $usersCount,
                     'name' => 'Utilizadores',
-                    'iconClass' => 'fa-regular fa-user fa-2xl',
+                    'iconClass' => 'fa-regular fa-id-card fa-2xl',
                     'dir' => route('users.index'),
                 ])
                 @endcomponent
