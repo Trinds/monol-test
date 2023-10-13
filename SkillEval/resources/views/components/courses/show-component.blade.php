@@ -11,17 +11,17 @@
             </div>
         @endif
         @foreach ($course->classrooms as $classroom)
-            <div class="classroom-card">
-                <div class="classroom-card-img">
+            <div class="grid-card">
+                <div class="grid-card-img">
                     <img src="/imgs/classroom.png"/>
                 </div>
-                <div class="classroom-card-details">
-                    <p class="fw-bold mb-1">{{$classroom->course->abbreviation}} {{$classroom->edition}}</p>
-                    <p class="text-muted mb-0">Inicio: {{$classroom->start_date}}</p>
-                    <p class="text-muted mb-0">Inicio: Fim: {{$classroom->end_date}} </p>
-                    <p class="text-muted mb-0">Nº de alunos: {{$classroom->students->count()}}</p>
+                <div class="grid-card-details">
+                    <p class="fw-bold mb-1">{{ $classroom->course->abbreviation . ' ' . $classroom->edition }}</p>
+                    <p class="text-muted mb-0">Inicio: {{ $classroom->start_date }}</p>
+                    <p class="text-muted mb-0">Fim: {{ $classroom->end_date }} </p>
+                    <p class="text-muted mb-0">Nº de alunos: {{ $classroom->students->count() }}</p>
                 </div>
-                <div class="classroom-card-btns">
+                <div class="grid-card-btns">
                     <a class="btn btn-link m-0 text-reset"
                        href="{{ route('classrooms.show', $classroom->id) }}"
                        role="button"

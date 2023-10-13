@@ -74,60 +74,7 @@
     align-content: center;
   }
 
-  .classroom-card{
-      display: grid;
-      grid-template-areas: "left right"
-      "buttons buttons";
-      gap: .5rem;
-      padding-top: 1rem;
-      background-color: #fff;
-      width: 20rem;
-      margin: 1rem;
-      border: 1px solid var(--platinum);
-      border-radius: .5rem;
 
-      & .classroom-card-details{
-          grid-area: right;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          padding: .6rem;
-          gap: .6rem;
-          align-items: flex-start;
-          justify-content: flex-end;
-      }
-
-      & .classroom-card-img{
-          grid-area: left;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          & img{
-              height: 3.5rem;
-              width: 3.5rem;
-              border-radius: 50%;
-              object-fit: contain;
-          }
-      }
-
-      & .classroom-card-btns{
-          grid-area: buttons;
-          background-color: var(--platinum);
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-
-          & a{
-              text-decoration: none;
-              padding: .5rem;
-          }
-
-          & i{
-              margin-left: .7rem;
-          }
-      }
-  }
 
 
   @media screen and (min-width: 480px) {
