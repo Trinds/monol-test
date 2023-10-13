@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Course;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ClassroomImport;
+
 class ClassroomController extends Controller
 {
     /**
@@ -133,5 +136,16 @@ class ClassroomController extends Controller
     {
                 $classroom->delete();
                 return redirect()->route('classrooms.index')->with('success','Turma excluída com sucesso!');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx',
+        ]);
+
+        Excel::import(new ClassroomImport, $request->file('file'));
+
+        return redirect()->route('classrooms.index')->with('success', 'Turma e alunos importados com sucesso.');
     }
 }
