@@ -7,7 +7,8 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use App\Course;
 use App\Classroom;
 use App\Student;
-use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+
 
 class ClassroomImport implements WithMultipleSheets
 {
@@ -24,18 +25,18 @@ class ClassroomSheetImport implements ToModel
 {
     public function model(array $row)
     {
-        $courseAbreviation = $row['abreviacao_curso'];
+        if ($row[0] == 'Abreviação do Curso') {
+            return null;
+        }
+        $courseAbreviation = $row[0];
         $edition = $row[1];
-        $startDate = Carbon::createFromFormat('d/m/Y', $row[2])->format('Y-m-d');
-        $endDate = Carbon::createFromFormat('d/m/Y', $row[3])->format('Y-m-d');
+        $startDate = Date::excelToDateTimeObject($row[2])->format('Y-m-d');
+        $endDate = Date::excelToDateTimeObject($row[3])->format('Y-m-d');
 
+        $course_id = Course::where('abbreviation', $courseAbreviation)->first()->id;
 
-        // Encontre o ID do curso com base no nome do curso
-        $course = Course::where('abbreviation', $courseAbreviation)->first();
-
-        // Crie a turma
         return new Classroom([
-            'course_id' => 1,
+            'course_id' => $course_id,
             'edition' => $edition,
             'start_date' => $startDate,
             'end_date' => $endDate,
@@ -47,15 +48,16 @@ class StudentsSheetImport implements ToModel
 {
     public function model(array $row)
     {
+        if ($row[0] == 'Nº de Formando') {
+            return null;
+        }
         $studentNumber = $row[0];
         $studentName = $row[1];
         $studentEmail = $row[2];
-        $studentBirthDate = Carbon::createFromFormat('d/m/Y', $row[3])->format('Y-m-d');
+        $studentBirthDate = Date::excelToDateTimeObject($row[3])->format('Y-m-d');
 
-        // Atribua a classroom_id com base na última turma criada
         $lastClassroom = Classroom::latest()->first();
 
-        // Crie o aluno e associe-o à última turma criada
         return new Student([
             'student_number' => $studentNumber,
             'name' => $studentName,
@@ -65,4 +67,3 @@ class StudentsSheetImport implements ToModel
         ]);
     }
 }
-
