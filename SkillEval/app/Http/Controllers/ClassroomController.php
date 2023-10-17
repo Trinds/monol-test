@@ -134,8 +134,8 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-                $classroom->delete();
-                return redirect()->route('classrooms.index')->with('success','Turma excluída com sucesso!');
+        $classroom->delete();
+        return redirect()->route('classrooms.index')->with('success','Turma excluída com sucesso!');
     }
 
     public function import(Request $request)
@@ -146,6 +146,13 @@ class ClassroomController extends Controller
 
         Excel::import(new ClassroomImport, $request->file('file'));
 
-        return redirect()->route('classrooms.index')->with('success', 'Turma e alunos importados com sucesso.');
+        $lastClassroom = Classroom::latest()->first();
+
+        if ($lastClassroom) {
+            return redirect()->route('classrooms.show', $lastClassroom->id)->with('success', 'Turma importada com sucesso!');
+        }
+        else {
+            return redirect()->route('classrooms.create')->with('error', 'Não foi possível importar a turma! Verifique os erros existentes no ficheiro.');
+        }
     }
 }

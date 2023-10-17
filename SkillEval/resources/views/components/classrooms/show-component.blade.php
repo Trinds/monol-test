@@ -1,5 +1,10 @@
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <div class="container">
+@if(session('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
 <div class="heading mb-3">
     <h1>{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
     <h5>{{$classroom->course->name}}</h5>
@@ -25,7 +30,6 @@
                         <p class="fw-bold mb-1">{{$student->name}}</p>
                         <p class="text-muted mb-0">Número: {{$student->student_number}}</p>
                         <p class="text-muted mb-0">E-mail: {{$student->email}}</p>
-                     
                     </div>
                 </div>
             </div>

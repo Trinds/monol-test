@@ -1,6 +1,25 @@
 <div class="container">        
-
-    <form action="{{ url('classrooms') }}" method="POST">
+    <div class="pb-5 pt-5">
+        <h1>Opções:</h1>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="formType" id="manualRadio" value="manual" checked>
+        <label class="form-check-label" for="manualRadio">
+            Formulário da Turma
+        </label>
+        @if(session('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="formType" id="importRadio" value="import">
+        <label class="form-check-label" for="importRadio">
+            Importar Excel com Turma e Formandos
+        </label>
+    </div>
+    </div>
+    <form action="{{ url('classrooms') }}" method="POST" id="manualForm">
         @csrf
         <h1>Adicionar Turma</h1>
 
@@ -13,10 +32,8 @@
             @endforeach
         </select>
         </fieldset>
-
         <fieldset>
             <legend><span class="number">2</span> Informação da Turma</legend>
-
             <label for="edition">Edição:</label>
             <input type="text" id="edition" name="edition" class="form-control"
             placeholder="Edição da turma"
@@ -27,7 +44,7 @@
             required
             aria-describedat="editionHelp">
             <small id="editionHelp" class="form-text text-muted">Ex: 2021/2022</small>
-          
+        
             <label for="start_date">Data de começo:</label>
             <input type="date" id="start_date" name="start_date"
             class="form-control"
@@ -54,4 +71,15 @@
         <button type="submit">Adicionar</button>
         </div>
     </form>
+    <form action="{{ route('classrooms.import') }}" method="POST" enctype="multipart/form-data" id="importForm" style="display: none;">
+    @csrf
+    <label for="file">Adicionar Turma e Formandos</label>
+    <div class="form-group">
+        <a href="{{ asset('templates/TurmaAlunos.xlsx') }}" download>Download do Template Excel</a>
+    </div>
+    <div class="form-group">
+        <input type="file" name="file" id="file" accept=".xlsx">
+    </div>
+    <button type="submit">Enviar</button>
+</form>
 </div>

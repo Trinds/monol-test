@@ -23,6 +23,7 @@ class ClassroomImport implements WithMultipleSheets
 
 class ClassroomSheetImport implements ToModel
 {
+    private $newClassroomId;
     public function model(array $row)
     {
         if ($row[0] == 'Abreviação do Curso') {
@@ -33,10 +34,10 @@ class ClassroomSheetImport implements ToModel
         $startDate = Date::excelToDateTimeObject($row[2])->format('Y-m-d');
         $endDate = Date::excelToDateTimeObject($row[3])->format('Y-m-d');
 
-        $course_id = Course::where('abbreviation', $courseAbreviation)->first()->id;
+        $course = Course::where('abbreviation', $courseAbreviation)->first();
 
         return new Classroom([
-            'course_id' => $course_id,
+            'course_id' => $course->id,
             'edition' => $edition,
             'start_date' => $startDate,
             'end_date' => $endDate,
