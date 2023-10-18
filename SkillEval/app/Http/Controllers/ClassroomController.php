@@ -144,22 +144,18 @@ class ClassroomController extends Controller
     $request->validate([
         'file' => 'required|file|mimes:xlsx,xls',
     ]);
-
     try {
         Excel::import(new ClassroomImport, $request->file('file'));
     } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
         $failures = $e->failures();
-        
         foreach ($failures as $failure) {
             $failure->row();
             $failure->attribute();
             $failure->errors();
             $failure->values();
         }
-        
         $courses = Course::all();
         return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
-        
     }
     $lastClassroom = Classroom::latest()->first();
     return redirect()->route('classrooms.show', $lastClassroom->id)->with('success','Turma e formandos importados com sucesso!');

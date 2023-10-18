@@ -130,7 +130,6 @@ class StudentController extends Controller
         $this->validate($request,[
             'file' => ['required','file','mimes:xlsx,xls']
         ]);
-        
         try{
             Excel::import(new StudentsImport($classroom), $request->file('file'));
         }
@@ -142,9 +141,7 @@ class StudentController extends Controller
                 $failure->errors();
                 $failure->values();
             }
-
             return view('classrooms.show', ['classroom' => $classroom, 'failures'=>$failures]);
-
         }
         return redirect()->route('classrooms.show', $classroom)->with('success','Formandos importados com sucesso!');
     }
