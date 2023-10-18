@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Student;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StudentsImport;
 class StudentController extends Controller
 {
     /**
@@ -120,5 +122,26 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //
+    }
+
+    public function import(Request $request, Classroom $classroom)
+    {
+        $this->validate($request,[
+            'file' => ['required','file','mimes:xlsx,xls']
+        ]);
+        try{
+            Excel::import(new StudentsImport($classroom), $request->file('file'));
+        }
+        catch(\Maatwebsite\Excel\Validators\ValidationException $e){
+            $failures = $e->failures();
+            foreach($failures as $failure){
+                $failure->row();
+                $failure->attribute();
+                $failure->errors();
+                $failure->values();
+            }
+            return view('classrooms.show', ['classroom' => $classroom, 'failures'=>$failures]);
+        }
+        return redirect()->route('classrooms.show', $classroom)->with('success','Formandos importados com sucesso!');
     }
 }

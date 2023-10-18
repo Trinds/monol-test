@@ -48,3 +48,6 @@ Route::delete('/users/{user}', 'UserController@destroy')->name('users.destroy');
 
 
 Route::get('/users/create', 'Auth\RegisterController@showRegistrationForm')->name('users.create');
+
+Route::post('classrooms/import', 'ClassroomController@import')->name('classrooms.import');
+Route::post('students/import/{classroom}', 'StudentController@import')->name('students.import');
