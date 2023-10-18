@@ -22,6 +22,20 @@
     <h5>{{$classroom->course->name}}</h5>
     <h6>Começo: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
 </div>
+<div class="d-flex justify-content-end">
+<form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <label for="file">Adicionar Formandos à Turma</label>
+    <div class="form-group">
+        <a href="{{ asset('templates/AdicionarAlunos.xlsx') }}" download>Download do Template Excel</a>
+    </div>
+    <div class="form-group">
+        <input type="file" name="file" id="file" accept=".xlsx,.xls" required>
+        <button type="submit">Enviar</button>
+    </div>
+</form>
+
+</div>
 <div class="chart-container">
     @component('components.classrooms.classroom-chart', ['classroom'=>$classroom])
     @endcomponent
@@ -53,17 +67,4 @@
 </div>
     @endforeach
 </div>
-
-<form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <label for="file">Adicionar Formandos à Turma</label>
-    <div class="form-group">
-        <a href="{{ asset('templates/AdicionarAlunos.xlsx') }}" download>Download do Template Excel</a>
-    </div>
-    <div class="form-group">
-        <input type="file" name="file" id="file" accept=".xlsx,.xls" required>
-        <button type="submit">Enviar</button>
-    </div>
-</form>
-
 </div>
