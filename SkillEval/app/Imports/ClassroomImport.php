@@ -64,26 +64,41 @@ class ClassroomSheetImport implements ToModel, WithHeadingRow, WithValidation
     }
 }
 
-class StudentsSheetImport implements ToModel
+class StudentsSheetImport implements ToModel, WithHeadingRow, WithValidation
 {
     public function model(array $row)
     {
-        if ($row[0] == 'Nº de Formando') {
-            return null;
-        }
-        $studentNumber = $row[0];
-        $studentName = $row[1];
-        $studentEmail = $row[2];
-        $studentBirthDate = Date::excelToDateTimeObject($row[3])->format('Y-m-d');
-
         $lastClassroom = Classroom::latest()->first();
-
         return new Student([
-            'student_number' => $studentNumber,
-            'name' => $studentName,
-            'email' => $studentEmail,
-            'birth_date' => $studentBirthDate,
+            'student_number' => $row['no_de_formando'],
+            'name' => $row['nome'],
+            'email' => $row['email'],
+            'birth_date' => Date::excelToDateTimeObject($row['data_de_nascimento_ddmmaaaa'])->format('Y-m-d'),
             'classroom_id' => $lastClassroom->id,
         ]);
+    }
+
+    public function rules(): array
+    {
+        return [
+            'no_de_formando' => 'required|unique:students,student_number',
+            'nome' => 'required',
+            'email' => 'required|email|unique:students,email',
+            'data_de_nascimento_ddmmaaaa' => 'required|before:today',
+        ];
+    }
+
+    public function customValidationMessages()
+    {
+        return [
+            'no_de_formando.required' => 'O número de formando deve ser preenchido no ficheiro Excel.',
+            'no_de_formando.unique' => 'Um número de formando preenchido no Excel já existe.',
+            'nome.required' => 'Todos os campos Nome dos formandos devem ser preenchidos no ficheiro Excel.',
+            'email.required' => 'Todos os campos de email do formando devem ser preenchidos no ficheiro Excel.',
+            'email.email' => 'O email preenchido no Excel não é válido.',
+            'email.unique' => 'Um email preenchido no Excel já está associado a outro formando.',
+            'data_de_nascimento_ddmmaaaa.required' => 'Todas as datas de nascimento devem ser preenchidas no ficheiro Excel.',
+            'data_de_nascimento_ddmmaaaa.before' => 'Todas as datas de nascimento têm de ser anteriores à data atual.',
+        ];
     }
 }

@@ -145,8 +145,6 @@ class ClassroomController extends Controller
         'file' => 'required|file|mimes:xlsx',
     ]);
 
-    $lastClassroom = Classroom::latest()->first();
-    
     try {
         Excel::import(new ClassroomImport, $request->file('file'));
     } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
@@ -158,11 +156,12 @@ class ClassroomController extends Controller
             $failure->errors(); // Actual error messages from Laravel validator
             $failure->values(); // The values of the row that has failed.
         }
-
+        
         $courses = Course::all();
         return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
-
+        
     }
+    $lastClassroom = Classroom::latest()->first();
     return redirect()->route('classrooms.show', $lastClassroom->id)->with('success','Turma e formandos importados com sucesso!');
     }
 }

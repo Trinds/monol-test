@@ -10,7 +10,7 @@
     <ul>
             <h4>Ocorreu um erro ao importar o Excel. Verifique os erros existentes:</h4>
         @foreach ($failures as $failure)
-            <li>- Erro: {{ implode(", ", $failure->errors()) }}, Linha: {{ $failure->row() }}, Coluna: {{ $failure->attribute() }} </li>
+            <li>- Erro: {{ implode(", ", $failure->errors()) }} (Linha: {{ $failure->row() }}) </li>
         @endforeach
     </ul>
     </div>
