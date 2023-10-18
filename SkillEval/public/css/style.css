@@ -149,9 +149,9 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 input[type="file"]::before {
-  content: "Importar";
+  content: "Importar"; /* Replace with your custom text */
   display: inline-block;
-  background: var(--carrot-orange);
+  background: var(--carrot-orange); /* Style the custom text */
   color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
@@ -202,9 +202,9 @@ table{
         padding: .2rem .5rem;
     }
 }
-
 .table-row{
     height: 4rem;
+    /*min-width: 100rem;*/
     background-color: var(--platinum-light);
     & td{
         padding: 0.3rem 0.75rem;
@@ -256,58 +256,3 @@ table{
     }
 }
 /*#endregion*/
-
-.grid-card{
-    display: grid;
-    grid-template-areas: "left right"
-      "buttons buttons";
-    gap: .5rem;
-    padding-top: 1rem;
-    background-color: #fff;
-    width: 20rem;
-    margin: 1rem;
-    border: 1px solid var(--platinum);
-    border-radius: .5rem;
-
-    & .grid-card-details{
-        grid-area: right;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        padding: .6rem;
-        gap: .6rem;
-        align-items: flex-start;
-        justify-content: flex-end;
-    }
-
-    & .grid-card-img{
-        grid-area: left;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        & img{
-            height: 3.5rem;
-            width: 3.5rem;
-            border-radius: 50%;
-            object-fit: contain;
-        }
-    }
-
-    & .grid-card-btns{
-        grid-area: buttons;
-        background-color: var(--platinum);
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-
-        & a{
-            text-decoration: none;
-            padding: .5rem;
-        }
-
-        & i{
-            margin-left: .7rem;
-        }
-    }
-}

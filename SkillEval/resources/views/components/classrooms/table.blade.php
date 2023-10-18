@@ -7,7 +7,7 @@
         <tr class="table-header">
             <th scope="col">Curso</th>
             <th scope="col">Edição</th>
-            <th scope="col">Data de Início</th>
+            <th scope="col">Data de Começo</th>
             <th scope="col">Data de Conclusão</th>
             <th scope="col"></th>
         </tr>
