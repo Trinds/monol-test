@@ -6,12 +6,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedCourseId = courseSelect.value
 
         for (const option of classroomSelect.options) {
-            (selectedCourseId === "" || option.dataset.course === selectedCourseId) ?
+            option.dataset.course === selectedCourseId ?
                 option.style.display = 'block'
                 :
                 (option.style.display = 'none' , classroomSelect.value = '')
         }
-    }
+
         courseSelect.addEventListener('change', updateClassrooms)
         updateClassrooms()
+    }
 })

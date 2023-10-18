@@ -2,10 +2,10 @@
     <h1>Lista de Utilizadores</h1>
 </div>
 <div class="table-container">
-    <table id="usersTable">
+    <table id="studentsTable">
         <thead>
             <tr class="table-header">
-                <th scope="col"></th>
+                <th></th>
                 <th scope="col">Nome</th>
                 <th scope="col">Email</th>
                 <th scope="col">Função</th>
@@ -16,19 +16,24 @@
             @foreach($users as $user)
             <tr class="table-row">
                 <td>
-
+                 
                     @if($user->image !== null)
-                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia"/>
+                    <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }} Profile Image"
+                    style="border-radius: 50%; width: 50px; height: 50px;" />
                     @else
-
-                    <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image"/>
+                
+                    <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image" style="border-radius: 50%; width: 50px; height: 50px;" />
                     @endif
                 </td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
+                <td>
+                    <p>{{ $user->name }}</p>
+                </td>
+                <td>
+                    <p>{{ $user->email }}</p>
+                </td>
                 <td>
                     @foreach($user->roles as $role)
-                    {{ $role->name }}
+                    <p>{{ $role->name }}</p>
                     @endforeach
                 </td>
                 <td>
