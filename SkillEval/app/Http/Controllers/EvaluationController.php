@@ -32,10 +32,10 @@ class EvaluationController extends Controller
 
     public function createForStudent(Student $student)
     {
-      
+
         $tests = Test::all();
 
-        return view('evaluations.create-for-student', 
+        return view('evaluations.create-for-student',
             compact('student', 'tests'));
     }
 
@@ -66,13 +66,10 @@ class EvaluationController extends Controller
 
     $student = Student::findOrFail($request->input('student_id'));
 
-
     return redirect()->route('students.show', ['student' => $student->id]);
-
-
 }
 
-     
+
 
 
     /**
