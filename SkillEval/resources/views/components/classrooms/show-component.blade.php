@@ -1,40 +1,10 @@
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <div class="container">
-@if(session('success'))
-    <div class="alert alert-success" role="alert">
-        {{ session('success') }}
-    </div>
-    @endif
-
-    @if (isset($failures))
-    <div class="alert alert-danger">
-    <ul>
-            <h4>Ocorreu um erro ao importar o Excel. Verifique os erros existentes:</h4>
-        @foreach ($failures as $failure)
-            <li>- Erro: {{ implode(", ", $failure->errors()) }} (Linha: {{ $failure->row() }}) </li>
-        @endforeach
-    </ul>
-    </div>
-    @endif  
-
     <div class="heading mb-3">
         <h1>{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
         <h5>{{$classroom->course->name}}</h5>
         <h6>Início: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
     </div>
-    <div class="d-flex justify-content-end">
-<form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <label for="file">Adicionar Formandos à Turma</label>
-    <div class="form-group">
-        <a href="{{ asset('templates/AdicionarAlunos.xlsx') }}" download>Download do Template Excel</a>
-    </div>
-    <div class="form-group">
-        <input type="file" name="file" id="file" accept=".xlsx,.xls" required>
-        <button type="submit">Enviar</button>
-    </div>
-</form>
-</div>
     <div class="chart-container">
         @component('components.classrooms.classroom-chart', ['classroom'=>$classroom])
         @endcomponent
