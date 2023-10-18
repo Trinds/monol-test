@@ -1,23 +1,35 @@
 <div class="container">        
-    <div class="pb-5 pt-5">
-        <h1>Opções:</h1>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="formType" id="manualRadio" value="manual" checked>
-        <label class="form-check-label" for="manualRadio">
-            Formulário da Turma
-        </label>
-        @if(session('success'))
+    <div class="pt-2">
+    @if(session('success'))
     <div class="alert alert-success" role="alert">
-        {{ session('success') }}
+    {{ session('success') }}
+    </div>
+    @endif
+    @if (isset($failures))
+    <div class="alert alert-danger">
+    <ul>
+            <h4>Ocorreu um erro ao importar o Excel. Verifique os erros existentes:</h4>
+        @foreach ($failures as $failure)
+            <li>- Erro: {{ implode(", ", $failure->errors()) }}, Linha: {{ $failure->row() }}, Coluna: {{ $failure->attribute() }} </li>
+        @endforeach
+    </ul>
     </div>
     @endif
     </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="formType" id="importRadio" value="import">
-        <label class="form-check-label" for="importRadio">
-            Importar Excel com Turma e Formandos
-        </label>
-    </div>
+    <div class="pb-3 pt-2">
+        <h1>Opções:</h1>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="formType" id="manualRadio" value="manual" checked>
+            <label class="form-check-label" for="manualRadio">
+                Formulário da Turma
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="formType" id="importRadio" value="import">
+            <label class="form-check-label" for="importRadio">
+                Importar Excel com Turma e Formandos
+            </label>
+        </div>
     </div>
     <form action="{{ url('classrooms') }}" method="POST" id="manualForm">
         @csrf

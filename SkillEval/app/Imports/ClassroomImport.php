@@ -7,6 +7,8 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use App\Course;
 use App\Classroom;
 use App\Student;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 
@@ -21,27 +23,44 @@ class ClassroomImport implements WithMultipleSheets
     }
 }
 
-class ClassroomSheetImport implements ToModel
+class ClassroomSheetImport implements ToModel, WithHeadingRow, WithValidation
 {
-    private $newClassroomId;
     public function model(array $row)
     {
-        if ($row[0] == 'Abreviação do Curso') {
-            return null;
-        }
-        $courseAbreviation = $row[0];
-        $edition = $row[1];
-        $startDate = Date::excelToDateTimeObject($row[2])->format('Y-m-d');
-        $endDate = Date::excelToDateTimeObject($row[3])->format('Y-m-d');
-
+        $courseAbreviation = $row['abreviacao_do_curso'];
         $course = Course::where('abbreviation', $courseAbreviation)->first();
 
         return new Classroom([
             'course_id' => $course->id,
-            'edition' => $edition,
-            'start_date' => $startDate,
-            'end_date' => $endDate,
+            'edition' => $row['edicao'],
+            'start_date' => Date::excelToDateTimeObject($row['data_de_inicio_ddmmaaaa'])->format('Y-m-d'),
+            'end_date' => Date::excelToDateTimeObject($row['data_de_termino_ddmmaaaa'])->format('Y-m-d'),
         ]);
+        
+    }
+
+    public function rules(): array
+    {
+        return [
+            'abreviacao_do_curso' => 'required|exists:courses,abbreviation',
+            'edicao' => 'required|unique:classrooms,edition',
+            'data_de_inicio_ddmmaaaa' => 'required',
+            'data_de_termino_ddmmaaaa' => 'required',
+        ];
+    }
+
+    public function customValidationMessages()
+    {
+        return [
+            'abreviacao_do_curso.required' => 'A abreviação do curso deve ser preenchida no ficheiro Excel.',
+            'abreviacao_do_curso.exists' => 'A abreviação do curso inserida no Excel não existe.',
+            'edicao.required' => 'A edição deve ser preenchida no ficheiro Excel.',
+            'edicao.unique' => 'A edição preenchida no Excel já existe.',
+            'data_de_inicio_ddmmaaaa.required' => 'A data de início deve ser preenchida no ficheiro Excel.',
+            'data_de_inicio_ddmmaaaa.before' => 'A data de início tem de ser anterior à data de término.',
+            'data_de_termino_ddmmaaaa.required' => 'A data de término deve ser preenchida no ficheiro Excel.',
+            'data_de_termino_ddmmaaaa.after' => 'A data de término tem de ser posterior à data de início.',
+        ];
     }
 }
 

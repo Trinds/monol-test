@@ -58,7 +58,8 @@ class ClassroomController extends Controller
     public function create()
     {
         $courses = \App\Course::all();
-        return view('classrooms.create', ['courses'=>$courses]);
+        $failures = null;
+        return view('classrooms.create', ['courses'=>$courses, 'failures'=>$failures]);
     }
 
     /**
@@ -140,19 +141,28 @@ class ClassroomController extends Controller
 
     public function import(Request $request)
     {
-        $request->validate([
-            'file' => 'required|file|mimes:xlsx',
-        ]);
+    $request->validate([
+        'file' => 'required|file|mimes:xlsx',
+    ]);
 
+    $lastClassroom = Classroom::latest()->first();
+    
+    try {
         Excel::import(new ClassroomImport, $request->file('file'));
-
-        $lastClassroom = Classroom::latest()->first();
-
-        if ($lastClassroom) {
-            return redirect()->route('classrooms.show', $lastClassroom->id)->with('success', 'Turma importada com sucesso!');
+    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        $failures = $e->failures();
+        
+        foreach ($failures as $failure) {
+            $failure->row(); // row that went wrong
+            $failure->attribute(); // either heading key (if using heading row concern) or column index
+            $failure->errors(); // Actual error messages from Laravel validator
+            $failure->values(); // The values of the row that has failed.
         }
-        else {
-            return redirect()->route('classrooms.create')->with('error', 'Não foi possível importar a turma! Verifique os erros existentes no ficheiro.');
-        }
+
+        $courses = Course::all();
+        return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
+
+    }
+    return redirect()->route('classrooms.show', $lastClassroom->id)->with('success','Turma e formandos importados com sucesso!');
     }
 }

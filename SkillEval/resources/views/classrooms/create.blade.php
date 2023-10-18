@@ -10,7 +10,7 @@
 
 @section('content')
 
-@component('components.classrooms.add-form', ['courses' => $courses])
+@component('components.classrooms.add-form', ['courses' => $courses, 'failures' => $failures])
     
 @endcomponent
 
