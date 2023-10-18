@@ -7,6 +7,7 @@ use App\Course;
 use App\Classroom;
 use App\Student;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMappedCells;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
@@ -22,8 +23,17 @@ class ClassroomImport implements WithMultipleSheets
     }
 }
 
-class ClassroomSheetImport implements ToModel, WithHeadingRow, WithValidation
+class ClassroomSheetImport implements ToModel, WithHeadingRow, WithValidation, WithMappedCells
 {
+    public function mapping(): array
+    {
+        return [
+            'abreviacao_do_curso' => 'A2',
+            'edicao' => 'B2',
+            'data_de_inicio_ddmmaaaa' => 'C2',
+            'data_de_termino_ddmmaaaa' => 'D2',
+        ];
+    }
     public function model(array $row)
     {
         $courseAbreviation = $row['abreviacao_do_curso'];
@@ -37,6 +47,7 @@ class ClassroomSheetImport implements ToModel, WithHeadingRow, WithValidation
         ]);
         
     }
+    
 
     public function rules(): array
     {
