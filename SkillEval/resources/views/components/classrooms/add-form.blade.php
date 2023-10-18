@@ -28,10 +28,10 @@
             aria-describedat="editionHelp">
             <small id="editionHelp" class="form-text text-muted">Ex: 2021/2022</small>
           
-            <label for="start_date">Data de começo:</label>
+            <label for="start_date">Data de iníco:</label>
             <input type="date" id="start_date" name="start_date"
             class="form-control"
-            placeholder="Data de começo da turma"
+            placeholder="Data de início da turma"
             @error('start_date')
             is-invalid
             @enderror

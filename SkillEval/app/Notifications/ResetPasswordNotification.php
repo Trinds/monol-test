@@ -76,8 +76,8 @@ class ResetPasswordNotification extends Notification
         }
 
         return (new MailMessage)
-        ->subject(Lang::get('Pedido de redefinição de senha'))
-        ->greeting(Lang::get('Redefinição de senha'))
+        ->subject(Lang::get('Pedido de reposição de senha'))
+        ->greeting(Lang::get('Reposição de senha'))
         ->line(Lang::get('
         Está a receber este e-mail porque foi feito um pedido de recuperação de password para a sua conta.'))
         ->action(Lang::get('Redefinir senha'), $url)

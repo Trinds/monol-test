@@ -3,7 +3,7 @@
     <div class="heading mb-3">
         <h1>{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
         <h5>{{$classroom->course->name}}</h5>
-        <h6>Começo: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
+        <h6>Início: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
     </div>
     <div class="chart-container">
         @component('components.classrooms.classroom-chart', ['classroom'=>$classroom])
