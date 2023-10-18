@@ -87,10 +87,10 @@
     @csrf
     <label for="file">Adicionar Turma e Formandos</label>
     <div class="form-group">
-        <a href="{{ asset('templates/TurmaAlunos.xlsx') }}" download>Download do Template Excel</a>
+        <a href="{{ asset('templates/AddTurmaEAlunos.xlsx') }}" download>Download do Template Excel</a>
     </div>
     <div class="form-group">
-        <input type="file" name="file" id="file" accept=".xlsx">
+        <input type="file" name="file" id="file" accept=".xlsx,.xls" required>
     </div>
     <button type="submit">Enviar</button>
 </form>

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Imports;
-
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use App\Course;
