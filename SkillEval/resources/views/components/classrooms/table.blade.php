@@ -17,8 +17,8 @@
             <tr class="table-row">
                 <td>{{ $classroom->course->abbreviation}}</td>
                 <td>{{ $classroom->edition }}</td>
-                <td>{{ $classroom->start_date }}</td>
-                <td>{{ $classroom->end_date }}</td>
+                <td>{{ date('d-m-Y', strtotime($classroom->start_date))}}</td>
+                <td>{{ date('d-m-Y', strtotime($classroom->end_date))}}</td>
                 <td>
                     <a href="{{ route('classrooms.show', $classroom->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
                     <a href="{{ route('classrooms.edit', $classroom->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>

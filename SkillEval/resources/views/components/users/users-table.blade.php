@@ -18,7 +18,7 @@
                 <td>
 
                     @if($user->image !== null)
-                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia"/>
+                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia" style="height: 50px"/>
                     @else
 
                     <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image"/>
@@ -28,7 +28,7 @@
                 <td>{{ $user->email }}</td>
                 <td>
                     @foreach($user->roles as $role)
-                    {{ $role->name }}
+                    {{ Str::ucfirst($role->name) }}
                     @endforeach
                 </td>
                 <td>
