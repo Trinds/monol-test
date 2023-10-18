@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Course;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ClassroomImport;
-
 class ClassroomController extends Controller
 {
     /**
@@ -58,8 +55,7 @@ class ClassroomController extends Controller
     public function create()
     {
         $courses = \App\Course::all();
-        $failures = null;
-        return view('classrooms.create', ['courses'=>$courses, 'failures'=>$failures]);
+        return view('classrooms.create', ['courses'=>$courses]);
     }
 
     /**
@@ -89,8 +85,8 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        $failures = null;
-        return view('classrooms.show', ['classroom'=>$classroom, 'failures'=>$failures]);
+
+            return view('classrooms.show', ['classroom'=>$classroom]);
     }
 
     /**
@@ -135,29 +131,7 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        $classroom->delete();
-        return redirect()->route('classrooms.index')->with('success','Turma excluída com sucesso!');
-    }
-
-    public function import(Request $request)
-    {
-    $request->validate([
-        'file' => 'required|file|mimes:xlsx,xls',
-    ]);
-    try {
-        Excel::import(new ClassroomImport, $request->file('file'));
-    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-        $failures = $e->failures();
-        foreach ($failures as $failure) {
-            $failure->row();
-            $failure->attribute();
-            $failure->errors();
-            $failure->values();
-        }
-        $courses = Course::all();
-        return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
-    }
-    $lastClassroom = Classroom::latest()->first();
-    return redirect()->route('classrooms.show', $lastClassroom->id)->with('success','Turma e formandos importados com sucesso!');
+                $classroom->delete();
+                return redirect()->route('classrooms.index')->with('success','Turma excluída com sucesso!');
     }
 }

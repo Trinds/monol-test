@@ -2,7 +2,7 @@
 
 @section('content')
 
-@component('components.classrooms.show-component', ['classroom' => $classroom, 'failures' => $failures])
+@component('components.classrooms.show-component', ['classroom' => $classroom])
     
 @endcomponent
 

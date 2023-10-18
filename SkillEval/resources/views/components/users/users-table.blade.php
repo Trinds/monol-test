@@ -18,8 +18,9 @@
                 <td>
                  
                     @if($user->image !== null)
-                    <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }} Profile Image"
-                    style="border-radius: 50%; width: 50px; height: 50px;" />
+
+                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia" style="height: 50px"/>
+
                     @else
                 
                     <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image" style="border-radius: 50%; width: 50px; height: 50px;" />
@@ -33,7 +34,8 @@
                 </td>
                 <td>
                     @foreach($user->roles as $role)
-                    <p>{{ $role->name }}</p>
+                    {{ Str::ucfirst($role->name) }}
+
                     @endforeach
                 </td>
                 <td>

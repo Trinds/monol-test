@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <div class="container">
+
 @if(session('success'))
     <div class="alert alert-success" role="alert">
         {{ session('success') }}
@@ -18,10 +19,10 @@
     @endif  
 
 <div class="heading mb-3">
-    <h1>{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
-    <h5>{{$classroom->course->name}}</h5>
-    <h6>Começo: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
-</div>
+        <h1>{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
+        <h5>{{$classroom->course->name}}</h5>
+        <h6>Início: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
+  </div>
 <div class="d-flex justify-content-end">
 <form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -36,14 +37,16 @@
 </form>
 
 </div>
-<div class="chart-container">
-    @component('components.classrooms.classroom-chart', ['classroom'=>$classroom])
-    @endcomponent
-</div>
 <div class="row">
     @if ($classroom->students->count() == 0)
     <div class="alert alert-info" role="alert">
         Ainda não existem alunos para esta turma.
+
+    
+    <div class="chart-container">
+        @component('components.classrooms.classroom-chart', ['classroom'=>$classroom])
+        @endcomponent
+
     </div>
     @endif
     @foreach ($classroom->students as $student)
