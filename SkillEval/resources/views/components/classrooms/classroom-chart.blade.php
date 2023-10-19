@@ -1,4 +1,5 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.js"></script>
 <canvas class="classroom-eval-chart" id="barChart"></canvas>
 <script>
     var ctx = document.getElementById('barChart').getContext('2d');
@@ -6,6 +7,8 @@
     var studentNames = [];
     var tecnicoAverages = [];
     var psiquicoAverages = [];
+    var allTecnico = [];
+    var allPsiquico = [];
 
     @foreach ($classroom->students as $student)
         studentNames.push('{{$student->name}}');
@@ -14,65 +17,97 @@
         var studentPsiquicoScores = [];
 
         @foreach ($student->evaluations as $evaluation)
-            // Check the test type and add to the respective arrays
-            if ('{{$evaluation->test->type->type}}' === 'Tecnico') {
-                studentTecnicoScores.push({{$evaluation->score}});
-            } else if ('{{$evaluation->test->type->type}}' === 'Psiquico') {
-                studentPsiquicoScores.push({{$evaluation->score}});
+            @if ($evaluation->test->type->type === 'Tecnico')
+            {
+                allTecnico.push({{ $evaluation->score }});
+                studentTecnicoScores.push({{ $evaluation->score }});
             }
+            @elseif ($evaluation->test->type->type === 'Psiquico')
+            {
+                studentPsiquicoScores.push({{ $evaluation->score }});
+                allPsiquico.push({{ $evaluation->score }});
+            }
+            @endif
         @endforeach
 
         // Calculate the average for each type of test
         var tecnicoAverage = studentTecnicoScores.reduce((acc, score) => acc + score, 0) / studentTecnicoScores.length;
         var psiquicoAverage = studentPsiquicoScores.reduce((acc, score) => acc + score, 0) / studentPsiquicoScores.length;
-
+        var averageAllTecnico = allTecnico.reduce((acc, score) => acc + score, 0) / allTecnico.length;
+        var averageAllPsiquico = allPsiquico.reduce((acc, score) => acc + score, 0) / allTecnico.length;
+        
         tecnicoAverages.push(tecnicoAverage);
         psiquicoAverages.push(psiquicoAverage);
     @endforeach
 
     var datasets = [
         {
-            label: 'Tecnico',
+            label: 'Media Tecnico: ' + averageAllTecnico.toFixed(2),
             data: tecnicoAverages,
             backgroundColor: 'rgb(48, 133, 195)',
-            borderColor: tecnicoAverages.map(average => average > 9 ? 'green' : 'red'), // Conditionally set border color
-            borderWidth: 3
+            // borderColor: tecnicoAverages.map(average => average > 9 ? 'green' : 'red'), // Conditionally set border color
+            // borderWidth: 3
         },
+
         {
-            label: 'Psiquico',
+            label: 'Media Psiquico: '+ averageAllPsiquico.toFixed(2),
             data: psiquicoAverages,
             backgroundColor: 'rgb(249, 148, 23)',
-            borderColor: psiquicoAverages.map(average => average > 9 ? 'green' : 'red'), // Conditionally set border color
-            borderWidth: 3
+            // borderColor: psiquicoAverages.map(average => average > 9 ? 'green' : 'red'), // Conditionally set border color
+            // borderWidth: 3
         }
     ];
 
     var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: studentNames,
-            datasets: datasets
-        },
-        options: {
-            scales: {
-                y: {
-                    min: 0,
-                    max: 20,
-                    ticks: {
-                        stepSize: 1
-                    }
-                }
-            },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            var datasetLabel = data.datasets[tooltipItem.datasetIndex].label;
-                            return datasetLabel + ': Nota - ' + tooltipItem.formattedValue;
-                        }
-                    }
+    type: 'bar',
+    data: {
+        labels: studentNames,
+        datasets: datasets
+    },
+    options: {
+        scales: {
+            y: {
+                min: 0,
+                max: 20,
+                ticks: {
+                    stepSize: 1
                 }
             }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: (tooltipItem) => {
+                            const formattedValue = parseFloat(tooltipItem.formattedValue).toFixed(2);
+                            return ` Media - ${formattedValue}`;
+                        }
+
+                }
+            },
+            annotation: {
+                drawTime: 'beforeDatasetsDraw', // Set the draw time before datasets
+                annotations: [
+                    {
+                        type: 'line',
+                        mode: 'horizontal',
+                        scaleID: 'y',
+                        value: averageAllTecnico,
+                        borderColor: 'rgb(48, 133, 195)', // Change this to set the line color
+                        borderWidth: 2, // Change this to set the line width
+                        z: 1, // Set the z-index to draw behind the bars
+                    },
+                    {
+                        type: 'line',
+                        mode: 'horizontal',
+                        scaleID: 'y',
+                        value: averageAllPsiquico,    
+                        borderColor: 'rgb(249, 148, 23)', // Change this to set the line color
+                        borderWidth: 2, // Change this to set the line width
+                        z: 1, // Set the z-index to draw behind the bars
+                    }
+                ]
+            }
         }
-    });
+    }
+});
 </script>
