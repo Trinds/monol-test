@@ -18,7 +18,7 @@
                 <td>
 
                     @if($user->image !== null)
-                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia" style="height: 50px"/>
+                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia" style="height: 60px; width:60px; border-radius: 50%;"/>
                     @else
 
                     <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image"/>
