@@ -30,18 +30,22 @@ class UserController extends Controller
     
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'email',
-            'password'=>  'required',
-            'roles' => 'required'
+        $this->validate($request, [
+            'name'=>['required', 'string', 'max:255'],
+            'email'=>'required|email',
+            'password'=> 'required|confirmed|min:6',
+            'roles'=>'required'
         ]);
 
-        $user->update($request->all());
 
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+
+        $user->password = bcrypt($request->input('password'));
+    
         $user->roles()->sync($request->input('roles'));
-
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        $user->save();
+        return redirect()->route('users.index')->with('success','');
     }
 
     public function destroy(User $user)

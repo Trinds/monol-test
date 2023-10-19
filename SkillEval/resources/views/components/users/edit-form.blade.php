@@ -41,6 +41,17 @@
         aria-describedat="passwordHelp">
         <small id="passwordHelp" class="form-text text-muted">Ex: 12345678</small>
         
+       
+        <label for="password_confirmation">Confirmação da Password</label>
+        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Confirmação da Password do utilizador"
+        @error('password_confirmation')
+        is-invalid
+        @enderror
+        value="{{$user->password}}"
+        required
+        aria-describedat="password_confirmationHelp">
+        <small id="password_confirmationHelp" class="form-text text-muted">Ex: 12345678</small>
+
     </fieldset>
 
     <fieldset>
