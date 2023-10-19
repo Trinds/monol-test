@@ -15,7 +15,7 @@
         @endforeach
     </ul>
     </div>
-    @endif  
+    @endif
 
     <div class="heading mb-3">
         <h1>{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
@@ -65,11 +65,11 @@
                 </div>
                 <div class="grid-card-btns">
                     <a class="btn btn-link m-0 text-reset"
-                       href="{{ route('classrooms.show', $classroom->id) }}"
+                       href="{{ route('students.show', $student->id) }}"
                        role="button"
                        data-ripple-color="primary">Ver<i class="bi bi-search"></i></a>
                     <a class="btn btn-link m-0 text-reset"
-                       href="{{route('classrooms.edit', $classroom->id)}}"
+                       href="{{route('students.edit', $student->id)}}"
                        role="button"
                        data-ripple-color="primary">Editar<i class="bi bi-pencil-fill"></i></a>
                 </div>
