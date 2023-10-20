@@ -1,5 +1,4 @@
 <div class="container">        
-
 <div class="pt-2">
     @if(session('success'))
     <div class="alert alert-success" role="alert">
@@ -14,6 +13,15 @@
             <li>- Erro: {{ implode(", ", $failure->errors()) }} (Linha: {{ $failure->row() }}) </li>
         @endforeach
     </ul>
+    </div>
+    @endif
+    @if ($errors->any())
+    <div class="alert alert-danger">
+    <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>- {{ $error }}</li>
+        @endforeach
     </div>
     @endif
     </div>

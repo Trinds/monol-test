@@ -44,16 +44,17 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'abbreviation' => ['required', 'string', 'max:10', 'unique:courses,abbreviation'],
+        ]);
         try {
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'abbreviation' => ['required', 'string', 'max:10'],
-            ]);
-        
             Course::create($request->all());
             return redirect()->route('courses.index')->with('success', 'Curso criado com sucesso!');
         } catch (Exception $e) {
-            return redirect()->route('courses.index')->with('error', 'Falha ao criar o curso. Por favor, tente novamente.');
+            return redirect()
+            ->route('courses.create')
+            ->withErrors($e->getMessage());
         }
     }
 
@@ -90,17 +91,16 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'abbreviation' => ['required', 'string', 'max:10', 'unique:courses,abbreviation,'.$course->id],
+        ]);
         try
         {
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'abbreviation' => ['required', 'string', 'max:10'],
-            ]);
-        
             $course->update($request->all());
             return redirect()->route('courses.index')->with('success','Curso atualizado com sucesso!');
         } catch (Exception $e) {
-            return redirect()->route('courses.index')->with('error', 'Falha ao atualizar o curso. Por favor, tente novamente.');
+            return redirect()->route('courses.edit', $course->id)->withErrors($e->getMessage());
         }
     }
 

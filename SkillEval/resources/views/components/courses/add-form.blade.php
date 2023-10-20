@@ -1,5 +1,13 @@
 <div class="container">        
-
+@if ($errors->any())
+<div class="alert alert-danger">
+    <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>- {{ $error }}</li>
+        @endforeach
+</div>
+@endif
     <form action="{{ url('courses') }}" method="POST">
         @csrf
         <h1>Adicionar curso</h1>
@@ -17,7 +25,7 @@
             required
             aria-describedat="nameHelp">
             <small id="nameHelp" class="form-text text-muted">Ex: Técnico Programação e Sistemas de Informação</small>
-          
+        
             <label for="abbreviation">Sigla:</label>
             <input type="text" id="abbreviation" name="abbreviation"
             class="form-control"
