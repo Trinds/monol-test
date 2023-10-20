@@ -6,6 +6,9 @@
 <script type="module" src="{{asset('js/createStudentForm.js')}}"></script>
 <script type="module" src="{{asset('js/editStudentCard.js')}}"></script>
 @endsection
+@section('styles')
+<link rel="stylesheet" href="{{asset('css/students.css')}}">
+@endsection
 
 @section('content')
 
