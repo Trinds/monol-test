@@ -64,18 +64,14 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $customMessages = [
-            'birth_date.date' => 'A data de nascimento deve ser uma data válida.',
-            'birth_date.before' => 'A data de nascimento não pode ser superior à data atual.',
-        ];
         $request->validate([
             'student_number' => 'required|string|max:255|unique:students',
-            'classroom_id' => 'required|integer',
+            'classroom_id' => 'required|integer|exists:classrooms,id',
             'email' => 'required|email|max:255|unique:students',
             'name' => 'required|string|max:255',
-            'birth_date' => 'required|date|before_or_equal:today',
+            'birth_date' => 'required|date|before:today',
             'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
-        ], $customMessages);
+        ]);
 
         try {
             $imagePath = null;
@@ -91,12 +87,9 @@ class StudentController extends Controller
                 'birth_date' => $request->input('birth_date'),
                 'image' => $imagePath,
             ]);
-
             $student->save();
-
-            return redirect()->route('students.index')->with('success', 'Aluno criado com sucesso!');
+            return redirect()->route('students.index')->with('success', 'Formando criado com sucesso!');
         } catch (Exception $e) {
-
             return redirect()->route('students.create')->withErrors($e->getMessage());
         }
     }
@@ -137,19 +130,15 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        $customMessages = [
-            'birth_date.date' => 'A data de nascimento deve ser uma data válida.',
-        ];
         $request->validate(
             [
-                'student_number' => 'required|string|max:255',
-                'classroom_id' => 'required|integer',
+                'student_number' => 'required|string|max:255|unique:students,student_number,' . $student->id,
+                'classroom_id' => 'required|integer|exists:classrooms,id',
                 'email' => 'required|email|max:255|unique:students,email,' . $student->id,
                 'name' => 'required|string|max:255',
-                'birth_date' => 'required|date|before_or_equal:today',
+                'birth_date' => 'required|date|before:today',
                 'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
             ],
-            $customMessages
         );
         $classrooms = \App\Classroom::all();
         $courses = \App\Course::all();

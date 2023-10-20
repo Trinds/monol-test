@@ -135,7 +135,7 @@ return [
         'required' => 'A sigla é obrigatória.',
         'string' => 'A sigla deve conter apenas texto.',
         'max' => 'A sigla não pode exceder os :max caracteres.',
-        'unique' => 'A sigla introduzida já está en uso.',
+        'unique' => 'A sigla introduzida já está em uso.',
     ],
     'edition' => [
         'required' => 'A edição é obrigatória.',
@@ -154,6 +154,35 @@ return [
         'required' => 'A data de conclusão é obrigatória.',
         'date' => 'A data de conclusão deve ser uma data válida e com o formato correto.',
         'after' => 'A data de conclusão deve ser posterior à data de início.',
+    ],
+    'student_number' => [
+        'required' => 'O número de formando é obrigatório.',
+        'string' => 'O número de formando deve conter apenas texto.',
+        'max' => 'O número de formando não pode exceder os :max caracteres.',
+    ],
+    'classroom_id' => [
+        'required' => 'A escolha da turma é obrigatória.',
+    ],
+    'email' => [
+        'required' => 'O email é obrigatório.',
+        'email' => 'O email deve ser um endereço de email válido.',
+        'max' => 'O email não pode exceder os :max caracteres.',
+        'unique' => 'O email introduzido já está em uso.',
+    ],
+    'name' => [
+        'required' => 'O nome é obrigatório.',
+        'string' => 'O nome deve conter apenas texto.',
+        'max' => 'O nome não pode exceder os :max caracteres.',
+    ],
+    'birth_date' => [
+        'required' => 'A data de nascimento é obrigatória.',
+        'date' => 'A data de nascimento deve ser uma data válida e com o formato correto.',
+        'before' => 'A data de nascimento deve ser anterior à data atual.',
+    ],
+    'image' => [
+        'image' => 'A imagem deve ser um ficheiro no formato jpeg, png ou gif.',
+        'mimes' => 'A imagem deve ser um ficheiro do tipo: :values.',
+        'max' => 'A imagem é demasiado grande. Não pode exceder os :max kilobytes.',
     ],
 ],
 
@@ -175,5 +204,9 @@ return [
     'course_id' => 'curso',
     'start_date' => 'data de início',
     'end_date' => 'data de conclusão',
+    'student_number' => 'número de formando',
+    'classroom_id' => 'turma',
+    'email' => 'email',
+    'birth_date' => 'data de nascimento',
 ],
 ];

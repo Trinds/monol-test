@@ -1,3 +1,8 @@
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
 <div class="title">
     <h1>Lista de Alunos</h1>
 </div>

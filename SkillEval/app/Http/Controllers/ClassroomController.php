@@ -7,6 +7,7 @@ use App\Course;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ClassroomImport;
+
 class ClassroomController extends Controller
 {
     /**
@@ -18,34 +19,32 @@ class ClassroomController extends Controller
     {
         $classrooms = Classroom::all();
 
-        if ( isset($request->filter) && $request->filter != "" ){
-            if ( isset($request->searchParam) ){
+        if (isset($request->filter) && $request->filter != "") {
+            if (isset($request->searchParam)) {
                 $classrooms = Classroom::query()
                     ->select(['*'])
-                    ->whereHas('course', function ($query) use ($request){
+                    ->whereHas('course', function ($query) use ($request) {
                         $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
                             ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
                     })->where('classrooms.course_id', $request->filter)
                     ->get();
-            }
-            else {
+            } else {
                 $classrooms = Classroom::query()
                     ->where('classrooms.course_id', $request->filter)
                     ->get();
             }
-        }
-        else {
+        } else {
             $classrooms = Classroom::query()
                 ->select(['*'])
-                ->whereHas('course', function ($query) use ($request){
+                ->whereHas('course', function ($query) use ($request) {
                     $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
                         ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
                 })->get();
         }
 
         return view('classrooms.index', [
-            'classrooms'=>$classrooms,
-            'courses'=>Course::all()->sortBy('name')
+            'classrooms' => $classrooms,
+            'courses' => Course::all()->sortBy('name')
         ]);
     }
 
@@ -58,7 +57,7 @@ class ClassroomController extends Controller
     {
         $courses = \App\Course::all();
         $failures = null;
-        return view('classrooms.create', ['courses'=>$courses, 'failures'=>$failures]);
+        return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
     }
 
     /**
@@ -69,15 +68,24 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'edition' => ['required','string','max:255'],
-            'course_id' => ['required','integer'],
-            'start_date' => ['required','date', 'before:end_date'],
-            'end_date' => ['required','date', 'after:start_date'],
+        $this->validate($request, [
+            'edition' => ['required', 'string', 'max:255'],
+            'course_id' => ['required', 'integer'],
+            'start_date' => ['required', 'date', 'before:end_date'],
+            'end_date' => ['required', 'date', 'after:start_date'],
         ]);
 
-        Classroom::create($request->all());
-        return redirect()->route('classrooms.index')->with('success','Turma criada com sucesso!');
+        try {
+            Classroom::create($request->all());
+            return redirect()->route('classrooms.index')->with('success', 'Turma criada com sucesso!');
+        } catch (\Exception $e) {
+            $failures = $e->getMessage();
+            $courses = \App\Course::all();
+            return redirect()
+                ->route('classrooms.create')
+                ->with('failures', $failures)
+                ->with('courses', $courses);
+        }
     }
 
     /**
@@ -89,7 +97,7 @@ class ClassroomController extends Controller
     public function show(Classroom $classroom)
     {
         $failures = null;
-        return view('classrooms.show', ['classroom'=>$classroom, 'failures'=>$failures]);
+        return view('classrooms.show', ['classroom' => $classroom, 'failures' => $failures]);
     }
 
     /**
@@ -101,8 +109,8 @@ class ClassroomController extends Controller
     public function edit(Classroom $classroom)
     {
 
-            $courses = \App\Course::all();
-            return view('classrooms.edit', ['classroom'=>$classroom, 'courses'=>$courses]);
+        $courses = \App\Course::all();
+        return view('classrooms.edit', ['classroom' => $classroom, 'courses' => $courses]);
     }
 
     /**
@@ -115,15 +123,26 @@ class ClassroomController extends Controller
     public function update(Request $request, Classroom $classroom)
     {
 
-            $this->validate($request,[
-                'edition' => ['required','string','max:255'],
-                'course_id' => ['required','integer'],
-                'start_date' => ['required','date'],
-                'end_date' => ['required','date'],
-            ]);
+        $this->validate($request, [
+            'edition' => ['required', 'string', 'max:255'],
+            'course_id' => ['required', 'integer'],
+            'start_date' => ['required', 'date', 'before:end_date'],
+            'end_date' => ['required', 'date', 'after:start_date'],
+        ]);
 
+        try{
             $classroom->update($request->all());
-            return redirect()->route('classrooms.index')->with('success','Turma atualizada com sucesso!');
+            return redirect()->route('classrooms.index')->with('success', 'Turma atualizada com sucesso!');
+        }
+        catch (\Exception $e) {
+            $failures = $e->getMessage();
+            $courses = \App\Course::all();
+            return redirect()
+                ->route('classrooms.edit', $classroom->id)
+                ->with('failures', $failures)
+                ->with('courses', $courses);
+        }
+
     }
 
     /**
@@ -134,29 +153,29 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-                $classroom->delete();
-                return redirect()->route('classrooms.index')->with('success','Turma excluída com sucesso!');
+        $classroom->delete();
+        return redirect()->route('classrooms.index')->with('success', 'Turma excluída com sucesso!');
     }
 
     public function import(Request $request)
     {
-    $request->validate([
-        'file' => 'required|file|mimes:xlsx,xls',
-    ]);
-    try {
-        Excel::import(new ClassroomImport, $request->file('file'));
-    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-        $failures = $e->failures();
-        foreach ($failures as $failure) {
-            $failure->row();
-            $failure->attribute();
-            $failure->errors();
-            $failure->values();
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
+        try {
+            Excel::import(new ClassroomImport, $request->file('file'));
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            foreach ($failures as $failure) {
+                $failure->row();
+                $failure->attribute();
+                $failure->errors();
+                $failure->values();
+            }
+            $courses = Course::all();
+            return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
         }
-        $courses = Course::all();
-        return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
-    }
-    $lastClassroom = Classroom::latest()->first();
-    return redirect()->route('classrooms.show', $lastClassroom->id)->with('success','Turma e formandos importados com sucesso!');
+        $lastClassroom = Classroom::latest()->first();
+        return redirect()->route('classrooms.show', $lastClassroom->id)->with('success', 'Turma e formandos importados com sucesso!');
     }
 }

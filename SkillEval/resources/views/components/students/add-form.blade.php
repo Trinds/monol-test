@@ -1,9 +1,13 @@
 <div class="container">
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
-        </div>
-    @endif
+@if ($errors->any())
+<div class="alert alert-danger">
+    <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>- {{ $error }}</li>
+        @endforeach
+</div>
+@endif
     <form action="{{ url('students') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <h1>Adicionar Aluno</h1>
@@ -43,10 +47,6 @@
                    required
                    aria-describedat="student_numberHelp">
 
-            @error('student_number')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-
             <label for="email">Email:</label>
             <input type="email" id="email" name="email"
                    class="form-control"
@@ -56,10 +56,6 @@
                    @enderror
                    required
                    aria-describedat="emailHelp">
-
-            @error('email')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
 
             <label for="name">Nome:</label>
             <input type="text" id="name" name="name"
@@ -71,10 +67,6 @@
                    required
                    aria-describedat="nameHelp">
 
-            @error('name')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-
             <label for="birth_date">Data de nascimento:</label>
             <input type="date" id="birth_date" name="birth_date"
                    class="form-control"
@@ -85,10 +77,6 @@
                    required
                    aria-describedat="birth_dateHelp">
 
-            @error('birth_date')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-
             <label for="image">Foto:</label>
             <input type="file" id="image" name="image"
                    class="form-control"
@@ -98,9 +86,6 @@
                    @enderror
                    aria-describedat="imageHelp">
             
-            @error('image')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
         </fieldset>
         <div class="form-group">
             <button type="submit">Adicionar</button>
