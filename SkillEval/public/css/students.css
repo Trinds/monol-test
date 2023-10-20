@@ -27,7 +27,12 @@
         background-color: var(--platinum);
         width: 20rem;
     }
-
+    & select{
+        padding: .5rem;
+        border-radius: 0.5rem;
+        background-color: var(--platinum);
+        width: 20rem;
+    }
     & label{
         display:flex;
         justify-content: space-between;
@@ -85,5 +90,32 @@ td i:hover {
     color: #fff;
     cursor: pointer;
 }
+
+.borderNameStudent{
+    border-radius: 0.5rem;
+    background-color: #DFE3E6;
+    color: black;
+}
+
+.selectForm {
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 14px;
+    width: 100%;
+    margin-top: 5px;
+    border-radius: 5px;
+    outline: none;
+    background-color: #DFE3E6;
+}
+
+input[read-only]{
+    background-color: #f1f1f1;
+    opacity: 1;
+    pointer-events: none;
+}
+input[readonly]:focus {
+    outline: none;
+}
+
 
 

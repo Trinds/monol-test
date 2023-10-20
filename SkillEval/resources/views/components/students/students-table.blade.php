@@ -14,7 +14,6 @@
         @foreach ($students as $student)
             <tr class="table-row">
                 <td>
-                   
                     @if ($student->image !== null)
                         <img src="{{ asset('storage/' . $student->image) }}" alt="Fotografia" style="height: 60px; width:60px; border-radius: 50%;"/>
                     @else
