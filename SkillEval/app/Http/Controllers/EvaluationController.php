@@ -6,7 +6,9 @@ use App\Student;
 use App\Test;
 use App\Classroom;
 use App\Evaluation;
+use Exception;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
 class EvaluationController extends Controller
 {
@@ -35,8 +37,10 @@ class EvaluationController extends Controller
 
         $tests = Test::all();
 
-        return view('evaluations.create-for-student',
-            compact('student', 'tests'));
+        return view(
+            'evaluations.create-for-student',
+            compact('student', 'tests')
+        );
     }
 
 
@@ -49,25 +53,30 @@ class EvaluationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function storeForStudent(Request $request, Student $student)
-{
-    $request->validate([
-        'test_id' => 'required',
-        'score' => 'required|numeric|min:0|max:20'
-    ]);
+    public function storeForStudent(Request $request, Student $student)
+    {
+        try {
+            $request->validate([
+                'test_id' => 'required',
+                'score' => 'required|numeric|min:0|max:20'
+            ]);
 
-    $evaluation = new Evaluation([
-        'test_id' => $request->input('test_id'),
-        'score' => $request->input('score'),
-        'student_id' => $request->input('student_id')
-    ]);
+            $evaluation = new Evaluation([
+                'test_id' => $request->input('test_id'),
+                'score' => $request->input('score'),
+                'student_id' => $request->input('student_id')
+            ]);
 
-    $evaluation->save();
+            $evaluation->save();
 
-    $student = Student::findOrFail($request->input('student_id'));
+            $student = Student::findOrFail($request->input('student_id'));
 
-    return redirect()->route('students.show', ['student' => $student->id]);
-}
+            return redirect()->route('students.show', ['student' => $student->id])->with('success', 'Avaliação criada com sucesso!');
+
+        } catch (Exception $e) {
+            return redirect()->route('students.show', ['student' => $student->id])->with('error', 'Falha ao criar a avaliação. Por favor, tente novamente.');
+        }
+    }
 
 
 

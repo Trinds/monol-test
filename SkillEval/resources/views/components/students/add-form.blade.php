@@ -1,5 +1,5 @@
 <div class="container">
-    <form action="{{ url('students') }}" method="POST">
+    <form action="{{ url('students') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <h1>Adicionar Aluno</h1>
 
@@ -29,7 +29,7 @@
             <legend><span class="number">3</span> Informação do Aluno</legend>
 
             <label for="student_number">Numero de Formando:</label>
-            <input type="text" id="student_number" name="student_number" class="form-control"
+            <input type="number" id="student_number" name="student_number" class="form-control"
                    placeholder="Numero do Formando"
                    @error('student_number')
                    is-invalid

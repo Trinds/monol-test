@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Classroom;
+use Exception;
 use App\Student;
+use App\Classroom;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\StudentsImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class StudentController extends Controller
 {
     /**
@@ -64,21 +66,49 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'student_number' => ['required','string','max:255'],
-            'classroom_id' => ['required','integer'],
-            'email' => ['required','email','max:255'],
-            'name' => ['required','string','max:255'],
-            'birth_date' => ['required','date', function($atribute, $value, $fail){
-                if($value > now())
-                    $fail('A data de nascimento não pode ser superior à data atual.');
-            }],
-            'image' => ['nullable','image','max:2048']
-        ]);
-        Student::create($request->all());
-        return redirect()->route('students.index')->with('success','Estudante criado com sucesso!');
+      
+        $customMessages = [
+            'birth_date.date' => 'A data de nascimento deve ser uma data válida.',
+            'birth_date.before' => 'A data de nascimento não pode ser superior à data atual.',
+        ];
+    
+   
+        $request->validate([
+            'student_number' => 'required|string|max:255',
+            'classroom_id' => 'required|integer',
+            'email' => 'required|email|max:255|unique:students',
+            'name' => 'required|string|max:255',
+            'birth_date' => 'required|date|before_or_equal:today',
+            'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
+        ], $customMessages);
+    
+        try {
+          
+            $imagePath = null;
+            if ($request->hasFile('image'))
+            {
+                $imagePath = $request->file('image')->store('public/images');
+                $imagePath = str_replace('public/', '', $imagePath);
+            }
+      
+            $student = new Student([
+                'student_number' => $request->input('student_number'),
+                'classroom_id' => $request->input('classroom_id'),
+                'email' => $request->input('email'),
+                'name' => $request->input('name'),
+                'birth_date' => $request->input('birth_date'),
+                'image' => $imagePath,
+            ]);
+    
+            $student->save();
+    
+            return redirect()->route('students.index')->with('success', 'Aluno criado com sucesso!');
+        } catch (Exception $e) {
+          
+            return redirect()->route('students.index')->with('error', 'Erro ao criar o aluno. Por favor, tente novamente.');
+        }
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -121,7 +151,12 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+          try {
+                $student->delete();
+                return redirect()->route('students.index')->with('success', 'Aluno eliminado com sucesso!');
+          } catch (Exception $e) {
+                return redirect()->route('students.index')->with('error', 'Erro ao eliminar o aluno. Por favor, tente novamente.');
+          }
     }
 
     public function import(Request $request, Classroom $classroom)

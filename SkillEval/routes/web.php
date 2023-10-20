@@ -44,6 +44,8 @@ Route::get('/users/{user}', 'UserController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit');
 
 Route::put('/users/{user}', 'UserController@update')->name('users.update');
+
+
 Route::delete('/users/{user}', 'UserController@destroy')->name('users.destroy');
 
 
@@ -51,3 +53,6 @@ Route::get('/users/create', 'Auth\RegisterController@showRegistrationForm')->nam
 
 Route::post('classrooms/import', 'ClassroomController@import')->name('classrooms.import');
 Route::post('students/import/{classroom}', 'StudentController@import')->name('students.import');
+
+
+Route::delete('/students/{student}', 'StudentController@destroy')->name('students.destroy');
