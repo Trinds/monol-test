@@ -38,4 +38,5 @@
             </tr>
         @endforeach
     </table>
+    {{ $students->onEachSide(3)->links() }}
 </div>

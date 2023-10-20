@@ -16,36 +16,32 @@ class ClassroomController extends Controller
      */
     public function index(Request $request)
     {
-        $classrooms = Classroom::all();
+        $classrooms = Classroom::paginate(8)->withQueryString();
 
-        if ( isset($request->filter) && $request->filter != "" ){
-            if ( isset($request->searchParam) ){
-                $classrooms = Classroom::query()
-                    ->select(['*'])
-                    ->whereHas('course', function ($query) use ($request){
-                        $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
-                            ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
-                    })->where('classrooms.course_id', $request->filter)
-                    ->get();
-            }
-            else {
-                $classrooms = Classroom::query()
-                    ->where('classrooms.course_id', $request->filter)
-                    ->get();
-            }
-        }
-        else {
+        if (isset($request->searchParam) && isset($request->filter) && $request->filter != "") {
             $classrooms = Classroom::query()
                 ->select(['*'])
-                ->whereHas('course', function ($query) use ($request){
+                ->whereHas('course', function ($query) use ($request) {
                     $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
                         ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
-                })->get();
+                })->where('classrooms.course_id', $request->filter)
+                ->paginate(8)->withQueryString();
+        } else if (isset($request->filter) && $request->filter != "") {
+            $classrooms = Classroom::query()
+                ->where('classrooms.course_id', $request->filter)
+                ->paginate(8)->withQueryString();
+        } else if (isset($request->searchParam)) {
+            $classrooms = Classroom::query()
+                ->select(['*'])
+                ->whereHas('course', function ($query) use ($request) {
+                    $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
+                        ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
+                })->paginate(8)->withQueryString();
         }
 
         return view('classrooms.index', [
-            'classrooms'=>$classrooms,
-            'courses'=>Course::all()->sortBy('name')
+            'classrooms' => $classrooms,
+            'courses' => Course::all()->sortBy('name')
         ]);
     }
 

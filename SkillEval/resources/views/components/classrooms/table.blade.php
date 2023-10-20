@@ -24,7 +24,7 @@
                     <a href="{{ route('classrooms.edit', $classroom->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>
                     <a onclick="event.preventDefault();
                    document.getElementById('clasroomRmvForm').submit();">
-                    <i class="fa-regular fa-trash-can removeBtn"></i>
+                        <i class="fa-regular fa-trash-can removeBtn"></i>
                     </a>
                     <form id="clasroomRmvForm" action="{{ route('classrooms.destroy', $classroom->id) }}" method="POST">
                         @csrf
@@ -35,4 +35,5 @@
             </tr>
         </tbody>
     </table>
+    {{ $classrooms->onEachSide(3)->links() }}
 </div>
