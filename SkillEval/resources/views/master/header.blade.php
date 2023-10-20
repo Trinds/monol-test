@@ -6,25 +6,25 @@
         </svg>
         <p>ATEC SkillEval</p>
     </div>
-<ul id="userInfo">
-    @if (Auth::user())
-    <li>
-        @if(Auth::user()->image !== null)
-        <div>
-            <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }} Profile Image">
-        </div>
+    <ul id="userInfo">
+        @if (Auth::user())
+            <li>
+                @if(Auth::user()->image !== null)
+                    <div>
+                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ implode(' ',[ explode(' ', Auth::user()->name)[0] , explode(' ', Auth::user()->name)[str_word_count(Auth::user()->name)-1] ]) }}">
+                    </div>
+                @endif
+            </li>
+            <li id="userName">
+                <p>{{ implode(' ',[ explode(' ', Auth::user()->name)[0] , explode(' ', Auth::user()->name)[str_word_count(Auth::user()->name)-1] ]) }}</p>
+            </li>
+            <li id="userRole">
+                @foreach(Auth::user()->roles as $role)
+                    <p>{{ $role->name }} </p>
+                @endforeach
+            </li>
         @endif
-    </li>
-    <li id="userName">
-        <p>{{ Auth::user()->name }}</p>
-    </li>
-    <li id="userRole">
-        @foreach(Auth::user()->roles as $role)
-        <p>{{ $role->name }} </p>
-        @endforeach
-    </li>
-    @endif
-</ul>
+    </ul>
     <ul id="menu">
         <li onclick="goToHome()" id="toHome"><div class="icon"><i class="fa fa-home"></i></div>Início</li>
         <li onclick="goToCourses()" id="toCourses"><div class="icon"><i class="fa-regular fa-bookmark"></i></div>Cursos</li>
@@ -33,12 +33,12 @@
 
         @Auth
             @if (Auth::user()->roles->contains('name', 'admin'))
-        <li onclick="goToUsers()" id="toUsers">
-            <div class="icon">
-                <i class="fa-solid fa-id-card"></i>
-            </div>Utlizadores
-        </li>
-        @endif
+                <li onclick="goToUsers()" id="toUsers">
+                    <div class="icon">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>Utlizadores
+                </li>
+            @endif
         @endauth
 
         <li id="toReports"><div class="icon"><i class="fa fa-flag"></i></div>Relatórios</li>
@@ -47,7 +47,7 @@
 
     <ul id="sair">
         <li id="toLogout"
-        onclick="event.preventDefault();
+            onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">
             SAIR
             <div class="icon">
