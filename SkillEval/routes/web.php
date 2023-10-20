@@ -56,3 +56,4 @@ Route::post('students/import/{classroom}', 'StudentController@import')->name('st
 
 
 Route::delete('/students/{student}', 'StudentController@destroy')->name('students.destroy');
+Route::put('/students/{student}', 'StudentController@update')->name('students.update');

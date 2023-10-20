@@ -1,4 +1,9 @@
 <div class="container">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
+        </div>
+    @endif
     <form action="{{ url('students') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <h1>Adicionar Aluno</h1>
@@ -29,7 +34,7 @@
             <legend><span class="number">3</span> Informação do Aluno</legend>
 
             <label for="student_number">Numero de Formando:</label>
-            <input type="number" id="student_number" name="student_number" class="form-control"
+            <input type="text" id="student_number" name="student_number" class="form-control"
                    placeholder="Numero do Formando"
                    @error('student_number')
                    is-invalid
@@ -37,6 +42,10 @@
                    value="{{old('student_number')}}"
                    required
                    aria-describedat="student_numberHelp">
+
+            @error('student_number')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email"
@@ -48,6 +57,10 @@
                    required
                    aria-describedat="emailHelp">
 
+            @error('email')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+
             <label for="name">Nome:</label>
             <input type="text" id="name" name="name"
                    class="form-control"
@@ -58,6 +71,10 @@
                    required
                    aria-describedat="nameHelp">
 
+            @error('name')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+
             <label for="birth_date">Data de nascimento:</label>
             <input type="date" id="birth_date" name="birth_date"
                    class="form-control"
@@ -67,6 +84,7 @@
                    @enderror
                    required
                    aria-describedat="birth_dateHelp">
+
             @error('birth_date')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -79,6 +97,10 @@
                    is-invalid
                    @enderror
                    aria-describedat="imageHelp">
+            
+            @error('image')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </fieldset>
         <div class="form-group">
             <button type="submit">Adicionar</button>
