@@ -138,9 +138,7 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         $customMessages = [
-            'classroom_id.required' => 'A edição da turma é obrigatória.',
             'birth_date.date' => 'A data de nascimento deve ser uma data válida.',
-            'birth_date.before' => 'A data de nascimento não pode ser superior à data atual.',
         ];
         $request->validate(
             [

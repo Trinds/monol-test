@@ -1,3 +1,10 @@
+<div class="container">
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+</div>
 <div class="title">
     <h1>Lista de Cursos</h1>
 </div>
@@ -12,7 +19,7 @@
             <td>{{ $course->abbreviation }}</td>
             <td>{{ $course->name }}</td>
             <td>
-                <a href="{{ route('courses.show', $course->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"  data-toggle="modal" data-target="#showModal"></i></a>
+                <a href="{{ route('courses.show', $course->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn" data-toggle="modal" data-target="#showModal"></i></a>
                 <a href="{{route('courses.edit', $course->id)}}"><i class="fa-solid fa-pencil editBtn"></i></a>
                 <a onclick="event.preventDefault();
                    document.getElementById('courseRmvForm').submit();">

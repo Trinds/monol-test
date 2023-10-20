@@ -1,5 +1,13 @@
 <div class="container">        
-
+@if ($errors->any())
+<div class="alert alert-danger">
+    <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>- {{ $error }}</li>
+        @endforeach
+</div>
+@endif
     <form action="{{ url('courses/' . $course->id) }}" method="POST">
         @csrf
         @method('PUT')
