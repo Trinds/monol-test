@@ -17,11 +17,11 @@ class CourseController extends Controller
     {
         isset($request->searchParam) ?
             $courses = Course::query()
-            ->where(strtoupper('abbreviation'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-            ->orWhere(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-            ->get()
+                ->where(strtoupper('abbreviation'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                ->orWhere(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                ->paginate(8)->withQueryString()
             :
-            $courses = Course::all();
+            $courses = Course::paginate(8)->withQueryString();
 
         return view('courses.index', ['courses' => $courses]);
     }

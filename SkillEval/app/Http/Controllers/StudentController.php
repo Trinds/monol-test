@@ -18,25 +18,22 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $students = Student::all();
+        $students = Student::paginate(8)->withQueryString();
 
-        if (isset($request->filter) && $request->filter != "") {
-            if (isset($request->searchParam)) {
-                $students = Student::query()
-                    ->where('classroom_id', $request->filter)
-                    ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-                    ->get();
-            } else {
-                $students = Student::query()
-                    ->where('classroom_id', $request->filter)->get();
-            }
-        } else {
-            if (isset($request->searchParam)) {
-                $students = Student::query()
-                    ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-                    ->get();
-            }
+        if (isset($request->searchParam) && isset($request->filter) && $request->filter != "") {
+            $students = Student::query()
+                ->where('classroom_id', $request->filter)
+                ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                ->paginate(8)->withQueryString();
+        } else if (isset($request->filter) && $request->filter != "") {
+            $students = Student::query()
+                ->where('classroom_id', $request->filter)->paginate(8)->withQueryString();
+        } else if (isset($request->searchParam)) {
+            $students = Student::query()
+                ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                ->paginate(8)->withQueryString();
         }
+
 
         return view('students.index', [
             'students' => $students,

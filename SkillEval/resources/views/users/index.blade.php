@@ -6,6 +6,12 @@
 
 @section('content')
 
+@component('components.topbar',[
+    'dir'=>'users',
+    'createBtnName'=>'Utilizador',
+    ])
+    @endcomponent
+
 
     @component('components.users.users-table', ['users' => $users] )
     @endcomponent
