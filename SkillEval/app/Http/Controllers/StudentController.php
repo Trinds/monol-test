@@ -20,20 +20,18 @@ class StudentController extends Controller
     {
         $students = Student::all();
 
-        if ( isset($request->filter) && $request->filter != "" ){
-            if ( isset($request->searchParam) ){
+        if (isset($request->filter) && $request->filter != "") {
+            if (isset($request->searchParam)) {
                 $students = Student::query()
-                    ->where('classroom_id',$request->filter)
+                    ->where('classroom_id', $request->filter)
                     ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
                     ->get();
-            }
-            else{
+            } else {
                 $students = Student::query()
-                    ->where('classroom_id',$request->filter)->get();
+                    ->where('classroom_id', $request->filter)->get();
             }
-        }
-        else{
-            if ( isset($request->searchParam) ){
+        } else {
+            if (isset($request->searchParam)) {
                 $students = Student::query()
                     ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
                     ->get();
@@ -53,9 +51,9 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $courses=\App\Course::all();
-        $classrooms=\App\Classroom::all();
-        return view('students.create', ['courses'=>$courses, 'classrooms'=>$classrooms]);
+        $courses = \App\Course::all();
+        $classrooms = \App\Classroom::all();
+        return view('students.create', ['courses' => $courses, 'classrooms' => $classrooms]);
     }
 
     /**
@@ -78,11 +76,10 @@ class StudentController extends Controller
             'birth_date' => 'required|date|before_or_equal:today',
             'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
         ], $customMessages);
-    
+
         try {
             $imagePath = null;
-            if ($request->hasFile('image'))
-            {
+            if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('public/images');
                 $imagePath = str_replace('public/', '', $imagePath);
             }
@@ -94,16 +91,16 @@ class StudentController extends Controller
                 'birth_date' => $request->input('birth_date'),
                 'image' => $imagePath,
             ]);
-    
+
             $student->save();
-    
+
             return redirect()->route('students.index')->with('success', 'Aluno criado com sucesso!');
         } catch (Exception $e) {
-        
+
             return redirect()->route('students.create')->withErrors($e->getMessage());
         }
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -112,9 +109,9 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        $courses=\App\Course::all();
-        $classrooms=\App\Classroom::all();
-        return view('students.show',['student'=>$student, 'classrooms'=>$classrooms, 'courses'=>$courses]);
+        $courses = \App\Course::all();
+        $classrooms = \App\Classroom::all();
+        return view('students.show', ['student' => $student, 'classrooms' => $classrooms, 'courses' => $courses]);
     }
 
     /**
@@ -125,7 +122,10 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+
+        $courses = \App\Course::all();
+        $classrooms = \App\Classroom::all();
+        return view('students.edit', ['student' => $student, 'courses' => $courses, 'classrooms' => $classrooms]);
     }
 
     /**
@@ -150,8 +150,9 @@ class StudentController extends Controller
                 'name' => 'required|string|max:255',
                 'birth_date' => 'required|date|before_or_equal:today',
                 'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
-            ], 
-        $customMessages);
+            ],
+            $customMessages
+        );
         $classrooms = \App\Classroom::all();
         $courses = \App\Course::all();
         try {
@@ -162,11 +163,19 @@ class StudentController extends Controller
                 ->with('courses', $courses)
                 ->with('success', 'Aluno atualizado com sucesso!');
         } catch (Exception $e) {
-            return redirect()
-                ->route('students.show', $student)
-                ->with('classrooms', $classrooms)
-                ->with('courses', $courses)
-                ->withErrors($e->getMessage());
+            if ($request->is('students/*')) {
+                return redirect()
+                    ->route('students.show', $student)
+                    ->with('classrooms', $classrooms)
+                    ->with('courses', $courses)
+                    ->withErrors($e->getMessage());
+            } elseif ($request->is('students/*/edit')) {
+                return redirect()
+                    ->route('students.create')
+                    ->with('classrooms', $classrooms)
+                    ->with('courses', $courses)
+                    ->withErrors($e->getMessage());
+            }
         }
     }
 
@@ -178,32 +187,31 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-          try {
-                $student->delete();
-                return redirect()->route('students.index')->with('success', 'Aluno eliminado com sucesso!');
-          } catch (Exception $e) {
-                return redirect()->route('students.index')->with('error', 'Erro ao eliminar o aluno. Por favor, tente novamente.');
-          }
+        try {
+            $student->delete();
+            return redirect()->route('students.index')->with('success', 'Aluno eliminado com sucesso!');
+        } catch (Exception $e) {
+            return redirect()->route('students.index')->with('error', 'Erro ao eliminar o aluno. Por favor, tente novamente.');
+        }
     }
 
     public function import(Request $request, Classroom $classroom)
     {
-        $this->validate($request,[
-            'file' => ['required','file','mimes:xlsx,xls']
+        $this->validate($request, [
+            'file' => ['required', 'file', 'mimes:xlsx,xls']
         ]);
-        try{
+        try {
             Excel::import(new StudentsImport($classroom), $request->file('file'));
-        }
-        catch(\Maatwebsite\Excel\Validators\ValidationException $e){
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
-            foreach($failures as $failure){
+            foreach ($failures as $failure) {
                 $failure->row();
                 $failure->attribute();
                 $failure->errors();
                 $failure->values();
             }
-            return view('classrooms.show', ['classroom' => $classroom, 'failures'=>$failures]);
+            return view('classrooms.show', ['classroom' => $classroom, 'failures' => $failures]);
         }
-        return redirect()->route('classrooms.show', $classroom)->with('success','Formandos importados com sucesso!');
+        return redirect()->route('classrooms.show', $classroom)->with('success', 'Formandos importados com sucesso!');
     }
 }
