@@ -23,22 +23,21 @@ class UserController extends Controller
         return view('users.edit', compact('user', 'roles'));
     }
 
-    public function show (User $user)
+    public function show(User $user)
     {
         return view('users.show', compact('user'));
     }
 
 
-    
     public function update(Request $request, User $user)
     {
-        $imagePath = null; 
+        $imagePath = null;
 
         $customMessages = [
             'required' => 'O :attribute é obrigatório.',
             'email' => 'O :attribute deve ser um endereço de email válido.',
             'confirmed' => 'A confirmação :attribute não coincide.',
-            'min' => 'A password deve ter pelo menos :min caractéres.',
+            'password.min' => 'A password deve ter pelo menos :min caracteres.',
             'image' => 'A imagem deve ser um ficheiro do tipo jpeg, png, jpg, gif ou svg com um tamanho máximo de 5 megabytes.'
         ];
 
@@ -46,28 +45,43 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'email' => 'required|email',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'sometimes|confirmed',
             'roles' => 'required',
         ], $customMessages);
 
-        if ($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/images');
             $imagePath = str_replace('public/', '', $imagePath);
+        } elseif ($user->image) {
+            $imagePath = $user->image;
+        } else {
+            $imagePath = null;
         }
 
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput()
-                ->with('error', 'Oops! Algo correu mal ao atualizar o utlizador. Por favor verifique o(s) seguinte(s) erro:');
+                ->with('error', 'Oops! Algo correu mal ao atualizar o utilizador. Por favor verifique o(s) seguinte(s) erro:');
         }
 
         try {
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->image = $imagePath;
-            $user->password = bcrypt($request->input('password'));
+            if ($request->filled('password')) {
+                if (strlen($request->input('password')) < 6) {
+                    $validator->getMessageBag()->add('password', 'A password deve ter pelo menos 6 caracteres.');
+    
+                    return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput()
+                        ->with('error', 'Oops! Algo correu mal ao atualizar o utilizador. Por favor verifique o(s) seguinte(s) erro:');
+                }
+    
+                $user->password = bcrypt($request->input('password'));
+            }
+    
             $user->roles()->sync($request->input('roles'));
             $user->save();
 
@@ -76,8 +90,8 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Ocorreu um erro ao atualizar o utlizador.');
         }
     }
-    
-    
+
+
     public function destroy(User $user)
     {
         $user->delete();

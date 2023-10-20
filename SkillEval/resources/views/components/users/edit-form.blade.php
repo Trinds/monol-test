@@ -44,33 +44,29 @@
 
         <fieldset>
             <legend><span class="number">2</span>Credenciais</legend>
-
+        
             <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="E-mail do utilizador"
-                @error('email')
-        is-invalid
-        @enderror value="{{ $user->email }}" required
-                aria-describedat="emailHelp">
+            <input type="email" id="email" name="email" class="form-control" placeholder="E-mail do utilizador" @error('email') is-invalid @enderror value="{{ $user->email }}" required aria-describedat="emailHelp">
             <small id="emailHelp" class="form-text text-muted">Ex: User@edu.atec.pt</small>
-
+        
+            @if ($user->id === auth()->user()->id)
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control"
-                placeholder="Password do utilizador" @error('password')
-        is-invalid
-        @enderror
-                value="{{ $user->password }}" required aria-describedat="passwordHelp">
+            <div class="input-group">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password do utilizador" @error('password') is-invalid @enderror value="" aria-describedat="passwordHelp">
+                <span class="input-group-btn">
+                    <button class="btn btn-default reveal-password" type="button">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </span>
+            </div>
             <small id="passwordHelp" class="form-text text-muted">Ex: 12345678</small>
-
-
+        
             <label for="password_confirmation">Confirmação da Password</label>
-            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control"
-                placeholder="Confirmação da Password do utilizador"
-                @error('password_confirmation')
-        is-invalid
-        @enderror value="{{ $user->password }}"
-                required aria-describedat="password_confirmationHelp">
+            <div class="input-group">
+                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Confirmação da Password do utilizador" @error('password_confirmation') is-invalid @enderror value="" aria-describedat="password_confirmationHelp">
+            </div>
             <small id="password_confirmationHelp" class="form-text text-muted">Ex: 12345678</small>
-
+            @endif
         </fieldset>
 
         <fieldset>
@@ -89,3 +85,24 @@
         </div>
     </form>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        $(".reveal-password").on("click", function () {
+            var passwordInput = $("#password");
+            var passwordConfirmationInput = $("#password_confirmation");
+            var icon = $(this).find("i");
+
+            if (passwordInput.attr("type") === "password") {
+                passwordInput.attr("type", "text");
+                passwordConfirmationInput.attr("type", "text");
+                icon.removeClass("fa-eye").addClass("fa-eye-slash");
+            } else {
+                passwordInput.attr("type", "password");
+                passwordConfirmationInput.attr("type", "password");
+                icon.removeClass("fa-eye-slash").addClass("fa-eye");
+            }
+        });
+    });
+</script>
