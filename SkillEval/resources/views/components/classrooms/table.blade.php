@@ -1,3 +1,8 @@
+    @if(session('success'))
+    <div class="container alert alert-success" role="alert">
+    {{ session('success') }}
+    </div>
+    @endif
 <div class="title">
     <h1>Lista de Turmas</h1>
 </div>
