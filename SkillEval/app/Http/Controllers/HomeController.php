@@ -26,10 +26,8 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-
     {
         return view('home',
-
             [
                 'coursesCount'      => Course::all()->count(),
                 'classroomsCount'   => Classroom::all()->count(),
@@ -38,6 +36,5 @@ class HomeController extends Controller
                 'classrooms'        => Classroom::with('course')->get(),
                 'courses'           => Course::all()
             ]);
-
     }
 }

@@ -22,7 +22,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/reports', 'ReportsController@index')->name('reports.index');
 
+Route::resource('reports', 'ReportsController');
 Route::resource('courses', 'CourseController');
 Route::resource('classrooms', 'ClassroomController');
 Route::resource('students', 'StudentController');
