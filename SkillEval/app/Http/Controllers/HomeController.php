@@ -26,13 +26,18 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
+
     {
         return view('home',
+
             [
-                'coursesCount'     => Course::all()->count(),
-                'classroomsCount'  => Classroom::all()->count(),
-                'studentsCount'    => Student::all()->count(),
-                'usersCount'       => User::all()->count()
+                'coursesCount'      => Course::all()->count(),
+                'classroomsCount'   => Classroom::all()->count(),
+                'studentsCount'     => Student::all()->count(),
+                'usersCount'        => User::all()->count(),
+                'classrooms'        => Classroom::with('course')->get(),
+                'courses'           => Course::all()
             ]);
+
     }
 }

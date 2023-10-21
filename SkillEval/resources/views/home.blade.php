@@ -44,5 +44,25 @@
                 @endcomponent
             @endif
         @endauth
+
+        
+    </div>
+    <div class="chart_container">
+            <div class="charts">
+                @component('components.dashboard.dashboard-chartAlunosCurso', [         
+                    
+                    'Turmas'=>  $classrooms, //Array de Turmas
+                    'dir' => route('courses.index'),
+                ])
+                @endcomponent
+            </div>
+            <div class="charts">
+                @component('components.dashboard.dashboard-ChartTurmasCurso', [         
+                    
+                    'Turmas'=>  $classrooms, //Array de Turmas
+                    'dir' => route('courses.index'),
+                ])
+                @endcomponent
+            </div>
     </div>
 @endsection

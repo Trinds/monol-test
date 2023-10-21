@@ -30,7 +30,6 @@
             @endif
         @endforeach
 
-        // Calculate the average for each type of test
         var tecnicoAverage = studentTecnicoScores.reduce((acc, score) => acc + score, 0) / studentTecnicoScores.length;
         var psiquicoAverage = studentPsiquicoScores.reduce((acc, score) => acc + score, 0) / studentPsiquicoScores.length;
         var averageAllTecnico = allTecnico.reduce((acc, score) => acc + score, 0) / allTecnico.length;
@@ -44,17 +43,17 @@
         {
             label: 'Media Tecnico: ' + averageAllTecnico.toFixed(2),
             data: tecnicoAverages,
-            backgroundColor: 'rgb(48, 133, 195)',
-            // borderColor: tecnicoAverages.map(average => average > 9 ? 'green' : 'red'), // Conditionally set border color
-            // borderWidth: 3
+            backgroundColor: tecnicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'), 
+            borderColor: tecnicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)'), 
+            borderWidth: 1
         },
 
         {
             label: 'Media Psiquico: '+ averageAllPsiquico.toFixed(2),
             data: psiquicoAverages,
-            backgroundColor: 'rgb(249, 148, 23)',
-            // borderColor: psiquicoAverages.map(average => average > 9 ? 'green' : 'red'), // Conditionally set border color
-            // borderWidth: 3
+            backgroundColor: psiquicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'), 
+            borderColor: psiquicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)'), 
+            borderWidth: 1
         }
     ];
 
@@ -65,49 +64,69 @@
         datasets: datasets
     },
     options: {
-        scales: {
-            y: {
+        scales: 
+        {
+            y: 
+            {
                 min: 0,
                 max: 20,
-                ticks: {
-                    stepSize: 1
-                }
-            }
-        },
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    label: (tooltipItem) => {
-                            const formattedValue = parseFloat(tooltipItem.formattedValue).toFixed(2);
-                            return ` Media - ${formattedValue}`;
-                        }
-
+                ticks: 
+                {
+                    stepSize: 1,
+                    color: 'blue'
                 }
             },
+            x: 
+            {  
+                ticks: 
+                {
+                    color: 'blue' 
+                }
+            },
+            barThickness: 1, 
+            categoryPercentage: 1.0, 
+            barPercentage: 1.0 
+        },
+        plugins: 
+        {
+            tooltip: 
+            {
+                backgroundColor: 'rgb(56, 118, 191)',
+                callbacks: 
+                {
+                    label: (tooltipItem) => 
+                        {
+                            const formattedValue = parseFloat(tooltipItem.formattedValue).toFixed(2);  
+                            return ` ${tooltipItem.dataset.label}`;
+                        }
+                }
+            },
+
             annotation: {
-                drawTime: 'beforeDatasetsDraw', // Set the draw time before datasets
+                drawTime: 'beforeDatasetsDraw',
                 annotations: [
                     {
                         type: 'line',
                         mode: 'horizontal',
                         scaleID: 'y',
                         value: averageAllTecnico,
-                        borderColor: 'rgb(48, 133, 195)', // Change this to set the line color
-                        borderWidth: 2, // Change this to set the line width
-                        z: 1, // Set the z-index to draw behind the bars
+                        borderColor: 'rgb(48, 133, 195)',
+                        borderWidth: 3,
+                        z: 1,
                     },
                     {
                         type: 'line',
                         mode: 'horizontal',
                         scaleID: 'y',
-                        value: averageAllPsiquico,    
-                        borderColor: 'rgb(249, 148, 23)', // Change this to set the line color
-                        borderWidth: 2, // Change this to set the line width
-                        z: 1, // Set the z-index to draw behind the bars
+                        value: averageAllPsiquico,
+                        borderColor: 'rgb(249, 148, 23)',
+                        borderWidth: 3,
+                        z: 1,
                     }
                 ]
             }
         }
     }
 });
+
 </script>
