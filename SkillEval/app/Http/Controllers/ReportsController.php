@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Classroom;
 use App\Course; 
+use App\Student;
+use App\Classroom;
+
 use Illuminate\Http\Request;
 
 class ReportsController extends Controller
@@ -22,12 +24,12 @@ class ReportsController extends Controller
             $query->whereDate('end_date', '<=', $request->input('end_date'));
         }
         
-        $classrooms = $query->get();
+        $classrooms = $query->get();        
+        $courses = Course::all();        
+        $students = Student::all(); 
+
         
-        // Fetch course data
-        $courses = Course::all(); 
-        
-        return view('reports.index', compact('classrooms','courses'));
+        return view('reports.index', compact('classrooms','courses','students'));
     }
 }
 
