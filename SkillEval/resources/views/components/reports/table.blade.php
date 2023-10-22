@@ -30,12 +30,13 @@
         <select id="classroomEditionDropdown" name="classroom_edition" class="form-control">
             <option value="">Todas as Edições</option>
             @foreach($classEditions as $edition)
-                <option value="{{ $edition }}">{{ $edition }}
-                {{ $course->edition }}
+                <option value="{{ $edition }}" {{ (old('classroom_edition', request('classroom_edition')) == $edition) ? 'selected' : '' }}>
+                    {{ $edition }}
                 </option>
             @endforeach
         </select>
     </div>
+
 
 
     
