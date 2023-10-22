@@ -1,5 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <canvas class="classroom-eval-chart" id="barChart"></canvas>
 <script>
     var ctx = document.getElementById('barChart').getContext('2d');
@@ -41,18 +42,17 @@
 
     var datasets = [
         {
-            label: 'Media Tecnico: ' + averageAllTecnico.toFixed(2),
+            label:  'Psíquico: ' + averageAllPsiquico.toFixed(2),
             data: tecnicoAverages,
             backgroundColor: tecnicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'), 
             borderColor: tecnicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)'), 
             borderWidth: 1
         },
 
-        {
-            label: 'Media Psiquico: '+ averageAllPsiquico.toFixed(2),
+        {   label: 'Técnico: '+ averageAllTecnico.toFixed(2),
             data: psiquicoAverages,
-            backgroundColor: psiquicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'), 
-            borderColor: psiquicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)'), 
+            backgroundColor: psiquicoAverages.map(average => average > 9.49 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'), 
+            borderColor: psiquicoAverages.map(average => average > 9.49 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)'), 
             borderWidth: 1
         }
     ];
@@ -64,45 +64,47 @@
         datasets: datasets
     },
     options: {
-        scales: 
-        {
-            y: 
-            {
+        scales: {
+            y: {
                 min: 0,
                 max: 20,
-                ticks: 
-                {
+                ticks: {
                     stepSize: 1,
                     color: 'blue'
                 }
             },
-            x: 
-            {  
-                ticks: 
-                {
-                    color: 'blue' 
+            x: {
+                ticks: {
+                    color: 'blue'
                 }
-            },
-            barThickness: 1, 
-            categoryPercentage: 1.0, 
-            barPercentage: 1.0 
+            }
         },
-        plugins: 
-        {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Médias de testes', 
+                font: {
+                    size: 16, 
+                    weight: 'bold', 
+                    family: 'Arial, sans-serif', 
+                },
+                padding: 10, 
+            },
             tooltip: 
             {
                 backgroundColor: 'rgb(56, 118, 191)',
-                callbacks: 
-                {
+                callbacks: {
                     label: (tooltipItem) => 
-                        {
-                            const formattedValue = parseFloat(tooltipItem.formattedValue).toFixed(2);  
-                            return ` ${tooltipItem.dataset.label}`;
-                        }
+                    {
+                        const datasetIndex = tooltipItem.datasetIndex;
+                        const type = datasetIndex === 0 ? 'Técnico' : 'Psíquico';
+                        const value = tooltipItem.parsed.y.toFixed(2);
+                        return `${type}: ${value}`;
+                    }
                 }
             },
-
-            annotation: {
+            annotation: 
+            {
                 drawTime: 'beforeDatasetsDraw',
                 annotations: [
                     {
@@ -124,9 +126,10 @@
                         z: 1,
                     }
                 ]
-            }
+            },
         }
     }
 });
+
 
 </script>

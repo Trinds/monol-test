@@ -1,112 +1,125 @@
-<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
-
+<link href="{{ asset('css/reports.css') }}" rel="stylesheet">
 <div class="dashboard-container">
-
-
-<form action="{{ route('reports.index') }}" method="GET" >
-    <div class="form-group">
+    <form action="{{ route('reports.index') }}" method="GET">
+    <div class="row">
+    <div class="col-md-3 form-group">
         <label for="start_date">Data de Início</label>
         <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}" class="form-control">
+    </div>
 
-        <label for="end_date">Data de Fim</label>
+    <div class="col-md-3 form-group">
+        <label for="end_date">Data de Conclusão</label>
         <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}" class="form-control">
+    </div>
 
-        <label for="courseDropdown">Selecionar Curso</label>
+    <div class="col-md-2 form-group">
+        <label for="courseDropdown">Sigla curso</label>
         <select id="courseDropdown" name="course_id" class="form-control">
-            <option value="">Escolher um curso</option>
+            <option value="">Sigla curso</option>
             @foreach($courses as $course)
-                <option value="{{ $course->abbreviation }}" @if(request('course_id') == $course->abbreviation) selected @endif>
+                <option value="{{ $course->abbreviation }}" {{ (old('course_id', request('course_id')) == $course->abbreviation) ? 'selected' : '' }}>
                     {{ $course->abbreviation }}
                 </option>
             @endforeach
         </select>
+    </div>
+
+    
+
+    <div class="col-md-2 form-group">
         <label for="min_average">Média Mínima</label>
         <input type="number" id="min_average" name="min_average" value="{{ request('min_average') }}" class="form-control" step="0.01">
-        
+    </div>
+
+    <div class="col-md-2 form-group">
         <label for="max_average">Média Máxima</label>
         <input type="number" id="max_average" name="max_average" value="{{ request('max_average') }}" class="form-control" step="0.01">
     </div>
-
-    <button type="submit" >Filtrar</button>
-</form>
+</div>
 
 
-<table class="table mt-4">
-    <thead>
-        <tr>
-            <th>Turma</th>
-            <th>Sigla</th>
-            <th>Aluno</th>
-            <th>Média Testes</th>
-            <th>Data de Início</th>
-            <th>Data de Conclusão</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach($classrooms as $classroom)
-        @if (request('course_id') === '' || request('course_id') === $classroom->course->abbreviation)
-            @foreach ($classroom->students as $student)
-                @php
-                    $studentAverages = [];
-                @endphp
-                @foreach ($student->evaluations as $evaluation)
+        <button type="submit">Relatório</button>
+    </form>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Formando</th>
+                <th>Turma</th>
+                <th>Média Testes</th>
+                <th>Data de Início</th>
+                <th>Data de Conclusão</th>
+            </tr>
+        </thead>
+
+        @if(request('course_id') != "")
+        <tbody>
+            @foreach($classrooms as $classroom)
+                @foreach($classroom->students as $student)
                     @php
-                        $typeId = $evaluation->test->type->id;
-                        $score = $evaluation->score;
-                        if (!isset($studentAverages[$typeId])) {
-                            $studentAverages[$typeId] = ['total' => 0, 'count' => 0];
+                        $studentAverages = [];
+                        foreach ($student->evaluations as $evaluation) 
+                        {
+                            $typeId = $evaluation->test->type->id;
+                            $score = $evaluation->score;
+                            if (!isset($studentAverages[$typeId])) 
+                                $studentAverages[$typeId] = ['total' => 0, 'count' => 0];
+                            $studentAverages[$typeId]['total'] += $score;
+                            $studentAverages[$typeId]['count']++;
                         }
-                        $studentAverages[$typeId]['total'] += $score;
-                        $studentAverages[$typeId]['count']++;
+
+                        $studentAverage = 0;
+                        $averageCount = 0; 
+
+                        foreach ($studentAverages as $typeId => $data) 
+                        {
+                            $average = $data['total'] / $data['count'];
+                            $type = \App\Type::find($typeId);
+                            $studentAverage += $average;
+                            $averageCount++; // Increment the average count
+                        }
+                        $studentAverage = ($averageCount > 0) ? $studentAverage / $averageCount : 0; // Calculate the overall average
                     @endphp
-                @endforeach
-                @php
-                    $allAveragesWithinRange = true;
-                    $studentAverage = 0;
-                @endphp
-                @foreach ($studentAverages as $typeId => $data)
+
+
                     @php
-                        $average = $data['total'] / $data['count'];
-                        $type = \App\Type::find($typeId);
-                        $studentAverage += $average;
+                        $minAverage = request('min_average', 0);
+                        $maxAverage = request('max_average', 20);
                     @endphp
+
                     @if (
-                        (request('min_average') !== '' && $average < request('min_average')) ||
-                        (request('max_average') !== '' && $average > request('max_average'))
+                        ($minAverage === 0 || $average >= $minAverage)
+                        &&
+                        ($maxAverage === 20 || $average <= $maxAverage)
                     )
-                        @php
-                            $allAveragesWithinRange = false;
-                            break;
-                        @endphp
-                    @endif
-                @endforeach
-                @if ($allAveragesWithinRange)
+
+
                     <tr>
-                        <td>{{ $classroom->edition }}</td>
-                        <td>{{ $classroom->course->abbreviation }}</td>
                         <td>{{ $student->name }}</td>
+                        <td>{{ $student->classroom->course->abbreviation }}-{{ $student->classroom->edition }}</td>
                         <td>
-                            @foreach ($studentAverages as $typeId => $data)
-                                @php
+                            @php
+                                foreach ($studentAverages as $typeId => $data)
+                                {
                                     $average = $data['total'] / $data['count'];
                                     $type = \App\Type::find($typeId);
-                                @endphp
-                                {{ $type->type }}: {{ number_format($average, 2) }}<br>
-                            @endforeach
-                        </td>
-                        <td>{{ $classroom->start_date }}</td>
-                        <td>{{ $classroom->end_date }}</td>
+
+                                    echo ($average < 10) 
+                                    ? '<span class="text-danger font-weight-bold">' . $type->type . ': ' . number_format($average, 2) . '</span><br>'
+                                    : '<span class="text-primary font-weight-bold">' . $type->type . ': ' . number_format($average, 2) . '</span><br>';
+
+                                }
+                            @endphp
+                        </td>        
+                        <td>{{ date('d-m-Y', strtotime($classroom->start_date)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($classroom->end_date)) }}</td>     
                         <td>
-                            <a href="/students/{{ $student->id }}"><button>ALUNO</button></a>
+                            <a href="/students/{{ $student->id }}"><button>Formando</button></a>
                         </td>
                     </tr>
-                @endif
+                    @endif
+                @endforeach
             @endforeach
+        </tbody>
         @endif
-    @endforeach
-</tbody>
-
-
-</table>
-
-    </div>
+    </table>
+</div>

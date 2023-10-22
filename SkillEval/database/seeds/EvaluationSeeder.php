@@ -30,7 +30,8 @@ class EvaluationSeeder extends Seeder
     {
         $students = App\Student::all();
 
-        foreach ($students as $student) {
+        foreach ($students as $student) 
+        {
 
             for ($i = 1; $i < 7; $i++) 
             {
