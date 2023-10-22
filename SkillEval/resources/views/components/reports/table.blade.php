@@ -50,15 +50,12 @@
         </div>
 
         <div class="checkbox">
-            <label>
-                <input type="checkbox" name="active_classes" value="1" checked {{ request('active_classes') ? 'checked' : '' }}> Só turmas Ativas
+            <label> 
+                <input type="checkbox" name="active_classes" value="1" {{ request('active_classes', 0) ? 'checked' : '' }}> Só turmas Ativas
             </label>
         </div>
 
-
-
-        <button type="submit">Relatório</button>
-                
+        <button type="submit">Relatório</button>               
     
 
     </form>

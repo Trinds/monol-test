@@ -5,32 +5,36 @@
 <canvas class="classroom_chart" id="barChart"></canvas>
 
     <?php
+        $allTecnico = [];
+        $allPsiquico = [];
         $studentNames = [];
         $tecnicoAverages = [];
         $psiquicoAverages = [];
-        $allTecnico = [];
-        $allPsiquico = [];
 
-        foreach ($classroom->students as $student) {
-            $studentNames[] = $student->name;
-
+        foreach ($classroom->students as $student) 
+        {
             $studentTecnicoScores = [];
             $studentPsiquicoScores = [];
+            $studentNames[] = $student->name;
 
-            foreach ($student->evaluations as $evaluation) {
-                if ($evaluation->test->type->type === 'Tecnico') {
+            foreach ($student->evaluations as $evaluation) 
+            {
+                if ($evaluation->test->type->type === 'Tecnico') 
+                {
                     $allTecnico[] = $evaluation->score;
                     $studentTecnicoScores[] = $evaluation->score;
-                } elseif ($evaluation->test->type->type === 'Psiquico') {
+                } 
+                elseif ($evaluation->test->type->type === 'Psiquico') 
+                {
                     $allPsiquico[] = $evaluation->score;
                     $studentPsiquicoScores[] = $evaluation->score;
                 }
             }
 
-            $tecnicoAverage = array_sum($studentTecnicoScores) / count($studentTecnicoScores);
-            $psiquicoAverage = array_sum($studentPsiquicoScores) / count($studentPsiquicoScores);
             $averageAllTecnico = array_sum($allTecnico) / count($allTecnico);
             $averageAllPsiquico = array_sum($allPsiquico) / count($allPsiquico);
+            $tecnicoAverage = array_sum($studentTecnicoScores) / count($studentTecnicoScores);
+            $psiquicoAverage = array_sum($studentPsiquicoScores) / count($studentPsiquicoScores);
 
             $tecnicoAverages[] = $tecnicoAverage;
             $psiquicoAverages[] = $psiquicoAverage;
@@ -38,13 +42,13 @@
 
         // Pass all PHP variables and arrays to JavaScript
         echo '<script>';
+        echo 'var allTecnico = ' . json_encode($allTecnico) . ';';
+        echo 'var allPsiquico = ' . json_encode($allPsiquico) . ';';
         echo 'var studentNames = ' . json_encode($studentNames) . ';';
         echo 'var tecnicoAverages = ' . json_encode($tecnicoAverages) . ';';
         echo 'var psiquicoAverages = ' . json_encode($psiquicoAverages) . ';';
         echo 'var averageAllTecnico = ' . json_encode($averageAllTecnico) . ';';
         echo 'var averageAllPsiquico = ' . json_encode($averageAllPsiquico) . ';';
-        echo 'var allTecnico = ' . json_encode($allTecnico) . ';';
-        echo 'var allPsiquico = ' . json_encode($allPsiquico) . ';';
         echo '</script>';
     ?>
 
@@ -54,13 +58,13 @@
 
     <script>
         //get php variables
+            var allTecnico = <?php echo json_encode($allTecnico); ?>;
+            var allPsiquico = <?php echo json_encode($allPsiquico); ?>;
             var studentNames = <?php echo json_encode($studentNames); ?>;
             var tecnicoAverages = <?php echo json_encode($tecnicoAverages); ?>;
             var psiquicoAverages = <?php echo json_encode($psiquicoAverages); ?>;
             var averageAllTecnico = <?php echo json_encode($averageAllTecnico); ?>;
             var averageAllPsiquico = <?php echo json_encode($averageAllPsiquico); ?>;
-            var allTecnico = <?php echo json_encode($allTecnico); ?>;
-            var allPsiquico = <?php echo json_encode($allPsiquico); ?>;
         
         var datasets = 
         [
@@ -94,16 +98,20 @@
             {
                 scales: 
                 {
-                    y: {
+                    y: 
+                    {
                         min: 0,
                         max: 20,
-                        ticks: {
+                        ticks: 
+                        {
                             stepSize: 1,
                             color: 'blue'
                         }
                     },
-                    x: {
-                        ticks: {
+                    x: 
+                    {
+                        ticks: 
+                        {
                             color: 'blue'
                         }
                     }
@@ -121,14 +129,12 @@
                     title: 
                     {
                         display: true,
+                        color: 'rgb(13, 18, 130)',
                         text: 'Médias de testes',
                         font: 
                         {
-                            size: 16,
-                            weight: 'bold',
-                            family: 'Arial, sans-serif',
+                            size: 14,
                         },
-                        padding: 10,
                     },
                     tooltip: 
                     {
@@ -136,37 +142,37 @@
                         callbacks: {
                             label: (tooltipItem) => 
                             {
+                                const value = tooltipItem.parsed.y.toFixed(2);
                                 const datasetIndex = tooltipItem.datasetIndex;
                                 const type = datasetIndex === 0 ? 'Técnico' : 'Psíquico';
-                                const value = tooltipItem.parsed.y.toFixed(2);
                                 return `${type}: ${value}`;
                             }
                         }
                     },
                     annotation: 
                     {
-                        drawTime: 'beforeDatasetsDraw',
                         annotations: 
                         [
                             {
-                                type: 'line',
-                                mode: 'horizontal',
+                                z: 1,
                                 scaleID: 'y',
+                                type: 'line',
+                                borderWidth: 3,
+                                mode: 'horizontal',
                                 value: averageAllTecnico,
                                 borderColor: 'rgb(48, 133, 195)',
-                                borderWidth: 3,
-                                z: 1,
                             },
                             {
+                                z: 1,
                                 type: 'line',
-                                mode: 'horizontal',
                                 scaleID: 'y',
+                                borderWidth: 3,
+                                mode: 'horizontal',
                                 value: averageAllPsiquico,
                                 borderColor: 'rgb(249, 148, 23)',
-                                borderWidth: 3,
-                                z: 1,
                             }
-                        ]
+                        ],
+                        drawTime: 'beforeDatasetsDraw',
                     },
                 }
             }

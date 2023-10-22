@@ -42,16 +42,46 @@
                 borderWidth: 1
             }]
         },
-        options: {
-            scales: {
-                y: {
-                    min: 0,
-                    max: 20,
-                    ticks: {
-                        stepSize: 1
+        options: 
+            {
+                scales: 
+                {
+                    y: {
+                        min: 0,
+                        max: 20,
+                        ticks: {
+                            stepSize: 1,
+                            color: 'blue'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'blue'
+                        }
                     }
+                },
+                plugins: 
+                {
+                    legend: 
+                    {
+                        display: false,
+                        labels: 
+                        {   
+                            boxWidth:0,
+                        }
+                    },
+                    title: 
+                    {
+                        display: true,
+                        text: 'Notas de testes',
+                        color: 'blue',
+                        font: 
+                        {
+                            size: 15,
+                        },
+                        padding: 10,
+                    },
                 }
-            }
         }
     });
 
