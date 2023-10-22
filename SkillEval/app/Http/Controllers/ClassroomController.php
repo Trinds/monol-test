@@ -155,7 +155,11 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        $classroom->delete();
+        try {
+            $classroom->delete();
+        } catch (\Exception $e) {
+            return redirect()->route('classrooms.index')->with('error', 'Não foi possível excluir a turma! Tente novamente mais tarde.');
+        }
         return redirect()->route('classrooms.index')->with('success', 'Turma excluída com sucesso!');
     }
 

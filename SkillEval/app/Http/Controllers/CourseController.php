@@ -15,15 +15,21 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'searchParam' => 'nullable|string|max:255',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('courses.index')->withErrors($validator)->withInput();
+        }
         isset($request->searchParam) ?
             $courses = Course::query()
-                ->where(strtoupper('abbreviation'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-                ->orWhere(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-                ->paginate(8)->withQueryString()
+            ->where(strtoupper('abbreviation'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+            ->orWhere(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+            ->paginate(8)->withQueryString()
             :
             $courses = Course::paginate(8)->withQueryString();
-
-        return view('courses.index', ['courses' => $courses]);
+        $hasResults = $courses->isNotEmpty();
+        return view('courses.index', ['courses' => $courses, 'hasResults' => $hasResults]);
     }
 
     /**
@@ -53,8 +59,8 @@ class CourseController extends Controller
             return redirect()->route('courses.index')->with('success', 'Curso criado com sucesso!');
         } catch (Exception $e) {
             return redirect()
-            ->route('courses.create')
-            ->withErrors($e->getMessage());
+                ->route('courses.create')
+                ->withErrors($e->getMessage());
         }
     }
 
@@ -67,7 +73,6 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         $course = Course::find($course->id);
-
         return view('courses.show', ['course' => $course]);
     }
 
@@ -79,7 +84,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('courses.edit',['course' => $course]);
+        return view('courses.edit', ['course' => $course]);
     }
 
     /**
@@ -93,12 +98,11 @@ class CourseController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'abbreviation' => ['required', 'string', 'max:10', 'unique:courses,abbreviation,'.$course->id],
+            'abbreviation' => ['required', 'string', 'max:10', 'unique:courses,abbreviation,' . $course->id],
         ]);
-        try
-        {
+        try {
             $course->update($request->all());
-            return redirect()->route('courses.index')->with('success','Curso atualizado com sucesso!');
+            return redirect()->route('courses.index')->with('success', 'Curso atualizado com sucesso!');
         } catch (Exception $e) {
             return redirect()->route('courses.edit', $course->id)->withErrors($e->getMessage());
         }
@@ -112,7 +116,12 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        try{
             $course->delete();
-            return redirect()->route('courses.index')->with('success','Curso apagado com sucesso!');
+        }
+        catch(Exception $e){
+            return redirect()->route('courses.index')->with('error', 'Não foi possível excluir a turma! Tente novamente mais tarde.');
+        }
+        return redirect()->route('courses.index')->with('success', 'Curso apagado com sucesso!');
     }
 }

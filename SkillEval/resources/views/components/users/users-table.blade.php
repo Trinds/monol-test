@@ -1,3 +1,23 @@
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+@if($errors->any())
+<div class="container alert alert-danger" role="alert">
+    <h6><strong>Ups!</strong> Ocorreu um erro:</h6>
+    <ul>
+        @foreach($errors->all() as $error)
+        <li> {{ $error }} </li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <div class="title">
     <h1>Lista de Utilizadores</h1>
 </div>
@@ -18,10 +38,10 @@
                 <td>
 
                     @if($user->image !== null)
-                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia" style="height: 60px; width:60px; border-radius: 50%;"/>
+                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia" style="height: 60px; width:60px; border-radius: 50%;" />
                     @else
 
-                    <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image"/>
+                    <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image" />
                     @endif
                 </td>
                 <td>{{ $user->name }}</td>

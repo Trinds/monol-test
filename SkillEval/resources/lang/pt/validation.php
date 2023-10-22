@@ -210,5 +210,10 @@ return [
     'birth_date' => 'data de nascimento',
     'searchParam' => 'parâmetro de pesquisa',
     'filter' => 'filtro',
+    'image' => 'imagem',
+    'password' => 'password',
+    'roles' => 'funções',
+    'permissions' => 'permissões',
+    'role' => 'função',
 ],
 ];

@@ -4,11 +4,30 @@
         {{ session('success') }}
     </div>
     @endif
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul style="margin-bottom: 0px;">
+            @foreach ($errors->all() as $error)
+            <li style="list-style: none;">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
 </div>
 <div class="title">
     <h1>Lista de Cursos</h1>
 </div>
 <div class="table-container">
+    @if(!$hasResults)
+    <div class="alert alert-info m-5">
+        Não foram encontrados resultados.
+    </div>
+    @else
     <table id="coursesTable">
         <tr class="table-header">
             <th scope="col">Sigla</th>
@@ -33,5 +52,6 @@
         </tr>
         @endforeach
     </table>
+    @endif
     {{ $courses->onEachSide(3)->links() }}
 </div>

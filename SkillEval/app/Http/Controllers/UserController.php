@@ -17,14 +17,19 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'searchParam' => 'nullable|string|max:255',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('users.index')->withErrors($validator)->withInput();
+        }
         isset($request->searchParam) ?
             $users = User::query()
-                ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-                ->orWhere(strtoupper('email'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-                ->paginate(8)->withQueryString()
+            ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+            ->orWhere(strtoupper('email'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+            ->paginate(8)->withQueryString()
             :
             $users = User::with('roles')->paginate(8)->withQueryString();
-
         return view('users.index', ['users' => $users]);
     }
 
@@ -45,59 +50,49 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function create()
-     {
-            $roles = Role::all();
-            return view('users.create', compact('roles'));
-     }
-     public function store(Request $request)
-     {
+    public function create()
+    {
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
+    }
+    public function store(Request $request)
+    {
         $imagePath = null;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6',
+            'roles' => 'required',
+        ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Oops! Algo correu mal ao criar o utilizador. Por favor verifique o(s) seguinte(s) erro:');
+        }
 
-         $customMessages = [
-             'required' => 'O :attribute é obrigatório.',
-             'email' => 'O :attribute deve ser um endereço de email válido.',
-             'confirmed' => 'A confirmação :attribute não coincide.',
-             'password.min' => 'A password deve ter pelo menos :min caracteres.',
-             'image' => 'A imagem deve ser um ficheiro do tipo jpeg, png, jpg, gif ou svg com um tamanho máximo de 5 megabytes.'
-         ];
+        try {
+            $user = new User();
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
 
-         $validator = Validator::make($request->all(), [
-             'name' => 'required|string|max:255',
-             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-             'email' => 'required|email',
-             'password' => 'required|confirmed|min:6',
-             'roles' => 'required',
-         ], $customMessages);
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('public/images');
+                $imagePath = str_replace('public/', '', $imagePath);
+                $user->image = $imagePath;
+            }
 
-         if ($validator->fails()) {
-             return redirect()->back()
-                 ->withErrors($validator)
-                 ->withInput()
-                 ->with('error', 'Oops! Algo correu mal ao criar o utilizador. Por favor verifique o(s) seguinte(s) erro:');
-         }
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+            $user->roles()->sync($request->input('roles'));
 
-         try {
-             $user = new User();
-             $user->name = $request->input('name');
-             $user->email = $request->input('email');
-
-                if ($request->hasFile('image')) {
-                    $imagePath = $request->file('image')->store('public/images');
-                    $imagePath = str_replace('public/', '', $imagePath);
-                    $user->image = $imagePath;
-                }
-
-             $user->password = bcrypt($request->input('password'));
-             $user->save();
-             $user->roles()->sync($request->input('roles'));
-
-             return redirect()->route('users.index')->with('success', 'Utilizador criado com sucesso.');
-         } catch (Exception $e) {
-             return redirect()->back()->with('error', 'Ocorreu um erro ao criar o utilizador.');
-         }
-     }
+            return redirect()->route('users.index')->with('success', 'Utilizador criado com sucesso.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Ocorreu um erro ao criar o utilizador.');
+        }
+    }
 
 
 
@@ -166,10 +161,11 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->delete();
-
+        try{
+            $user->delete();
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Ocorreu um erro ao eliminar o utilizador.');
+        }
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
-
-
 }

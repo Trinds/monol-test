@@ -4,13 +4,14 @@
         <h1>Criar Utilizador</h1>
 
         @if ($errors->any() || session('error'))
-            <div class="alert alert-danger">
+        <div class="alert alert-danger">
                 <ul>
                     @if (session('error'))
-                        <li>{{ session('error') }}</li>
+                        <li> {{ session('error') }}</li>
                     @endif
+                    <br>
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li>- {{ $error }}</li>
                     @endforeach
                 </ul>
             </div>

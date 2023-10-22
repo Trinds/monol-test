@@ -18,8 +18,14 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'searchParam' => 'nullable|string|max:255',
+            'filter' => 'nullable|integer|exists:classrooms,id',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('students.index')->withErrors($validator)->withInput();
+        }
         $students = Student::paginate(8)->withQueryString();
-
         if (isset($request->searchParam) && isset($request->filter) && $request->filter != "") {
             $students = Student::query()
                 ->where('classroom_id', $request->filter)
@@ -33,11 +39,11 @@ class StudentController extends Controller
                 ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
                 ->paginate(8)->withQueryString();
         }
-
-
+        $hasResults = $students->isNotEmpty();
         return view('students.index', [
             'students' => $students,
-            'classrooms' => Classroom::all()->sortBy('course_id')
+            'classrooms' => Classroom::all()->sortBy('course_id'),
+            'hasResults' => $hasResults,
         ]);
     }
 
@@ -50,6 +56,12 @@ class StudentController extends Controller
     {
         $courses = \App\Course::all();
         $classrooms = \App\Classroom::all();
+        if ($courses->isEmpty()){
+            return redirect()->route('courses.create')->with('error', 'Não existem cursos. Por favor, crie um curso primeiro.');
+        }
+        elseif ($classrooms->isEmpty()){
+            return redirect()->route('classrooms.create')->with('error', 'Não existem turmas. Por favor, crie uma turma primeiro.');
+        }
         return view('students.create', ['courses' => $courses, 'classrooms' => $classrooms]);
     }
 
@@ -69,7 +81,6 @@ class StudentController extends Controller
             'birth_date' => 'required|date|before:today',
             'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
         ]);
-
         try {
             $imagePath = null;
             if ($request->hasFile('image')) {
