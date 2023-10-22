@@ -25,8 +25,17 @@ class ReportsController extends Controller
         if ($request->filled('end_date'))
             $classroomQuery->whereDate('end_date', '<=', $request->input('end_date'));
 
+        //ckecked active classrooms
+        if ($request->has('active_classes')) 
+        {
+            $activeClassesValue = $request->input('active_classes');
+            if ($activeClassesValue === '1')
+                $classroomQuery->whereDate('end_date', '>=', now());
+        }
+
         // Filter by course abbreviation
-        if ($request->filled('course_id')) {
+        if ($request->filled('course_id')) 
+        {
             $courseAbbreviation = $request->input('course_id');
             $classroomQuery->whereHas('course', function ($query) use ($courseAbbreviation) {
                 $query->where('abbreviation', $courseAbbreviation);

@@ -1,59 +1,66 @@
 <link href="{{ asset('css/reports.css') }}" rel="stylesheet">
 <div class="dashboard-container">
+
     <form action="{{ route('reports.index') }}" method="GET">
-    <div class="row border border-1">
-    <div class="col-md-3 form-group">
-        <label for="start_date">Data de Início</label>
-        <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}" class="form-control">
-    </div>
+        <div class="row border border-1">
+            <div class="col-md-3 form-group">
+                <label for="start_date">Data de Início</label>
+                <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}" class="form-control">
+            </div>
 
-    <div class="col-md-3 form-group">
-        <label for="end_date">Data de Conclusão</label>
-        <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}" class="form-control">
-    </div>
+            <div class="col-md-3 form-group">
+                <label for="end_date">Data de Conclusão</label>
+                <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}" class="form-control">
+            </div>
 
-    <div class="col-md-2 form-group">
-        <label for="courseDropdown">Curso</label>
-        <select id="courseDropdown" name="course_id" class="form-control">
-            <option value="">Sigla curso</option>
-            @foreach($courses as $course)
-                <option value="{{ $course->abbreviation }}" {{ (old('course_id', request('course_id')) == $course->abbreviation) ? 'selected' : '' }}>
-                    {{ $course->abbreviation }}
-                </option>
-            @endforeach
-        </select>
-    </div>   
-
-
-    <div class="col-md-2 form-group">
-        <label for="classroomEditionDropdown">Turma</label>
-        <select id="classroomEditionDropdown" name="classroom_edition" class="form-control">
-            <option value="">Todas as Edições</option>
-            @foreach($classEditions as $edition)
-                <option value="{{ $edition }}" {{ (old('classroom_edition', request('classroom_edition')) == $edition) ? 'selected' : '' }}>
-                    {{ $edition }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+            <div class="col-md-2 form-group">
+                <label for="courseDropdown">Curso</label>
+                <select id="courseDropdown" name="course_id" class="form-control">
+                    <option value="">Sigla curso</option>
+                    @foreach($courses as $course)
+                        <option value="{{ $course->abbreviation }}" {{ (old('course_id', request('course_id')) == $course->abbreviation) ? 'selected' : '' }}>
+                            {{ $course->abbreviation }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>   
 
 
+            <div class="col-md-2 form-group">
+                <label for="classroomEditionDropdown">Turma</label>
+                <select id="classroomEditionDropdown" name="classroom_edition" class="form-control">
+                    <option value="">Todas as Edições</option>
+                    @foreach($classEditions as $edition)
+                        <option value="{{ $edition }}" {{ (old('classroom_edition', request('classroom_edition')) == $edition) ? 'selected' : '' }}>
+                            {{ $edition }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-    
+            <div class="col-md-2 form-group">
+                <label for="min_average">Média Mínima</label>
+                <input type="number" id="min_average" name="min_average" value="{{ request('min_average') }}" class="form-control" step="0.01">
+            </div>
 
-    <div class="col-md-2 form-group">
-        <label for="min_average">Média Mínima</label>
-        <input type="number" id="min_average" name="min_average" value="{{ request('min_average') }}" class="form-control" step="0.01">
-    </div>
+            <div class="col-md-2 form-group">
+                <label for="max_average">Média Máxima</label>
+                <input type="number" id="max_average" name="max_average" value="{{ request('max_average') }}" class="form-control" step="0.01">
+            </div>
+        </div>
 
-    <div class="col-md-2 form-group">
-        <label for="max_average">Média Máxima</label>
-        <input type="number" id="max_average" name="max_average" value="{{ request('max_average') }}" class="form-control" step="0.01">
-    </div>
-</div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="active_classes" value="1" checked {{ request('active_classes') ? 'checked' : '' }}> Só turmas Ativas
+            </label>
+        </div>
+
 
 
         <button type="submit">Relatório</button>
+                
+    
+
     </form>
     <table class="table mt-4">
         <thead>
@@ -114,7 +121,7 @@
 
                     <tr>
                         <td>{{ $student->name }}</td>
-                        <td>{{ $student->classroom->course->abbreviation }}-{{ $student->classroom->edition }}</td>
+                        <td>{{ $student->classroom->course->abbreviation }} {{ $student->classroom->edition }}</td>
                         <td>
                             @php
                                 foreach ($studentAverages as $typeId => $data)
