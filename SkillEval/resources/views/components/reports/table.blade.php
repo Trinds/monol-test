@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-md-2 form-group">
-        <label for="courseDropdown">Sigla curso</label>
+        <label for="courseDropdown">Curso</label>
         <select id="courseDropdown" name="course_id" class="form-control">
             <option value="">Sigla curso</option>
             @foreach($courses as $course)
@@ -22,9 +22,7 @@
                 </option>
             @endforeach
         </select>
-    </div>
-
-
+    </div>   
 
 
     <div class="col-md-2 form-group">
@@ -32,7 +30,9 @@
         <select id="classroomEditionDropdown" name="classroom_edition" class="form-control">
             <option value="">Todas as Edições</option>
             @foreach($classEditions as $edition)
-                <option value="{{ $edition }}">{{ $edition }}</option>
+                <option value="{{ $edition }}">{{ $edition }}
+                {{ $course->edition }}
+                </option>
             @endforeach
         </select>
     </div>
@@ -68,8 +68,12 @@
         @if(request('course_id') != "")
         <tbody>
             @foreach($classrooms as $classroom)
+            @if(!request('classroom_edition') || $classroom->edition == request('classroom_edition'))  
+
+
                 @foreach($classroom->students as $student)
                     @php
+                    
                         $studentAverages = [];
                         foreach ($student->evaluations as $evaluation) 
                         {
@@ -132,6 +136,8 @@
                     </tr>
                     @endif
                 @endforeach
+            
+            @endif
             @endforeach
         </tbody>
         @endif

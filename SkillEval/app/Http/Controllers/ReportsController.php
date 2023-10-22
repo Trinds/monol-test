@@ -39,8 +39,12 @@ class ReportsController extends Controller
 
         // Retrieve the editions of all classrooms
         $selectedCourse = $request->input('course_id');
-        $classEditions = Classroom::where('course_id', $selectedCourse)->pluck('edition');
-
+        $classroomIds = Classroom::whereHas('course', function ($query) use ($selectedCourse) {
+            $query->where('abbreviation', $selectedCourse);
+        })->pluck('id');
+        
+        $classEditions = Classroom::whereIn('id', $classroomIds)->pluck('edition');
+                
         $students = $studentQuery->get();
         $classrooms = $classroomQuery->get();
         $courses = Course::all();
