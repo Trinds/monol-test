@@ -208,5 +208,7 @@ return [
     'classroom_id' => 'turma',
     'email' => 'email',
     'birth_date' => 'data de nascimento',
+    'searchParam' => 'parâmetro de pesquisa',
+    'filter' => 'filtro',
 ],
 ];

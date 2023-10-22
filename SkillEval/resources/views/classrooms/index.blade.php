@@ -14,7 +14,7 @@
     ])
     @endcomponent
 
-    @component('components.classrooms.table', ['classrooms' => $classrooms])
+    @component('components.classrooms.table', ['classrooms' => $classrooms, 'hasResults' => $hasResults])
     @endcomponent
 
 @endsection

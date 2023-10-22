@@ -8,6 +8,12 @@
         @endforeach
 </div>
 @endif
+@if(session('error'))
+<div class="alert alert-danger" role="alert">
+    {{ session('error') }}
+</div>
+@endif
+
     <form action="{{ url('courses') }}" method="POST">
         @csrf
         <h1>Adicionar curso</h1>

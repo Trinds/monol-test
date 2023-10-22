@@ -17,8 +17,14 @@ class ClassroomController extends Controller
      */
     public function index(Request $request)
     {
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'searchParam' => 'nullable|string|max:255',
+            'filter' => 'nullable|integer|exists:courses,id',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('classrooms.index')->withErrors($validator)->withInput();
+        }
         $classrooms = Classroom::paginate(8)->withQueryString();
-
         if (isset($request->searchParam) && isset($request->filter) && $request->filter != "") {
             $classrooms = Classroom::query()
                 ->select(['*'])
@@ -39,10 +45,11 @@ class ClassroomController extends Controller
                         ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
                 })->paginate(8)->withQueryString();
         }
-
+        $hasResults = $classrooms->isNotEmpty();
         return view('classrooms.index', [
             'classrooms' => $classrooms,
-            'courses' => Course::all()->sortBy('name')
+            'courses' => Course::all()->sortBy('name'),
+            'hasResults' => $hasResults,
         ]);
     }
 
@@ -55,6 +62,9 @@ class ClassroomController extends Controller
     {
         $courses = \App\Course::all();
         $failures = null;
+        if ($courses->isEmpty()) {
+            return redirect()->route('courses.create')->with('error', 'Não existem cursos para adicionar turmas! Por favor, adicione um curso primeiro.');
+        }
         return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
     }
 
@@ -72,7 +82,6 @@ class ClassroomController extends Controller
             'start_date' => ['required', 'date', 'before:end_date'],
             'end_date' => ['required', 'date', 'after:start_date'],
         ]);
-
         try {
             Classroom::create($request->all());
             return redirect()->route('classrooms.index')->with('success', 'Turma criada com sucesso!');
@@ -106,7 +115,6 @@ class ClassroomController extends Controller
      */
     public function edit(Classroom $classroom)
     {
-
         $courses = \App\Course::all();
         return view('classrooms.edit', ['classroom' => $classroom, 'courses' => $courses]);
     }
@@ -120,19 +128,16 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, Classroom $classroom)
     {
-
         $this->validate($request, [
             'edition' => ['required', 'string', 'max:255'],
             'course_id' => ['required', 'integer'],
             'start_date' => ['required', 'date', 'before:end_date'],
             'end_date' => ['required', 'date', 'after:start_date'],
         ]);
-
-        try{
+        try {
             $classroom->update($request->all());
             return redirect()->route('classrooms.index')->with('success', 'Turma atualizada com sucesso!');
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $failures = $e->getMessage();
             $courses = \App\Course::all();
             return redirect()
@@ -140,7 +145,6 @@ class ClassroomController extends Controller
                 ->with('failures', $failures)
                 ->with('courses', $courses);
         }
-
     }
 
     /**
