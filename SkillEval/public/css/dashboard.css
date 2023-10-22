@@ -51,7 +51,7 @@
 
 .chart_container {
     display: flex; 
-    max-width: 80%;
+    max-width: 50%;
 }
 .charts {
     width: 50%; 
