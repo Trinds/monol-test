@@ -1,7 +1,7 @@
 <link href="{{ asset('css/reports.css') }}" rel="stylesheet">
 <div class="dashboard-container">
     <form action="{{ route('reports.index') }}" method="GET">
-    <div class="row">
+    <div class="row border border-1">
     <div class="col-md-3 form-group">
         <label for="start_date">Data de Início</label>
         <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}" class="form-control">
@@ -23,6 +23,20 @@
             @endforeach
         </select>
     </div>
+
+
+
+
+    <div class="col-md-2 form-group">
+        <label for="classroomEditionDropdown">Turma</label>
+        <select id="classroomEditionDropdown" name="classroom_edition" class="form-control">
+            <option value="">Todas as Edições</option>
+            @foreach($classEditions as $edition)
+                <option value="{{ $edition }}">{{ $edition }}</option>
+            @endforeach
+        </select>
+    </div>
+
 
     
 

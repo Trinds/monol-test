@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-    @component('components.reports.table', ['classrooms' => $classrooms, 
+    @component('components.reports.table', ['classEditions'=>$classEditions,
+                                            'classrooms' => $classrooms, 
                                             'courses' => $courses,
                                             'students' => $students])
     @endcomponent
