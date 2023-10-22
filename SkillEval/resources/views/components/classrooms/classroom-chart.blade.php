@@ -4,48 +4,48 @@
 
 <canvas class="classroom_chart" id="barChart"></canvas>
 
-<?php
-    $studentNames = [];
-    $tecnicoAverages = [];
-    $psiquicoAverages = [];
-    $allTecnico = [];
-    $allPsiquico = [];
+    <?php
+        $studentNames = [];
+        $tecnicoAverages = [];
+        $psiquicoAverages = [];
+        $allTecnico = [];
+        $allPsiquico = [];
 
-    foreach ($classroom->students as $student) {
-        $studentNames[] = $student->name;
+        foreach ($classroom->students as $student) {
+            $studentNames[] = $student->name;
 
-        $studentTecnicoScores = [];
-        $studentPsiquicoScores = [];
+            $studentTecnicoScores = [];
+            $studentPsiquicoScores = [];
 
-        foreach ($student->evaluations as $evaluation) {
-            if ($evaluation->test->type->type === 'Tecnico') {
-                $allTecnico[] = $evaluation->score;
-                $studentTecnicoScores[] = $evaluation->score;
-            } elseif ($evaluation->test->type->type === 'Psiquico') {
-                $allPsiquico[] = $evaluation->score;
-                $studentPsiquicoScores[] = $evaluation->score;
+            foreach ($student->evaluations as $evaluation) {
+                if ($evaluation->test->type->type === 'Tecnico') {
+                    $allTecnico[] = $evaluation->score;
+                    $studentTecnicoScores[] = $evaluation->score;
+                } elseif ($evaluation->test->type->type === 'Psiquico') {
+                    $allPsiquico[] = $evaluation->score;
+                    $studentPsiquicoScores[] = $evaluation->score;
+                }
             }
+
+            $tecnicoAverage = array_sum($studentTecnicoScores) / count($studentTecnicoScores);
+            $psiquicoAverage = array_sum($studentPsiquicoScores) / count($studentPsiquicoScores);
+            $averageAllTecnico = array_sum($allTecnico) / count($allTecnico);
+            $averageAllPsiquico = array_sum($allPsiquico) / count($allPsiquico);
+
+            $tecnicoAverages[] = $tecnicoAverage;
+            $psiquicoAverages[] = $psiquicoAverage;
         }
 
-        $tecnicoAverage = array_sum($studentTecnicoScores) / count($studentTecnicoScores);
-        $psiquicoAverage = array_sum($studentPsiquicoScores) / count($studentPsiquicoScores);
-        $averageAllTecnico = array_sum($allTecnico) / count($allTecnico);
-        $averageAllPsiquico = array_sum($allPsiquico) / count($allPsiquico);
-
-        $tecnicoAverages[] = $tecnicoAverage;
-        $psiquicoAverages[] = $psiquicoAverage;
-    }
-
-    // Pass all PHP variables and arrays to JavaScript
-    echo '<script>';
-    echo 'var studentNames = ' . json_encode($studentNames) . ';';
-    echo 'var tecnicoAverages = ' . json_encode($tecnicoAverages) . ';';
-    echo 'var psiquicoAverages = ' . json_encode($psiquicoAverages) . ';';
-    echo 'var averageAllTecnico = ' . json_encode($averageAllTecnico) . ';';
-    echo 'var averageAllPsiquico = ' . json_encode($averageAllPsiquico) . ';';
-    echo 'var allTecnico = ' . json_encode($allTecnico) . ';';
-    echo 'var allPsiquico = ' . json_encode($allPsiquico) . ';';
-    echo '</script>';
+        // Pass all PHP variables and arrays to JavaScript
+        echo '<script>';
+        echo 'var studentNames = ' . json_encode($studentNames) . ';';
+        echo 'var tecnicoAverages = ' . json_encode($tecnicoAverages) . ';';
+        echo 'var psiquicoAverages = ' . json_encode($psiquicoAverages) . ';';
+        echo 'var averageAllTecnico = ' . json_encode($averageAllTecnico) . ';';
+        echo 'var averageAllPsiquico = ' . json_encode($averageAllPsiquico) . ';';
+        echo 'var allTecnico = ' . json_encode($allTecnico) . ';';
+        echo 'var allPsiquico = ' . json_encode($allPsiquico) . ';';
+        echo '</script>';
     ?>
 
     <!----------------------------------------------------------------------------------------------------->
@@ -62,7 +62,8 @@
             var allTecnico = <?php echo json_encode($allTecnico); ?>;
             var allPsiquico = <?php echo json_encode($allPsiquico); ?>;
         
-        var datasets = [
+        var datasets = 
+        [
             {
                 label: 'Psíquico: ' + averageAllPsiquico.toFixed(2),
                 data: tecnicoAverages,
@@ -81,14 +82,18 @@
 
         var ctx = document.getElementById('barChart').getContext('2d');
         
-        var myChart = new Chart(ctx, {
+        var myChart = new Chart(ctx, 
+        {
             type: 'bar',
-            data: {
+            data: 
+            {
                 labels: studentNames,
                 datasets: datasets
             },
-            options: {
-                scales: {
+            options: 
+            {
+                scales: 
+                {
                     y: {
                         min: 0,
                         max: 20,
@@ -103,11 +108,22 @@
                         }
                     }
                 },
-                plugins: {
-                    title: {
+                plugins: 
+                {
+                    legend: 
+                    {
+                        display: true,
+                        labels: 
+                        {   
+                            boxWidth:0,
+                        }
+                    },
+                    title: 
+                    {
                         display: true,
                         text: 'Médias de testes',
-                        font: {
+                        font: 
+                        {
                             size: 16,
                             weight: 'bold',
                             family: 'Arial, sans-serif',
