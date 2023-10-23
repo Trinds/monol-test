@@ -1,19 +1,19 @@
 <div class="student-card">
-@if(session('success'))
+    @if(session('success'))
     <div class="alert alert-success" role="alert">
         {{ session('success') }}
     </div>
     @endif
     @if ($errors->any())
-<div class="alert alert-danger">
-    <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
-    <ul>
-        @foreach ($errors->all() as $error)
+    <div class="alert alert-danger">
+        <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <form method="POST" action="{{ route('students.update', ['student' => $student]) }}">
         <fieldset>
             @csrf
