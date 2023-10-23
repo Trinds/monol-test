@@ -26,18 +26,23 @@
 
       var backgroundColors = 
       [
-                    'rgb(237, 125, 49, 0.7)',
-                    'rgb(25, 38, 85, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgb(148, 11, 146, 0.7)',
-                    'rgb(238, 237, 237), 0.7'
+                    'rgba(242, 147, 31, 1)',
+                    'rgba(25, 150, 208, 1)',
+                    'rgba(236, 118, 33, 1)',
+                    'rgba(130, 119, 78, 1)',
+                    'rgba(17, 90, 125, 1)',
+                    'rgba(21, 120, 167, 1)',
+                    'rgba(154, 83, 57, 1)',
+                    'rgba(229, 88, 35, 1)',
+                    'rgba(186, 133, 55, 1)',
+                    'rgba(78, 78, 78, 1)',
       ];
 
-      var data = {
+      var data = 
+      {
         labels: labels,
-        datasets: [
+        datasets: 
+        [
           {
             data: values,
             backgroundColor: backgroundColors.slice(0, labels.length),
@@ -49,11 +54,17 @@
       {
         type: "pie",
         data: data,
-        options: {
+        options: 
+        {
           cutout: '70%', 
-          plugins: {
-            legend: {
-              title: {
+          plugins: 
+          {
+            legend: 
+            {
+              display: true,
+              position: 'right',
+              title: 
+              { 
                 display: true,
                 text: 'Turmas Por Curso',
               },
