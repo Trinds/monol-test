@@ -3,7 +3,6 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script type="module" src="{{asset('js/createStudentChart.js')}}"></script>
-<script type="module" src="{{asset('js/createStudentForm.js')}}"></script>
 <script type="module" src="{{asset('js/editStudentCard.js')}}"></script>
 @endsection
 @section('styles')
