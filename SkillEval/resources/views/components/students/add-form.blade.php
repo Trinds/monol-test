@@ -22,7 +22,6 @@
                 @endforeach
             </select>
         </fieldset>
-
         <fieldset>
             <legend><span class="number">2</span> Informação da Turma</legend>
             <label for="classroom_id">Turma:</label>

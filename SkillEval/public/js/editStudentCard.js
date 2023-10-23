@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const numberInput = document.getElementById("studentNumberInput");
     const birthDateView = document.getElementById("birthDateView");
     const birthDateInput = document.getElementById("birthDateInput");
-    const course_id = document.getElementById("course_id");
 
     editBtn.addEventListener("click", function () {
         nameH1.hidden = true;
@@ -43,24 +42,4 @@ document.addEventListener("DOMContentLoaded", function () {
         cancelBtn.hidden = true;
         editBtn.hidden = false;
     });
-
-    course_id.addEventListener("change", function () {
-        actClassrooms();
-        classroom_id.value = "Selecione...";
-    });
-    function actClassrooms(){
-        const selectedCourseId = course_id.value;
-        const classroomSelect = document.getElementById("classroom_id");
-        for (const option of classroomSelect.options) {
-            if (
-                selectedCourseId === "" ||
-                option.dataset.course === selectedCourseId
-            ) {
-                option.style.display = "block";
-            } else {
-                option.style.display = "none";
-            }
-        }
-    }
-    actClassrooms()
 });

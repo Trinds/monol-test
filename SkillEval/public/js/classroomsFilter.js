@@ -1,20 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const courseSelect = document.getElementById("course_id");
+    const course_id = document.getElementById("course_id");
     const classroomSelect = document.getElementById("classroom_id");
 
     function updateClassrooms() {
-        const selectedCourseId = courseSelect.value;
-
+        const selectedCourseId = course_id.value;
+        
         for (const option of classroomSelect.options) {
             selectedCourseId === "" ||
             option.dataset.course === selectedCourseId
                 ? (option.style.display = "block")
-                : ((option.style.display = "none"),
-                (classroomSelect.value = ""));
+                : 
+                ((option.style.display = "none"));
+            }
         }
-    }
-
-    courseSelect.addEventListener("change", function () {
+        
+        course_id.addEventListener("change", function () {
+            updateClassrooms();
+                classroomSelect.value = "";
+        });
         updateClassrooms();
     });
-});

@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('scripts')
-    <script src="{{ asset('js/createStudentForm.js') }}"></script>
+    <script type="module" src="{{ asset('js/classroomsFilter.js') }}"></script>
 @endsection
 
 @section('styles')
