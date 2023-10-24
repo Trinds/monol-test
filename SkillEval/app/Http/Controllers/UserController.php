@@ -158,9 +158,14 @@ class UserController extends Controller
         }
     }
 
-
     public function destroy(User $user)
     {
+        $countAdmins = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->count();
+        if ($countAdmins == 1 && $user->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Não é possível eliminar o único administrador existente.');
+        }
         try{
             $user->delete();
         } catch (Exception $e) {
