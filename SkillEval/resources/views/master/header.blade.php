@@ -10,7 +10,7 @@
         @if (Auth::user())
             <li>
                 @if(Auth::user()->image !== null)
-                    <div>
+                    <div onclick="goToUserProfile()">
                         <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ implode(' ',[ explode(' ', Auth::user()->name)[0] , explode(' ', Auth::user()->name)[str_word_count(Auth::user()->name)-1] ]) }}">
                     </div>
                 @endif
@@ -65,6 +65,11 @@
 
 
 <script type="text/javascript">
+
+    function goToUserProfile() {
+        location.href = "{{ route('users.show', Auth::user()->id) }}"
+    }
+
     function goToHome(){
         location.href = "{{route('home')}}"
     }
@@ -81,8 +86,6 @@
     function goToUsers(){
         location.href = "{{route('users.index')}}"
     }
-
-
 
     function goToReports(){
         location.href = "{{route('reports.index')}}"

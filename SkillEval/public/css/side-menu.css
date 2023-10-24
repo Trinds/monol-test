@@ -66,6 +66,10 @@
             height: 7rem;
         }
 
+        & div:hover{
+            cursor: pointer;
+        }
+
         & img{
             width: 7rem;
             height: 7rem;
