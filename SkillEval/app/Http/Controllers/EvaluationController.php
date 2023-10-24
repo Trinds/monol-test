@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Student;
 use App\Test;
+use App\Course;
+use App\Student;
 use App\Classroom;
 use App\Evaluation;
 use Exception;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
 class EvaluationController extends Controller
 {
@@ -17,9 +17,22 @@ class EvaluationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $courses = Course::all();
+        $classrooms = Classroom::all();
+        // If a course is selected, filter classrooms based on the selected course
+        if ($request->has('course_id')) 
+        {
+            $selectedCourseId = $request->input('course_id');
+            $classrooms = Classroom::where('course_id', $selectedCourseId)->get();
+        }
+    
+        return view('evaluations.index', [
+            'courses' => $courses,
+            'classrooms' => $classrooms,
+            'students' => Student::all()->sortBy('student_name'),
+        ]);
     }
 
     /**

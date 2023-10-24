@@ -31,7 +31,7 @@
         <li onclick="goToClassrooms()" id="toClassrooms"><div class="icon"><i class="fa-solid fa-users"></i></div>Turmas</li>
         <li onclick="goToStudents()" id="toStudents"><div class="icon"><i class="fa-solid fa-user-graduate"></i></div>Formandos</li>
         <li onclick="goToReports()" id="toReports"><div class="icon"><i class="fa fa-flag"></i></div>Relatórios</li>
-
+        <li onclick="goToEvaluation()" id="toEvaluation"><div class="icon"><i class="fa-solid fa-check"></i></div>Avaliações</li>
         @Auth
             @if (Auth::user()->roles->contains('name', 'admin'))
                 <li onclick="goToUsers()" id="toUsers">
@@ -42,7 +42,7 @@
             @endif
         @endauth
 
-        <li id="toEvaluations"><div class="icon"><i class="fa-solid fa-check"></i></div>Avaliações</li>
+        
     </ul>
 
     <ul id="sair">
@@ -89,5 +89,9 @@
 
     function goToReports(){
         location.href = "{{route('reports.index')}}"
+    }
+
+    function goToEvaluation(){
+        location.href = "{{route('evaluations.index')}}"
     }
 </script>
