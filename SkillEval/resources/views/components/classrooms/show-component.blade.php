@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="{{asset('css/style.css')}}">
 <div class="container">
     @if(session('success'))
         <div class="alert alert-success" role="alert">
@@ -17,11 +16,9 @@
         </div>
     @endif
 
-    <div class="heading mb-3">
-        <h1>{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
-        <h5>{{$classroom->course->name}}</h5>
-        <h6>Início: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
-    </div>
+        <h1 class="title">{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
+        <h5 class="subtitle">{{$classroom->course->name}}</h5>
+        <h6 class="text-center">Início: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
     <div class="d-flex justify-content-end">
         <form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -39,7 +36,7 @@
         @component('components.classrooms.classroom-chart', ['classroom'=>$classroom])
         @endcomponent
     </div>
-    <div class="row">
+    <div class="student-cards-container">
         @if ($classroom->students->count() == 0)
             <div class="alert alert-info" role="alert">
                 Ainda não existem alunos para esta turma.
@@ -48,12 +45,8 @@
         @foreach ($classroom->students as $student)
             <div class="grid-card">
                 <div class="grid-card-img">
-                    {{--                    @if($user->image !== null)--}}
-                    {{--                        <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia"/>--}}
-                    {{--                    @else--}}
-
+{{--                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia"/>--}}
                     <img src="{{ asset('imgs/student.png') }}" alt="{{ $student->name }} Profile Image"/>
-                    {{--                    @endif--}}
                 </div>
                 <div class="grid-card-details">
                     <p class="fw-bold mb-1">{{ isset($student) ?

@@ -15,7 +15,7 @@
                     <path d="M3 0L3 39" stroke="#F8D442" stroke-width="6" />
                 </svg>
                 <h1>Reset Password</h1>
-            </div>  
+            </div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -35,9 +35,9 @@
                             </span>
                         @enderror
                     </div>
-        
 
-               
+
+
                     <div class="login-form-submit-button">
                         <button type="submit" class="btn btn-primary">
                             {{ __('Enviar link de recuperação') }}
