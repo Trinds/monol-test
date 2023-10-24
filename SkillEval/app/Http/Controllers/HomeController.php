@@ -30,7 +30,6 @@ class HomeController extends Controller
         return view('home',
             [
                 'coursesCount'      => Course::all()->count(),
-                'classroomsCount'   => Classroom::all()->count(),
                 'studentsCount'     => Student::all()->count(),
                 'usersCount'        => User::all()->count(),
                 'classrooms'        => Classroom::with('course')->get(),

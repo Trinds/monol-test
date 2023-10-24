@@ -23,7 +23,7 @@
 
             @component('components.dashboard.dashboard-card', [
                 'backgroundClass' => 'background-gradient-light-blue',
-                'count' => $classroomsCount,
+                'count' => $classrooms->count(),
                 'name' => 'Turmas',
                 'iconClass' => 'fa-solid fa-users fa-2xl',
                 'dir' => route('classrooms.index'),
