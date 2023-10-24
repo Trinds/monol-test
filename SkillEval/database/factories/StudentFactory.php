@@ -12,6 +12,6 @@ $factory->define(Student::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'birth_date' => $faker->date('Y-m-d', 'now'),
         'name' => $faker->name,
-        'image' => 'images/7ORQ593P0pgkY7fPsqrAHMNNBLbPhXaZ5bwiDj6d.png',
+        'image' => 'images/default/student.png',
     ];
 });

@@ -93,7 +93,7 @@ class StudentController extends Controller
                 'email' => $request->input('email'),
                 'name' => $request->input('name'),
                 'birth_date' => $request->input('birth_date'),
-                'image' => $imagePath,
+                'image' => isset($request->image) ? $imagePath : 'images/default/student.png',
             ]);
             $student->save();
             return redirect()->route('students.index')->with('success', 'Formando criado com sucesso!');

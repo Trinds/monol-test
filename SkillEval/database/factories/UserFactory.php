@@ -22,6 +22,6 @@ $factory->define(User::class, function (Faker $faker) {
         'name' =>$faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt('password123'),
-        'image' => $faker->imageUrl(640, 480),
+        'image' => 'images/default/defaultuser.png'
     ];
 });

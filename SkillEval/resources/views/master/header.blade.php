@@ -16,7 +16,7 @@
                 @endif
             </li>
             <li id="userName">
-                <p>{{ implode(' ',[ explode(' ', Auth::user()->name)[0] , explode(' ', Auth::user()->name)[str_word_count(Auth::user()->name)-1] ]) }}</p>
+                <a href="{{ route('users.show', Auth::user()->id) }}">{{ implode(' ',[ explode(' ', Auth::user()->name)[0] , explode(' ', Auth::user()->name)[str_word_count(Auth::user()->name)-1] ]) }}</a>
             </li>
             <li id="userRole">
                 @foreach(Auth::user()->roles as $role)
