@@ -52,9 +52,15 @@
             <td>
                 <a href="{{ route('students.show', $student->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
                 <a href="{{ route('students.edit', $student->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>
-                <a onclick="event.preventDefault(); document.getElementById('studentRmvForm{{$student->id}}').submit();">
+                <a class="deleteBtn" data-id="{{ $student->id }}" data-name="{{ $student->name }}" data-entity="students">
                     <i class="fa-regular fa-trash-can removeBtn"></i>
                 </a>
+                <div id="confirmationBox">
+                    <h2><strong>Apagar Aluno</strong></h2>
+                    <p class="confirmation-text" id="Name"></p>
+                    <button id="confirmYesButton">Sim</button>
+                    <button id="confirmNoButton">Não</button>
+                </div>
                 <form id="studentRmvForm{{$student->id}}" action="{{route('students.destroy', $student->id)}}" method="POST">
                     @csrf
                     @method('DELETE')

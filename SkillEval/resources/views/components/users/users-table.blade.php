@@ -54,9 +54,15 @@
                 <td>
                     <a href="{{ route('users.show', $user->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
                     <a href="{{ route('users.edit', $user->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>
-                    <a onclick="event.preventDefault(); document.getElementById('userRmvForm{{$user->id}}').submit();">
+                    <a class="deleteBtn" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-entity="users">
                         <i class="fa-regular fa-trash-can removeBtn"></i>
                     </a>
+                    <div id="confirmationBox">
+                        <h2><strong>Apagar Utilizador</strong></h2>
+                        <p class="confirmation-text" id="Name"></p>
+                        <button id="confirmYesButton">Sim</button>
+                        <button id="confirmNoButton">Não</button>
+                    </div>
                     <form id="userRmvForm{{$user->id}}" action="{{ route('users.destroy', $user->id) }}" method="POST">
                         @csrf
                         @method('DELETE')

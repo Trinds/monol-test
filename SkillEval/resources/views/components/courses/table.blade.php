@@ -40,11 +40,16 @@
             <td>
                 <a href="{{ route('courses.show', $course->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn" data-toggle="modal" data-target="#showModal"></i></a>
                 <a href="{{route('courses.edit', $course->id)}}"><i class="fa-solid fa-pencil editBtn"></i></a>
-                <a onclick="event.preventDefault();
-                   document.getElementById('courseRmvForm').submit();">
+                <a class="deleteBtn" data-id="{{ $course->id }}" data-name="{{ $course->abbreviation }}" data-entity="courses">
                     <i class="fa-regular fa-trash-can removeBtn"></i>
                 </a>
-                <form id="courseRmvForm" action="{{route('courses.destroy', $course->id)}}" method="POST">
+                <div id="confirmationBox">
+                    <h2><strong>Apagar Curso</strong></h2>
+                    <p class="confirmation-text" id="Name"></p>
+                    <button id="confirmYesButton">Sim</button>
+                    <button id="confirmNoButton">Não</button>
+                </div>
+                <form id="courseRmvForm{{$course->id}}" action="{{route('courses.destroy', $course->id)}}" method="POST">
                     @csrf
                     @method('DELETE')
                 </form>

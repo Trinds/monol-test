@@ -47,11 +47,16 @@
                     <td>
                         <a href="{{ route('classrooms.show', $classroom->id) }}"><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
                         <a href="{{ route('classrooms.edit', $classroom->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>
-                        <a onclick="event.preventDefault();
-                   document.getElementById('clasroomRmvForm').submit();">
+                        <a class="deleteBtn" data-id="{{ $classroom->id }}" data-name="{{ $classroom->course->abbreviation}}{{ $classroom->edition }}" data-entity="classrooms">
                             <i class="fa-regular fa-trash-can removeBtn"></i>
                         </a>
-                        <form id="clasroomRmvForm" action="{{ route('classrooms.destroy', $classroom->id) }}" method="POST">
+                        <div id="confirmationBox">
+                            <h2><strong>Apagar Turma</strong></h2>
+                            <p class="confirmation-text" id="Name"></p>
+                            <button id="confirmYesButton">Sim</button>
+                            <button id="confirmNoButton">Não</button>
+                        </div>
+                        <form id="clasroomRmvForm{{$classroom->id}}" action="{{ route('classrooms.destroy', $classroom->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                         </form>
