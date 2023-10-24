@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", function ()
     const course_id = document.getElementById("course_id");
     const classroomSelect = document.getElementById("classroom_id");
 
-    function clearClassrooms() 
-    {
-        for (const option of classroomSelect.options) 
-            option.style.display = "none";
-    }
+    // function clearClassrooms() 
+    // {
+    //     for (const option of classroomSelect.options) 
+    //         option.style.display = "none";
+    // }
 
-    clearClassrooms();
+    //clearClassrooms();
 
     function updateClassrooms() 
     {
@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function ()
             clearClassrooms();
         else 
         {
-            for (const option of classroomSelect.options) {
-                if (option.dataset.course === selectedCourseId) {
+            for (const option of classroomSelect.options) 
+            {
+                if (option.dataset.course === selectedCourseId) 
                     option.style.display = "block";
-                } else {
-                    option.style.display = "none";
-                }
+                else
+                    option.style.display = "none";                
             }
         }
     }
