@@ -19,7 +19,9 @@ class EvaluationController extends Controller
      */
     public function index(Request $request)
     {
+        $tests = Test::all();
         $courses = Course::all();
+        $students = Student::all();
         $classrooms = Classroom::all();
         // If a course is selected, filter classrooms based on the selected course
         if ($request->has('course_id')) 
@@ -27,12 +29,22 @@ class EvaluationController extends Controller
             $selectedCourseId = $request->input('course_id');
             $classrooms = Classroom::where('course_id', $selectedCourseId)->get();
         }
+        // If a classrom is selected, filter students based on the selected classrom
+        if ($request->has('classroom_id')) 
+        {
+            $selectedClassRoomId = $request->input('classroom_id');
+            $students = Student::where('classroom_id', $selectedClassRoomId)->get();
+        }
+        else
+            $students =[];
     
-        return view('evaluations.index', [
+        return view('evaluations.index', 
+            [
+            'tests' => $tests,
             'courses' => $courses,
+            'students' => $students,
             'classrooms' => $classrooms,
-            'students' => Student::all()->sortBy('student_name'),
-        ]);
+            ]);
     }
 
     /**
