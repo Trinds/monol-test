@@ -14,7 +14,7 @@
 @section('content')
 
 <div class="title">
-    <h1>Detalhes do Aluno</h1>
+    <h1>Detalhes do Formando</h1>
 </div>
 
 <div class="add-evaluation">

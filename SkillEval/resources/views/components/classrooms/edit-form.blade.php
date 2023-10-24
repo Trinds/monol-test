@@ -1,4 +1,5 @@
 <div class="container">
+    <h1>Editar Turma</h1>
 @if ($errors->any())
 <div class="alert alert-danger">
     <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
@@ -8,26 +9,25 @@
         @endforeach
 </div>
 @endif
-    <form action="{{url('classrooms/' . $classroom->id)}}" method="POST">
+    <form action="{{url('classrooms/' . $classroom->id)}}" method="POST" class="create-form">
     @csrf
     @method('PUT')
-    <h1>Editar Turma</h1>
-    <fieldset>
-        <legend><span class="number">1</span>Informação do Curso</legend>
+    <fieldset class="fieldset">
+        <legend class="legend"><span class="number">1</span> Informação do curso <i class="fa-solid fa-bookmark" id="fa-course-legend"></i></legend>
 
-        <label for="course_id">Curso:</label>
-        <select name="course_id" id="course_id" class="form-control">
+        <label for="course_id" class="form-label">Curso:</label>
+        <select name="course_id" id="course_id" class="form-control-select">
             @foreach ($courses as $course)
                 <option value="{{$course->id}}" @if($course->id == $classroom->course_id) selected @endif>{{$course->abbreviation}}</option>
             @endforeach
         </select>
     </fieldset>
 
-    <fieldset>
-        <legend><span class="number">2</span>Informação da Turma</legend>
+    <fieldset class="fieldset">
+        <legend class="legend"><span class="number">2</span> Informação da turma <i class="fa-solid fa-users" id="fa-users-legend"></i> </legend>
 
-        <label for="edition">Edição:</label>
-        <input type="text" id="edition" name="edition" class="form-control" placeholder="Edição da turma" 
+        <label for="edition" class="form-label" >Edição:</label>
+        <input type="text" id="edition" name="edition" class="form-input" placeholder="Edição da turma" 
         @error('edition')
         is-invalid
         @enderror
@@ -36,8 +36,8 @@
         aria-describedat="editionHelp">
         <small id="editionHelp" class="form-text text-muted">Ex: 0922</small>
 
-        <label for="start_date">Data de início:</label>
-        <input type="date" id="start_date" name="start_date" class="form-control" placeholder="Data de início da turma"
+        <label for="start_date" class="form-label">Data de início:</label>
+        <input type="date" id="start_date" name="start_date" class="form-input" placeholder="Data de início da turma"
         @error('start_date')
         is-invalid
         @enderror
@@ -46,8 +46,8 @@
         aria-describedat="start_dateHelp">
         <small id="start_dateHelp" class="form-text text-muted">Ex: 2021-09-01</small>
 
-        <label for="end_date">Data de conclusão:</label>
-        <input type="date" id="end_date" name="end_date" class="form-control" placeholder="Data de conclusão da turma"
+        <label for="end_date" class="form-label">Data de conclusão:</label>
+        <input type="date" id="end_date" name="end_date" class="form-input" placeholder="Data de conclusão da turma"
         @error('end_date')
         is-invalid
         @enderror
@@ -59,7 +59,9 @@
     </fieldset>
 
     <div class="form-group">
-        <button type="submit">Editar</button>
+        <button type="submit">Atualizar
+            <i class="fa-regular fa-pen-to-square"></i>
+        </button>
     </div>
 
     </form>

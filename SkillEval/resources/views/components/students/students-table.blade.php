@@ -19,7 +19,7 @@
 </div>
 @endif
 <div class="title">
-    <h1>Lista de Alunos</h1>
+    <h1>Lista de Formandos</h1>
 </div>
 <div class="table-container">
     @if(!$hasResults)
@@ -56,7 +56,7 @@
                     <i class="fa-regular fa-trash-can removeBtn"></i>
                 </a>
                 <div id="confirmationBox">
-                    <h2><strong>Apagar Aluno</strong></h2>
+                    <h2><strong>Apagar Formando</strong></h2>
                     <p class="confirmation-text" id="Name"></p>
                     <button id="confirmYesButton">Sim</button>
                     <button id="confirmNoButton">Não</button>
