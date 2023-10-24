@@ -13,11 +13,13 @@
 }
 
 .dashboard-card{
+    display: flex;
     border-radius: 0.5rem;
     padding: 1rem 2rem;
     background-color: #42D7F8;
     min-height: 8rem;
     min-width: 17rem;
+    justify-content: space-between;
     box-shadow: 0 0 10px 0 rgba(153,153,153,1);
 
     .left{
