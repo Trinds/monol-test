@@ -1,13 +1,12 @@
 .dashboard-container{
-    display: grid;
-    grid-template-areas: 'cards cards'
-'students-chart classrooms-chart';
+    display: flex;
+    flex-direction: column;
 }
 
 .cards-container{
     display: flex;
     flex-wrap: wrap;
-    padding: 3rem;
+    padding: 3rem 2rem 2rem 2rem;
     gap: 3.5rem;
     grid-area: cards;
 }
@@ -55,16 +54,16 @@
     cursor: pointer;
 }
 
-.students-chart{
-    grid-area: students-chart;
-    padding: 3rem;
-    max-width: 30rem;
+.dashboard-charts{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
-.classrooms-chart{
-    grid-area: classrooms-chart;
-    padding: 3rem;
-    max-width: 30rem;
+.chart-container{
+    display: flex;
+    flex-direction: column;
+    width: 21rem;
 }
 
 .charts {

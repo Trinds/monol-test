@@ -45,8 +45,7 @@
         @foreach ($classroom->students as $student)
             <div class="grid-card">
                 <div class="grid-card-img">
-{{--                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia"/>--}}
-                    <img src="{{ asset('imgs/student.png') }}" alt="{{ $student->name }} Profile Image"/>
+                    <img src="{{ asset('storage/' . $student->image) }}" alt="Fotografia"/>
                 </div>
                 <div class="grid-card-details">
                     <p class="fw-bold mb-1">{{ isset($student) ?

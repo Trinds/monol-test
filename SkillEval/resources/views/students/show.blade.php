@@ -18,7 +18,7 @@
 </div>
 
 <div class="add-evaluation">
-    <a href="{{ route('evaluations.create.student', $student->id) }}">Adicionar Avaliação<i class="fa-solid fa-plus-circle addBtn"></i></a>
+    <a href="{{ route('evaluations.create', $student->id) }}">Adicionar Avaliação<i class="fa-solid fa-plus-circle addBtn"></i></a>
 </div>
 
 <div class="grid-container">

@@ -1,4 +1,8 @@
-<div class="container">        
+<div class="container"> 
+
+<h1>Adicionar Curso</h1>
+
+</div>       
 @if ($errors->any())
 <div class="alert alert-danger">
     <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
@@ -14,15 +18,13 @@
 </div>
 @endif
 
-    <form action="{{ url('courses') }}" method="POST">
+    <form action="{{ url('courses') }}" method="POST" class="create-form">
         @csrf
-        <h1>Adicionar curso</h1>
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">1</span> Informação do Curso <i class="fa-solid fa-bookmark" id="fa-course-legend"></i></legend>
 
-        <fieldset>
-            <legend><span class="number">1</span> Informação do Curso</legend>
-
-            <label for="name">Nome:</label>
-            <input type="text" id="name" name="name" class="form-control"
+            <label for="name" class="form-label">Nome:</label>
+            <input type="text" id="name" name="name" class="form-input"
             placeholder="Nome do curso"
             @error('name')
             is-invalid
@@ -32,9 +34,9 @@
             aria-describedat="nameHelp">
             <small id="nameHelp" class="form-text text-muted">Ex: Técnico Programação e Sistemas de Informação</small>
         
-            <label for="abbreviation">Sigla:</label>
+            <label for="abbreviation" class="form-label">Sigla:</label>
             <input type="text" id="abbreviation" name="abbreviation"
-            class="form-control"
+            class="form-input"
             placeholder="Sigla do curso"
             @error('abbreviation')
             is-invalid
@@ -45,7 +47,9 @@
         
         </fieldset>
         <div class="form-group">
-        <button type="submit">Adicionar</button>
+            <button type="submit">Adicionar
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </button>
         </div>
     </form>
 </div>
