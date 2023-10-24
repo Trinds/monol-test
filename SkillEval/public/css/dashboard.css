@@ -1,18 +1,23 @@
 .dashboard-container{
+    display: grid;
+    grid-template-areas: 'cards cards'
+'students-chart classrooms-chart';
+}
+
+.cards-container{
     display: flex;
     flex-wrap: wrap;
     padding: 3rem;
     gap: 3.5rem;
+    grid-area: cards;
 }
 
 .dashboard-card{
-    display: flex;
     border-radius: 0.5rem;
     padding: 1rem 2rem;
     background-color: #42D7F8;
     min-height: 8rem;
     min-width: 17rem;
-    justify-content: space-between;
     box-shadow: 0 0 10px 0 rgba(153,153,153,1);
 
     .left{
@@ -48,13 +53,18 @@
     cursor: pointer;
 }
 
-
-.chart_container {
-    display: flex; 
-    max-width: 50%;
+.students-chart{
+    grid-area: students-chart;
+    padding: 3rem;
+    max-width: 30rem;
 }
+
+.classrooms-chart{
+    grid-area: classrooms-chart;
+    padding: 3rem;
+    max-width: 30rem;
+}
+
 .charts {
-    width: 50%; 
-    padding: 10px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }

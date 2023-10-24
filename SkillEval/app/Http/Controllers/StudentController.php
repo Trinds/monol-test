@@ -25,19 +25,19 @@ class StudentController extends Controller
         if ($validator->fails()) {
             return redirect()->route('students.index')->withErrors($validator)->withInput();
         }
-        $students = Student::paginate(8)->withQueryString();
+        $students = Student::paginate(9)->withQueryString();
         if (isset($request->searchParam) && isset($request->filter) && $request->filter != "") {
             $students = Student::query()
                 ->where('classroom_id', $request->filter)
                 ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-                ->paginate(8)->withQueryString();
+                ->paginate(9)->withQueryString();
         } else if (isset($request->filter) && $request->filter != "") {
             $students = Student::query()
-                ->where('classroom_id', $request->filter)->paginate(8)->withQueryString();
+                ->where('classroom_id', $request->filter)->paginate(9)->withQueryString();
         } else if (isset($request->searchParam)) {
             $students = Student::query()
                 ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-                ->paginate(8)->withQueryString();
+                ->paginate(9)->withQueryString();
         }
         $hasResults = $students->isNotEmpty();
         return view('students.index', [

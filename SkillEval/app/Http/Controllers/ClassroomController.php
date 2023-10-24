@@ -24,7 +24,7 @@ class ClassroomController extends Controller
         if ($validator->fails()) {
             return redirect()->route('classrooms.index')->withErrors($validator)->withInput();
         }
-        $classrooms = Classroom::paginate(8)->withQueryString();
+        $classrooms = Classroom::paginate(14)->withQueryString();
         if (isset($request->searchParam) && isset($request->filter) && $request->filter != "") {
             $classrooms = Classroom::query()
                 ->select(['*'])
@@ -32,18 +32,18 @@ class ClassroomController extends Controller
                     $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
                         ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
                 })->where('classrooms.course_id', $request->filter)
-                ->paginate(8)->withQueryString();
+                ->paginate(14)->withQueryString();
         } else if (isset($request->filter) && $request->filter != "") {
             $classrooms = Classroom::query()
                 ->where('classrooms.course_id', $request->filter)
-                ->paginate(8)->withQueryString();
+                ->paginate(14)->withQueryString();
         } else if (isset($request->searchParam)) {
             $classrooms = Classroom::query()
                 ->select(['*'])
                 ->whereHas('course', function ($query) use ($request) {
                     $query->where('classrooms.edition', 'LIKE', '%' . strtolower($request->searchParam) . '%')
                         ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
-                })->paginate(8)->withQueryString();
+                })->paginate(14)->withQueryString();
         }
         $hasResults = $classrooms->isNotEmpty();
         return view('classrooms.index', [

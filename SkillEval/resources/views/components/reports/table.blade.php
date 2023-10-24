@@ -1,8 +1,8 @@
 
-<div class="dashboard-container">
-        <form action="{{ route('reports.index') }}" method="GET">     
+<div class="cards-container">
+        <form action="{{ route('reports.index') }}" method="GET">
             <div class="row">
-                <div class="col-md-3 border border-1">                
+                <div class="col-md-3 border border-1">
                     <p class="text-primary">Filtrar Turmas</p>
                     <div class="form-group">
                         <label for="courseDropdown">Curso</label>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 border border-1">                
+                <div class="col-md-3 border border-1">
                     <p class="text-primary">Filtrar Datas</p>
                     <div class="form-group">
                         <label for="start_date">Data de Início</label>
@@ -79,11 +79,11 @@
                 <thead>
                     <tr>
                         <th>Formando</th>
-                        <th>Turma</th>               
+                        <th>Turma</th>
                         <th>Média Testes Técnico</th>
-                        <th>Média Testes Psiquico</th> 
+                        <th>Média Testes Psiquico</th>
                         <th>Data de Início</th>
-                        <th>Data de Conclusão</th>                
+                        <th>Data de Conclusão</th>
                         <th>Detalhes</th>
                     </tr>
                 </thead>
@@ -94,17 +94,17 @@
                             @php
                                 $studentAverages = ['psi' => ['total' => 0, 'count' => 0], 'tec' => ['total' => 0, 'count' => 0]];
 
-                                foreach ($student->evaluations as $evaluation) 
+                                foreach ($student->evaluations as $evaluation)
                                 {
                                     $typeId = $evaluation->test->type->id;
                                     $score = $evaluation->score;
 
-                                    if ($typeId == 2) 
+                                    if ($typeId == 2)
                                     {
                                         $studentAverages['psi']['total'] += $score;
                                         $studentAverages['psi']['count']++;
-                                    } 
-                                    elseif ($typeId == 1) 
+                                    }
+                                    elseif ($typeId == 1)
                                     {
                                         $studentAverages['tec']['total'] += $score;
                                         $studentAverages['tec']['count']++;
@@ -119,35 +119,35 @@
                                 $maxAverageTec = request('max_average_tec', 20);
                                 $minAveragePsi = request('min_average_psi', 0);
                                 $maxAveragePsi = request('max_average_psi', 20);
-                                
+
                             @endphp
-                                
+
                             @if($tecAverage > $minAverageTec && $psiAverage > $minAveragePsi && $tecAverage < $maxAverageTec && $psiAverage < $maxAveragePsi)
                             <tr>
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->classroom->course->abbreviation }} {{ $student->classroom->edition }}</td>
                                 <td>
-                                        Média Técnico: 
-                                    @php                                    
+                                        Média Técnico:
+                                    @php
                                         echo ($tecAverage < 10) ?
-                                        '<span class="text-danger font-weight-bold">' . number_format($tecAverage, 2) . '</span><br>' 
-                                        : 
+                                        '<span class="text-danger font-weight-bold">' . number_format($tecAverage, 2) . '</span><br>'
+                                        :
                                         '<span class="text-primary font-weight-bold">' . number_format($tecAverage, 2) . '</span><br>';
                                     @endphp
                                 </td>
                                 <td>
-                                        Média Psiquico: 
+                                        Média Psiquico:
                                     @php
                                         echo ($psiAverage < 10) ?
-                                        '<span class="text-danger font-weight-bold">' . number_format($psiAverage, 2) . '</span><br>' 
-                                        : 
+                                        '<span class="text-danger font-weight-bold">' . number_format($psiAverage, 2) . '</span><br>'
+                                        :
                                         '<span class="text-primary font-weight-bold">' . number_format($psiAverage, 2) . '</span><br>';
                                     @endphp
                                 </td>
                                 <td>{{ date('d-m-Y', strtotime($classroom->start_date)) }}</td>
                                 <td>{{ date('d-m-Y', strtotime($classroom->end_date)) }}</td>
                                 <td>
-                                    <a href="/students/{{ $student->id }}"><button>Formando</button></a>                                
+                                    <a href="/students/{{ $student->id }}"><button>Formando</button></a>
                                     <a href="/classrooms/{{ $student->classroom_id }}"><button>Turma</button></a>
                                 </td>
                             </tr>
@@ -157,7 +157,7 @@
                     @endif
                 @endforeach
             </tbody>
-        </table>        
+        </table>
         @endif
-        
+
     </div>

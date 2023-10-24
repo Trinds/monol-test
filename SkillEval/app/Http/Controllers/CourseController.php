@@ -25,9 +25,9 @@ class CourseController extends Controller
             $courses = Course::query()
             ->where(strtoupper('abbreviation'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
             ->orWhere(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-            ->paginate(8)->withQueryString()
+            ->paginate(14)->withQueryString()
             :
-            $courses = Course::paginate(8)->withQueryString();
+            $courses = Course::paginate(14)->withQueryString();
         $hasResults = $courses->isNotEmpty();
         return view('courses.index', ['courses' => $courses, 'hasResults' => $hasResults]);
     }
