@@ -1,4 +1,5 @@
-<div class="container">        
+<div class="container">    
+    <h1>Editar curso</h1>
 @if ($errors->any())
 <div class="alert alert-danger">
     <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
@@ -8,16 +9,13 @@
         @endforeach
 </div>
 @endif
-    <form action="{{ url('courses/' . $course->id) }}" method="POST">
+    <form action="{{ url('courses/' . $course->id) }}" method="POST" class="create-form">
         @csrf
         @method('PUT')
-        <h1>Editar curso</h1>
-
-        <fieldset>
-            <legend><span class="number">1</span> Informação do Curso</legend>
-
-            <label for="name">Nome:</label>
-            <input type="text" id="name" name="name" class="form-control"
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">1</span> Informação do Curso <i class="fa-solid fa-bookmark" id="fa-course-legend"></i></legend>
+            <label for="name" class="form-label">Nome:</label>
+            <input type="text" id="name" name="name" class="form-input"
             placeholder="{{ $course->name }}"
             @error('name')
             is-invalid
@@ -27,9 +25,9 @@
             aria-describedat="nameHelp">
             <small id="nameHelp" class="form-text text-muted">Ex: Técnico Programação e Sistemas de Informação</small>
           
-            <label for="abbreviation">Sigla:</label>
+            <label for="abbreviation" class="form-label">Sigla:</label>
             <input type="text" id="abbreviation" name="abbreviation"
-            class="form-control"
+            class="form-input"
             placeholder="{{$course->abbreviation}}"
             @error('abbreviation')
             is-invalid
@@ -41,7 +39,11 @@
         
         </fieldset>
 
-        <button type="submit">Editar</button>
+        <div class="form-group">
+            <button type="submit">Atualizar
+                <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+        </div>
 
     </form>
 </div>

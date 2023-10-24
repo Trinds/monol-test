@@ -2,7 +2,7 @@
 
 <h1>Adicionar Curso</h1>
 
-</div>       
+    
 @if ($errors->any())
 <div class="alert alert-danger">
     <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>

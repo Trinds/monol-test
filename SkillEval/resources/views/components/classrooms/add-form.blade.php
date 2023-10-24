@@ -53,7 +53,7 @@
 
         <fieldset class="fieldset">
             <legend class="legend"><span class="number">1</span> Informação do curso <i class="fa-solid fa-bookmark" id="fa-course-legend"></i></legend>
-            <label for="course_id">Curso:</label>
+            <label for="course_id" class="form-label">Curso:</label>
             <select name="course_id" id="course_id" class="form-control-select">
                 @foreach ($courses as $course)
                 <option value="{{$course->id}}">{{$course->abbreviation}}</option>

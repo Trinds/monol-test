@@ -1,4 +1,7 @@
 <div class="container">
+    <div class="one">
+        <h1>Adicionar Formando</h1>
+    </div>
 @if ($errors->any())
 <div class="alert alert-danger">
     <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
@@ -8,24 +11,22 @@
         @endforeach
 </div>
 @endif
-    <form action="{{ url('students') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('students') }}" method="POST" enctype="multipart/form-data" class="create-form">
         @csrf
-        <h1>Adicionar Aluno</h1>
-
-        <fieldset>
-            <legend><span class="number">1</span> Informação do Curso</legend>
-            <label for="course_id">Curso:</label>
-            <select name="course_id" id="course_id" class="form-control">
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">1</span> Informação do curso <i class="fa-solid fa-bookmark" id="fa-course-legend"></i></legend>
+            <label for="course_id" class="form-label">Curso:</label>
+            <select name="course_id" id="course_id" class="form-control-select">
                 <option value="">Selecione...</option>
                 @foreach ($courses as $course)
                     <option value="{{$course->id}}">{{$course->abbreviation}}</option>
                 @endforeach
             </select>
         </fieldset>
-        <fieldset>
-            <legend><span class="number">2</span> Informação da Turma</legend>
-            <label for="classroom_id">Turma:</label>
-            <select name="classroom_id" id="classroom_id" class="form-control">
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">2</span> Informação da turma <i class="fa-solid fa-users" id="fa-users-legend"></i></legend>
+            <label for="classroom_id" class="form-label">Turma:</label>
+            <select name="classroom_id" id="classroom_id" class="form-control-select">
                 <option value="">Selecione...</option>
                 @foreach ($classrooms as $classroom)
                     <option value="{{$classroom->id}}" data-course="{{$classroom->course_id}}">{{$classroom->edition}}</option>
@@ -33,12 +34,12 @@
             </select>
         </fieldset>
 
-        <fieldset>
-            <legend><span class="number">3</span> Informação do Aluno</legend>
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">3</span> Informação do formando <i class="fa-solid fa-user-graduate" id="fa-user-graduate"></i></legend>
 
-            <label for="student_number">Numero de Formando:</label>
-            <input type="text" id="student_number" name="student_number" class="form-control"
-                   placeholder="Numero do Formando"
+            <label for="student_number" class="form-label">Número de formando:</label>
+            <input type="text" id="student_number" name="student_number" class="form-input"
+                   placeholder="Número do formando"
                    @error('student_number')
                    is-invalid
                    @enderror
@@ -46,20 +47,20 @@
                    required
                    aria-describedat="student_numberHelp">
 
-            <label for="email">Email:</label>
+            <label for="email" class="form-label">Email:</label>
             <input type="email" id="email" name="email"
-                   class="form-control"
-                   placeholder="Email do Formando"
+                   class="form-input"
+                   placeholder="Email do formando"
                    @error('email')
                    is-invalid
                    @enderror
                    required
                    aria-describedat="emailHelp">
 
-            <label for="name">Nome:</label>
+            <label for="name" class="form-label">Nome:</label>
             <input type="text" id="name" name="name"
-                   class="form-control"
-                   placeholder="Nome do Formando"
+                   class="form-input"
+                   placeholder="Nome do formando"
                    @error('name')
                    is-invalid
                    @enderror
@@ -68,7 +69,7 @@
 
             <label for="birth_date">Data de nascimento:</label>
             <input type="date" id="birth_date" name="birth_date"
-                   class="form-control"
+                   class="form-input"
                    placeholder="Data de nascimento do formando"
                    @error('birth_date')
                    is-invalid
@@ -78,16 +79,17 @@
 
             <label for="image">Foto:</label>
             <input type="file" id="image" name="image"
-                   class="form-control"
+                   class="form-input"
                    placeholder="Imagem do formando"
                    @error('image')
                    is-invalid
                    @enderror
                    aria-describedat="imageHelp">
-            
         </fieldset>
         <div class="form-group">
-            <button type="submit">Adicionar</button>
+            <button type="submit">Adicionar
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </button>
         </div>
     </form>
 </div>

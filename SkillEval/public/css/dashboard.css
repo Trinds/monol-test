@@ -64,6 +64,14 @@
     display: flex;
     flex-direction: column;
     width: 21rem;
+    
+}
+
+.subtitle
+{
+    
+    text-align: start;
+
 }
 
 .charts {
