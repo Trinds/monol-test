@@ -1,5 +1,7 @@
 <div class="container">
+    <div class="one">
     <h1>Adicionar Turma</h1>
+</div>
     <div class="pt-2">
         @if(session('success'))
         <div class="alert alert-success" role="alert">
@@ -32,17 +34,16 @@
         @endif
     </div>
     <div class="option-container">
-        <h1>Opções:</h1>
         <div class="form-check">
             <label class="form-check-label">
                 <input class="form-check-input" type="radio" name="formType" id="manualRadio" value="manual" checked>
-                Formulário da Turma
+                Formulário da turma
             </label>
         </div>
         <div class="form-check">
             <label class="form-check-label">
                 <input class="form-check-input" type="radio" name="formType" id="importRadio" value="import">
-                Importar Excel com Turma e Formandos
+                Importar Excel com turma e formandos
             </label>
         </div>
     </div>    
@@ -50,8 +51,8 @@
     <form action="{{ url('classrooms') }}" method="POST" id="manualForm" class="create-form">
         @csrf
 
-        <fieldset>
-            <legend><span class="number">1</span> Informação do Curso</legend>
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">1</span> Informação do curso <i class="fa-solid fa-bookmark" id="fa-course-legend"></i></legend>
             <label for="course_id">Curso:</label>
             <select name="course_id" id="course_id" class="form-control-select">
                 @foreach ($courses as $course)
@@ -60,34 +61,38 @@
             </select>
         </fieldset>
 
-        <fieldset>
-            <legend><span class="number">2</span> Informação da Turma</legend>
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">2</span> Informação da turma <i class="fa-solid fa-users" id="fa-users-legend"></i> </legend>
 
-            <label for="edition">Edição:</label>
-            <input type="text" id="edition" name="edition" class="form-control" placeholder="Edição da turma" @error('edition') is-invalid @enderror value="{{old('edition')}}" required aria-describedat="editionHelp">
+            <label for="edition" class="form-label">Edição:</label>
+            <input type="text" id="edition" name="edition" class="form-input" placeholder="Edição da turma" @error('edition') is-invalid @enderror value="{{old('edition')}}" required aria-describedby="editionHelp">
             <small id="editionHelp" class="form-text text-muted">Exemplo: 07.22</small>
 
             <label for="start_date">Data de iníco:</label>
-            <input type="date" id="start_date" name="start_date" class="form-control" placeholder="Data de início da turma" @error('start_date') is-invalid @enderror required aria-describedat="start_dateHelp">
+            <input type="date" id="start_date" name="start_date" class="form-input" placeholder="Data de início da turma" @error('start_date') is-invalid @enderror required aria-describedat="start_dateHelp">
 
             <label for="end_date">Data de conclusão:</label>
-            <input type="date" id="end_date" name="end_date" class="form-control" placeholder="Data de conclusão da turma" @error('end_date') is-invalid @enderror required aria-describedat="end_dateHelp">
+            <input type="date" id="end_date" name="end_date" class="form-input" placeholder="Data de conclusão da turma" @error('end_date') is-invalid @enderror required aria-describedat="end_dateHelp">
         </fieldset>
         <div class="form-group">
             <button type="submit">Adicionar
-                <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </button>
         </div>
     </form>
-    <form action="{{ route('classrooms.import') }}" method="POST" enctype="multipart/form-data" id="importForm" style="display: none;">
+    <form action="{{ route('classrooms.import') }}" method="POST" enctype="multipart/form-data" id="importForm" style="display: none;" class="create-form">
         @csrf
-        <label for="file">Adicionar Turma e Formandos</label>
+        <label for="file" class="form-label"> <h1>Adicionar turma e formandos</h1></label>
         <div class="form-group">
             <a href="{{ asset('templates/AddTurmaEAlunos.xlsx') }}" download>Download do Template Excel</a>
         </div>
         <div class="form-group">
-            <input type="file" name="file" id="file" accept=".xlsx,.xls" required>
+            <input type="file" name="file" id="file" accept=".xlsx,.xls" required class="form-input">
         </div>
-        <button type="submit">Enviar</button>
+        <div class="form-group">
+        <button type="submit">Enviar
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
+        </div>
     </form>
 </div>

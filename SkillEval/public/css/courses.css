@@ -1,6 +1,5 @@
 .option-container
 {
-  margin-top: 10px; 
   margin-bottom: 30px;
   width: 100%;
   height: 100%;
@@ -8,14 +7,8 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  gap: 10px;
 } 
-
-.option-container h1
-{
-  font-size: 30px;
-  font-weight: 300;
-  color: #F2931F;
-}
 
 
 .form-check {
@@ -34,10 +27,12 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-top: 10px;
 }
+
 .create-form
 {
-  max-width: 600px;
+  max-width: 900px;
   width: 100%;
   margin: 10px auto;
   padding: 10px 20px;
@@ -63,15 +58,7 @@
 
 
 
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="date"],
-  input[type="datetime"],
-  input[type="time"],
-  input[type="url"],
-  input[type="abbreviation"],
-  textarea,
+  /* textarea,
   select {
     background: rgba(255,255,255,0.1);
     border: none;
@@ -84,24 +71,19 @@
     color: #8a97a0;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     margin-bottom: 10px;
-  }
+  } */
 
 
-  fieldset {
+  .fieldset {
     margin: 10px 10px 20px 10px;
     border: none;
   }
 
-  legend {
+  .legend {
     font-size: 1.4em;
     margin-bottom: 10px;
   }
 
-  label {
-    display: block;
-    margin-bottom: 8px;
-    margin-top : 8px;
-  }
 
   label.light {
     font-weight: 300;
@@ -150,7 +132,67 @@
   }
 
 
+  .form-label
+  {
+    display: block;
+    margin-bottom: 10px;
+    margin-top : 10px;
+  }
 
+  .form-input
+  {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    font-size: 1rem;
+    height: auto;
+    outline: 0;
+    padding: 9px;
+    width: 100%;
+    background-color: #e8eeef;
+    color: #8a97a0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 400;
+    line-height: 1.6;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .form-input:focus
+  {
+    color: #495057;
+    background-color: #fff;
+    border-color: #F2931F;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(242, 147, 31, 0.25);
+  }
+
+  #fa-users-legend
+  {
+    font-size: 0.8em;
+    margin-left: 5px;
+    color: #F2931F;
+  }
+
+
+  #fa-course-legend
+  {
+    font-size: 0.8em;
+    margin-left: 5px;
+    color: #F2931F;
+  }
+  
+  #editionHelp 
+  {
+    margin-bottom: 10px;
+  }
+
+  .fa-arrow-up-right-from-square
+  {
+    font-size: 0.8em;
+    margin-left: 2px;
+  }
 
   @media screen and (min-width: 480px) {
 
