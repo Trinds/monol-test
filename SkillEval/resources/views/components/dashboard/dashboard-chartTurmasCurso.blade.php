@@ -1,8 +1,4 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.js"></script>
 <canvas id="myPieChart"></canvas>
-
 
 <?php
 $abbreviationArray = [];
@@ -11,21 +7,16 @@ foreach ($Turmas as $turma) {
     $abbreviationArray[] = $turma->course->abbreviation;
 }
 
-$abbreviationJSON = json_encode($abbreviationArray);
-
 $abbreviationCounts = array_count_values($abbreviationArray);
-$abbreviationCountsJSON = json_encode($abbreviationCounts);
 ?>
 
 <script>
     var ctx = document.getElementById("myPieChart").getContext("2d");
 
-    var abbreviationCounts = <?php echo $abbreviationCountsJSON; ?>;
+    var labels = Object.keys({!! json_encode($abbreviationCounts, JSON_HEX_TAG) !!});
+    var values = Object.values({!! json_encode($abbreviationCounts, JSON_HEX_TAG) !!});
 
-    var labels = Object.keys(abbreviationCounts);
-    var values = Object.values(abbreviationCounts);
-
-    var backgroundColors =
+    const backgroundColors =
         [
             'rgba(242, 147, 31, 1)',
             'rgba(25, 150, 208, 1)',
@@ -57,7 +48,7 @@ $abbreviationCountsJSON = json_encode($abbreviationCounts);
             data: data,
             options:
                 {
-                    cutout: '70%',
+                    cutout: '65%',
                     plugins:
                         {
                             legend:
@@ -68,9 +59,10 @@ $abbreviationCountsJSON = json_encode($abbreviationCounts);
                                     title:
                                         {
                                             display: true,
-                                            text: 'Turmas p/Curso',
-                                            lineWidth:30
                                         },
+                                    labels: {
+                                        boxWidth: 25
+                                    }
                                 },
                         },
                 },

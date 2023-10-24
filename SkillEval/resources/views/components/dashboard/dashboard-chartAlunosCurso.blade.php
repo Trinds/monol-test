@@ -1,6 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.js"></script>
 <canvas id="donutChart"></canvas>
 
 <?php
@@ -9,33 +6,29 @@ $contagemTurmas = $cursosArray = array();
 $alunosPorCurso = array();
 
 foreach ($Turmas as $turma) {
-    $nAlunos = $turma->students->count();
-    $Cursos = $turma->course->abbreviation;
+    $Curso = $turma->course->abbreviation;
 
-    if (!isset($contagemAlunos[$Cursos])) {
-        $contagemAlunos[$Cursos] = 0;
+    if (!isset($contagemAlunos[$Curso])) {
+        $contagemAlunos[$Curso] = 0;
     }
 
-    if (!isset($contagemTurmas[$Cursos])) {
-        $contagemTurmas[$Cursos] = 0;
+    if (!isset($contagemTurmas[$Curso])) {
+        $contagemTurmas[$Curso] = 0;
     }
 
-    $contagemAlunos[$Cursos] += $nAlunos;
+    $contagemAlunos[$Curso] += $turma->students->count();
 
-    $contagemTurmas[$Cursos]++;
+    $contagemTurmas[$Curso]++;
 
-    $cursosArray[] = $Cursos;
+    $cursosArray[] = $Curso;
 
-    $alunosPorCurso[] = $nAlunos;
+    $alunosPorCurso[] = $turma->students->count();
 }
-
-$cursosJson = json_encode($cursosArray);
-$alunosPorCursoJson = json_encode($alunosPorCurso);
 ?>
 
 <script>
-    var tiposDeCurso = <?php echo $cursosJson; ?>;
-    var numeroDeAlunosPorTipo = <?php echo $alunosPorCursoJson; ?>;
+    var tiposDeCurso = {!! json_encode($cursosArray, JSON_HEX_TAG) !!};
+    var numeroDeAlunosPorTipo = {!! json_encode($alunosPorCurso, JSON_HEX_TAG) !!};
 
 
     var tiposDeCursoUnicos = [...new Set(tiposDeCurso)];
@@ -74,7 +67,7 @@ $alunosPorCursoJson = json_encode($alunosPorCurso);
                 },
             options:
                 {
-                    cutout: '70%',
+                    cutout: '65%',
                     plugins:
                         {
                             legend:
@@ -85,8 +78,10 @@ $alunosPorCursoJson = json_encode($alunosPorCurso);
                                     title:
                                         {
                                             display: true,
-                                            text: 'Alunos p/Curso',
                                         },
+                                    labels: {
+                                        boxWidth: 25
+                                    }
                                 }
                         }
                 }

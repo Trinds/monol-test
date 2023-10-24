@@ -1,4 +1,10 @@
 @extends('master.main')
+
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.js"></script>
+@endsection
 @section('styles')
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 @endsection
@@ -48,24 +54,28 @@
 
 
         </div>
-        <div class="students-chart">
-            <div class="charts">
-                @component('components.dashboard.dashboard-chartAlunosCurso', [
+        <div class="dashboard-charts">
+            <div class="chart-container">
+                <label for="donutChart" class="subtitle">Alunos por Curso</label>
+                <div class="charts">
+                    @component('components.dashboard.dashboard-chartAlunosCurso', [
 
-                    'Turmas'=>  $classrooms, //Array de Turmas
-                    'dir' => route('courses.index'),
-                ])
-                @endcomponent
+                        'Turmas'=>  $classrooms, //Array de Turmas
+                        'dir' => route('courses.index'),
+                    ])
+                    @endcomponent
+                </div>
             </div>
-        </div>
-        <div class="classrooms-chart">
-            <div class="charts">
-                @component('components.dashboard.dashboard-ChartTurmasCurso', [
+            <div class="chart-container">
+                <label for="myPieChart" class="subtitle">Turmas por Curso</label>
+                <div class="charts">
+                    @component('components.dashboard.dashboard-ChartTurmasCurso', [
 
-                    'Turmas'=>  $classrooms, //Array de Turmas
-                    'dir' => route('courses.index'),
-                ])
-                @endcomponent
+                        'Turmas'=>  $classrooms, //Array de Turmas
+                        'dir' => route('courses.index'),
+                    ])
+                    @endcomponent
+                </div>
             </div>
         </div>
     </div>
