@@ -29,6 +29,8 @@ Route::resource('reports', 'ReportsController');
 Route::resource('students', 'StudentController');
 Route::resource('classrooms', 'ClassroomController');
 Route::resource('evaluations', 'EvaluationController');
+Route::post('/evaluations', 'EvaluationController@store')->name('evaluations.store');
+
 
 
 
