@@ -182,6 +182,10 @@ class ClassroomController extends Controller
             return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
         }
         $lastClassroom = Classroom::latest()->first();
-        return redirect()->route('classrooms.show', $lastClassroom->id)->with('success', 'Turma e formandos importados com sucesso!');
+        $failures = null;
+        return redirect()
+        ->route('classrooms.show', $lastClassroom->id)
+        ->with('failures', $failures)
+        ->with('success', 'Turma e formandos importados com sucesso!');
     }
 }

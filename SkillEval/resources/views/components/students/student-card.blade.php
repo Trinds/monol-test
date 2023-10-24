@@ -20,13 +20,14 @@
             @method('PUT')
             <!-- NAME -->
             <h1 id="studentNameH1">{{$student->name}}</h1>
-            <label for="name" id="studentNameInput" hidden>Nome: <input type="text" name="name" value="{{$student->name}}"></label>
             <!-- Load Image -->
             @if($student->image !== null)
             <img class='user-img' src="{{ asset('storage/' . $student->image) }}" alt="Fotografia" style="height: 150px; width:150px; border-radius: 50%;" />
             @else
             <img class='fa-regular fa-circle-user user-img' src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $student->name }} Profile Image" />
             @endif
+            <!-- Edit Name -->
+            <label for="name" id="studentNameInput" hidden>Nome: <input type="text" name="name" value="{{$student->name}}"></label>
             <!-- Upload Image -->
             <label id="studentImageInput" hidden>Foto:<input type="file" name="image"></label>
             <!-- Email -->
