@@ -1,18 +1,7 @@
-
 @extends('master.main')
+@section('styles')
+    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+@endsection
+@section('content')
 
-    @section('scripts')
-        <script type="module" src="{{ asset('js/classroomsFilter.js') }}"></script>
-    @endsection
-
-
-
-    @section('content')
-        @component('components.evaluations.table', 
-        [
-            'hasResults' => $hasResults,
-            'classrooms' => $classrooms ,
-            'courses' => $courses
-        ] )
-    @endcomponent
 @endsection
