@@ -1,7 +1,7 @@
 <div class="container">
-    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+    <h1>Criar Utilizador</h1>
+    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data" class="create-form">
         @csrf
-        <h1>Criar Utilizador</h1>
 
         @if ($errors->any() || session('error'))
         <div class="alert alert-danger">
@@ -17,33 +17,30 @@
             </div>
         @endif
 
-        <fieldset>
-            <legend><span class="number">1</span>Dados Pessoais</legend>
-
-            <label for="name">Nome:</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="Nome do utilizador" required
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">1</span>Dados Pessoais <i class="fa-regular fa-address-card" id="fa-address-card"></i></legend>
+            <label for="name"  class="form-label">Nome</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Nome do utilizador" required
                 value="{{ old('name') }}" aria-describedat="nameHelp">
             <small id="nameHelp" class="form-text text-muted">Ex: João Silva</small>
 
-            <fieldset>
-                <label for="image">Foto de perfil</label>
-                <input type="file" id="image" name="image" class="form-control" placeholder="Foto de perfil do utilizador"
+                <label for="image" class="form-label">Foto de perfil</label>
+                <input type="file" id="image" name="image" class="form-input" placeholder="Foto de perfil do utilizador"
                     aria-describedat="imageHelp">
-                <small id="imageHelp" class="form-text text-muted">Ex: Foto de perfil do utilizador</small>
-            </fieldset>
+            
         </fieldset>
 
-        <fieldset>
-            <legend><span class="number">2</span>Credenciais</legend>
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">2</span>Credenciais <i class="fa-solid fa-gears"></i></legend>
 
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="E-mail do utilizador"
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="E-mail do utilizador"
                 required value="{{ old('email') }}" aria-describedat="emailHelp">
             <small id="emailHelp" class="form-text text-muted">Ex: User@edu.atec.pt</small>
 
-            <label for="password">Password</label>
-            <div class="input-group">
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password do utilizador"
+            <label for="password" class="form-label">Password</label>
+            <div class="password-field">
+                <input type="password" id="password" name="password" class="form-input" placeholder="Password do utilizador"
                     required value="{{ old('password') }}" aria-describedat="passwordHelp">
                 <span class="input-group-btn">
                     <button class="btn btn-default reveal-password" type="button">
@@ -53,27 +50,28 @@
             </div>
             <small id="passwordHelp" class="form-text text-muted">Ex: 12345678</small>
 
-            <label for="password_confirmation">Confirmação da Password</label>
+            <label for="password_confirmation" class="form-label">Confirmação da Password</label>
             <div class="input-group">
-                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control"
+                <input type="password" id="password_confirmation" name="password_confirmation" class="form-input"
                     placeholder="Confirmação da Password do utilizador" required value="{{ old('password_confirmation') }}"
                     aria-describedat="password_confirmationHelp">
             </div>
-            <small id="password_confirmationHelp" class="form-text text-muted">Ex: 12345678</small>
         </fieldset>
 
-        <fieldset>
-            <legend><span class="number">3</span>Funções</legend>
-            <label for="roles">Funções:</label>
-            <select name="roles[]" id="roles" class="form-control" multiple required>
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">3</span>Funções</legend>
+            <label for="roles" class="form-label">Funções:</label>
+            <select name="roles[]" id="roles" class="form-control-select" multiple required>
                 @foreach ($roles as $role)
-                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    <option value="{{ $role->id }}">{{ Str::ucfirst($role->name)}}</option>
                 @endforeach
             </select>
         </fieldset>
 
         <div class="form-group">
-            <button type="submit">Criar</button>
+            <button type="submit">Adicionar
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </button>
         </div>
     </form>
 </div>
