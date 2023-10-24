@@ -27,10 +27,9 @@
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                <label class="login-form-input-name" for="password">Password
+                <label class="login-form-input-name" for="password">Password   </label>
                     <input id="password" type="password" placeholder="Password" class="login-form-input-field form-control"
                         name="password" required autocomplete="off">
-                </label>
                 <button type="submit" class="login-form-submit-button">Login</button>
 
                 <div class="link-span">
