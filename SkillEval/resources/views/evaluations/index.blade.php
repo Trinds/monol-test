@@ -55,18 +55,8 @@
             </select>
         </div>
     </div>
-
-    @component('components.evaluations.table', [ 'students' =>$students ])
-    @endcomponent
-
     @if($students)
-    <form method="POST" action="{{ url('evaluations') }}">
-        @csrf
-        <input type="hidden" name="grades" id="grades" value="">
-        <div id="insert_button">
-            <button type="submit">Inserir Pauta</button>
-        </div>
-    </form>
+        @component('components.evaluations.table', [ 'students' =>$students ])
+        @endcomponent
     @endif
-
 @endsection

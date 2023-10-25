@@ -55,6 +55,16 @@ class EvaluationController extends Controller
         //
     }
 
+    public function store(Request $request)
+    {
+        $test_id = $request->input('test_id');
+        $momentId = request('moment_id');
+        $grades = json_decode(request('grades'));
+        $student = request('students');
+
+        dd($grades);
+    }
+
     public function createForStudent(Student $student)
     {
 
