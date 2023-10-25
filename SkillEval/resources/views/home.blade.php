@@ -56,7 +56,7 @@
         </div>
         <div class="dashboard-charts">
             <div class="chart-container">
-                <label for="donutChart" class="subtitle">Alunos por Curso</label>
+                <label for="donutChart" class="subtitle text-center">Alunos por Curso</label>
                 <div class="charts">
                     @component('components.dashboard.dashboard-chartAlunosCurso', [
 
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div class="chart-container">
-                <label for="myPieChart" class="subtitle">Turmas por Curso</label>
+                <label for="myPieChart" class="subtitle text-center">Turmas por Curso</label>
                 <div class="charts">
                     @component('components.dashboard.dashboard-ChartTurmasCurso', [
 

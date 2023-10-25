@@ -1,4 +1,7 @@
-<canvas id="donutChart"></canvas>
+<div style="position: relative;">
+    <canvas id="donutChart"></canvas>
+    <p id="noDataMessage" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; font-size: large;">Sem Dados</p>
+</div>
 
 <?php
 $contagemAlunos = array();
@@ -29,16 +32,43 @@ foreach ($Turmas as $turma) {
 <script>
     var tiposDeCurso = {!! json_encode($cursosArray, JSON_HEX_TAG) !!};
     var numeroDeAlunosPorTipo = {!! json_encode($alunosPorCurso, JSON_HEX_TAG) !!};
+    var ctx = document.getElementById('donutChart').getContext('2d');
 
-
+    if (tiposDeCurso.length === 0) {
+        document.getElementById('noDataMessage').style.display = 'block';
+    tiposDeCurso = ['Nenhum Dado'];
+    numeroDeAlunosPorTipo = [1];
+    var donutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: tiposDeCurso,
+            datasets: [{
+                data: numeroDeAlunosPorTipo,
+                backgroundColor: [
+                    'rgba(21, 120, 167, 0.1)',
+                ],
+            }],
+        },
+        options: {
+            cutout: '65%',
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
+        },
+    });
+    ctx.globalAlpha = 0.5;
+    ctx.shadowColor = 'rgba(21, 120, 167, 0.5)';
+    ctx.shadowBlur = 10;
+}
+else {
+    document.getElementById('noDataMessage').style.display = 'none';
     var tiposDeCursoUnicos = [...new Set(tiposDeCurso)];
 
     var numeroTotalDeAlunosPorTipo = tiposDeCursoUnicos.map(tipo =>
         numeroDeAlunosPorTipo.reduce((total, valor, index) => tiposDeCurso[index] === tipo ? total + valor : total, 0)
     );
-
-
-    var ctx = document.getElementById('donutChart').getContext('2d');
 
     var donutChart = new Chart(ctx,
         {
@@ -86,5 +116,6 @@ foreach ($Turmas as $turma) {
                         }
                 }
         });
+}
 </script>
-
+    
