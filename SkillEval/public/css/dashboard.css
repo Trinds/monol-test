@@ -63,13 +63,13 @@
 .chart-container{
     display: flex;
     flex-direction: column;
-    width: 21rem;
-    
+    width: 11rem;
+
 }
 
 .subtitle
 {
-    
+
     text-align: start;
 
 }

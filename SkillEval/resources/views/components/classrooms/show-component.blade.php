@@ -32,7 +32,7 @@
             </div>
         </form>
     </div>
-    <div class="chart-container">
+    <div class="classroom-chart">
         @component('components.classrooms.classroom-chart', ['classroom'=>$classroom])
         @endcomponent
     </div>

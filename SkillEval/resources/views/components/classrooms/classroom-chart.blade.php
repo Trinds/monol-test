@@ -1,4 +1,4 @@
-<canvas class="classroom_chart" id="barChart"></canvas>
+<canvas id="barChart"></canvas>
 
 <?php
 $allTecnico = [];
@@ -103,6 +103,8 @@ echo '</script>';
                 },
             options:
                 {
+                    responsive:true,
+                    aspectRatio: -10,
                     scales:
                         {
                             y:

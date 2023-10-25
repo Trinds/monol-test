@@ -16,10 +16,6 @@
     <h1>Detalhes do Formando</h1>
 </div>
 
-<div class="add-evaluation">
-    <a href="{{ route('evaluations.create', $student->id) }}">Adicionar Avaliação<i class="fa-solid fa-plus-circle addBtn"></i></a>
-</div>
-
 <div class="grid-container">
     <div class="chart-area">
         @component('components.students.evaluations-chart' , ['studentEvaluations'=>$student->evaluations])
@@ -32,6 +28,9 @@
     </div>
     {{-- transformar tabela ou lista de avaliações em componente--}}
     <div class="evaluations-container">
+        <div class="add-evaluation">
+            <a href="{{ route('evaluations.create', $student->id) }}">Adicionar Avaliação<i class="fa-solid fa-plus-circle addBtn"></i></a>
+        </div>
         <h1 class="subtitle">Historico de avaliações</h1>
         <table>
             <thead>
@@ -57,9 +56,6 @@
                         @endif
                     </td>
                     <td>
-                        {{--                                <a href={{ route('evaluations.show', $evaluation->id) }}><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>--}}
-                        {{--                                <a href="{{ route('evaluations.edit', $evaluation->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>--}}
-                        <a><i class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
                         <a><i class="fa-solid fa-pencil editBtn"></i></a>
                         <a onclick="event.preventDefault();
                                     document.getElementById('evaluationRmvForm').submit();">

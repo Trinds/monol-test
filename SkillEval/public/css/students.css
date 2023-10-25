@@ -77,8 +77,10 @@ td i {
 }
 
 .student-eval-chart {
-    max-width: 40rem;
-    height: fit-content;
+    min-width: 30rem;
+    max-width: 35rem;
+    min-height: 20rem;
+    max-height: 30rem;
 }
 
 td i:hover {
