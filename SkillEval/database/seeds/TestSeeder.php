@@ -19,7 +19,21 @@ class TestSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('tests')->insert([
+            'type_id'    => 2,
+            'date'       =>  date('y-m-d'),
+            'moment'     => 'Inicial',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('tests')->insert([
             'type_id'    => 1,
+            'date'       =>  date('y-m-d'),
+            'moment'     => 'Intermédio',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('tests')->insert([
+            'type_id'    => 2,
             'date'       =>  date('y-m-d'),
             'moment'     => 'Intermédio',
             'created_at' => now(),
@@ -29,20 +43,6 @@ class TestSeeder extends Seeder
             'type_id'    => 1,
             'date'       =>  date('y-m-d'),
             'moment'     => 'Final',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        DB::table('tests')->insert([
-            'type_id'    => 2,
-            'date'       =>  date('y-m-d'),
-            'moment'     => 'Inicial',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        DB::table('tests')->insert([
-            'type_id'    => 2,
-            'date'       =>  date('y-m-d'),
-            'moment'     => 'Intermédio',
             'created_at' => now(),
             'updated_at' => now()
         ]);
