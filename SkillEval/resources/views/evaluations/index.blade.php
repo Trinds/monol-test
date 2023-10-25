@@ -54,6 +54,11 @@
                 @endforeach
             </select>
         </div>
+        <div class="col">
+            <label for="date">Data:</label>
+                    <input type="date" id="testDate" name="testDate" value=""class="form-control">
+            </div>
+        </div>
     </div>
     @if($students)
         @component('components.evaluations.table', [ 'students' =>$students ])

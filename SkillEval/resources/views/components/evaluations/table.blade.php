@@ -1,7 +1,5 @@
 @if ($students)
-<div class="table-container">        
-    <form method="POST" id = "gradesForm" action="{{ url('evaluations') }}">
-        @csrf
+<div class="table-container"> 
         <table>
             <thead>
                 <tr class="table-header">
@@ -24,6 +22,8 @@
                 @endforeach
             </tbody>
         </table>
+    <form method="POST" id = "gradesForm" action="{{ url('evaluations') }}">
+    @csrf
         <input type="hidden" name="grades" id="grades" value="">
         <div id="insert_button">
             <button type="button" id="submit-grades">Inserir Pauta</button>
