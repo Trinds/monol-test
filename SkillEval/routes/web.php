@@ -21,17 +21,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('users', 'UserController'); 
-Route::resource('courses', 'CourseController');
-Route::resource('reports', 'ReportsController');
-Route::resource('students', 'StudentController');
-Route::resource('classrooms', 'ClassroomController');
-Route::resource('evaluations', 'EvaluationController');
-
-
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('users', 'UserController');
+    Route::resource('courses', 'CourseController');
+    Route::resource('reports', 'ReportsController');
+    Route::resource('students', 'StudentController');
+    Route::resource('classrooms', 'ClassroomController');
+    Route::resource('evaluations', 'EvaluationController');
+    Route::post('classrooms/import', 'ClassroomController@import')->name('classrooms.import');
+    Route::post('students/import/{classroom}', 'StudentController@import')->name('students.import');
+    Route::delete('/students/{student}', 'StudentController@destroy')->name('students.destroy');
+    Route::get('/students/{student}/edit', 'StudentController@edit')->name('students.edit');
+    Route::put('/students/{student}', 'StudentController@update')->name('students.update');
+});
 
 
 
@@ -41,9 +44,6 @@ Route::resource('evaluations', 'EvaluationController');
 
 // Route::get('evaluations/create/{student}', 'EvaluationController@createForStudent')->name('evaluations.create.student');
 // Route::post('evaluations/store/student', 'EvaluationController@storeForStudent')->name('evaluations.store.student');
-
-
-Auth::routes();
 
 
 // Route::get('/users', 'UserController@index')->name('users.index');
@@ -58,10 +58,3 @@ Auth::routes();
 
 // Route::get('/users/create', 'UserController@create')->name('users.create');
 
-Route::post('classrooms/import', 'ClassroomController@import')->name('classrooms.import');
-Route::post('students/import/{classroom}', 'StudentController@import')->name('students.import');
-
-
-Route::delete('/students/{student}', 'StudentController@destroy')->name('students.destroy');
-Route::get('/students/{student}/edit', 'StudentController@edit')->name('students.edit');
-Route::put('/students/{student}', 'StudentController@update')->name('students.update');
