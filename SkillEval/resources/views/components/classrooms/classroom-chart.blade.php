@@ -5,12 +5,12 @@
 <canvas class="classroom_chart" id="barChart"></canvas>
 <?php
     $studentNames = [];
-    $aTec1=[];
-    $aTec2=[];
-    $aTec3=[];
-    $aPsi1=[];
-    $aPsi2=[];
-    $aPsi3=[];
+    $Tec1=[];
+    $Tec2=[];
+    $Tec3=[];
+    $Psi1=[];
+    $Psi2=[];
+    $Psi3=[];
 
 
     foreach ($classroom->students as $student) 
@@ -23,22 +23,22 @@
             switch ($evaluation->test_id)
             {
                 case 1:
-                    $aTec1[]=$evaluation->score;
+                    $Tec1[]=$evaluation->score;
                 break;
                 case 2:
-                    $aTec2[]=$evaluation->score;
+                    $Psi1[]=$evaluation->score;
                 break;
                 case 3:
-                    $aTec3[]=$evaluation->score;
+                    $Tec2[]=$evaluation->score;
                 break;
                 case 4:
-                    $aPsi1[]=$evaluation->score;
+                    $Psi2[]=$evaluation->score;
                 break;
                 case 5:
-                    $aPsi2[]=$evaluation->score;
+                    $Tec3[]=$evaluation->score;
                 break;
                 case 6:
-                    $aPsi3[]=$evaluation->score;
+                    $Psi3[]=$evaluation->score;
                 break;
             }                
         } 
@@ -51,9 +51,6 @@
     <script>
            
         var studentNames = <?php echo json_encode($studentNames); ?>;
-        <?php echo json_encode($aTec1); ?>
-        
-        
         var ctx = document.getElementById('barChart').getContext('2d');
         
         var datasets = 
@@ -61,42 +58,42 @@
 
             {
                 label: 'Tec1: ',
-                data: <?php echo json_encode($aTec1); ?>,
+                data: <?php echo json_encode($Tec1); ?>,
                 backgroundColor: 'blue',
                 borderColor: 'blue',
                 borderWidth: 1
             },
             {
                 label: 'Tec2: ', 
-                data: <?php echo json_encode($aTec2); ?>,
+                data: <?php echo json_encode($Tec2); ?>,
                 backgroundColor: 'orange',
                 borderColor: 'orange',
                 borderWidth: 1,
             },            
             {
                 label: 'Tec3: ', 
-                data: <?php echo json_encode($aTec3); ?>,
+                data: <?php echo json_encode($Tec3); ?>,
                 backgroundColor: 'green',
                 borderColor: 'green',
                 borderWidth: 1,
             },           
             {
                 label: 'Psi1: ', 
-                data: <?php echo json_encode($aPsi1); ?>,
+                data: <?php echo json_encode($Psi1); ?>,
                 backgroundColor: 'pink',
                 borderColor: 'pink',
                 borderWidth: 1,
             },           
             {
                 label: 'Psi2: ', 
-                data: <?php echo json_encode($aPsi2); ?>,
+                data: <?php echo json_encode($Psi2); ?>,
                 backgroundColor: 'yellow',
                 borderColor: 'yellow',
                 borderWidth: 1,
             },           
             {
                 label: 'Psi3: ', 
-                data: <?php echo json_encode($aPsi3); ?>,
+                data: <?php echo json_encode($Psi3); ?>,
                 backgroundColor: 'grey',
                 borderColor: 'grey',
                 borderWidth: 1,
