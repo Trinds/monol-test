@@ -11,6 +11,20 @@
 @section('content')
 
     <h1 class="title">Inserção de Pauta</h1>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="errors-list">
+                @foreach ($errors->all() as $error)
+                    <li class="error">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="input-container">
         <div class="col">
             <label for="course_filter">Curso:</label>

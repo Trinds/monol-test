@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Test;
+use App\Type;
+use Exception;
 use App\Course;
 use App\Student;
 use App\Classroom;
 use App\Evaluation;
-use App\Type;
-use Exception;
 use Illuminate\Http\Request;
 
 class EvaluationController extends Controller
@@ -60,31 +61,30 @@ class EvaluationController extends Controller
         try 
         {
             $grades = json_decode($request->input('grades'));
-            foreach ($grades as $grade) 
-            {              
-
-                if (!empty($grade->grade)) 
-                {
-                    $request->validate([
-                        'test_id' => 'required',
-                        'student_id' => 'required',
-                        'score' => 'required|numeric',
-                    ]);
-                    $evaluation = new Evaluation([
-                        'test_id' => $grade->test_id,
-                        'student_id' => $grade->student_id,
-                        'score' => $grade->grade,
-                    ]);
-                    $evaluation->save();
+    
+            if ($grades) {
+                foreach ($grades as $grade) 
+                {              
+                   
+                    if (isset($grade->test_id, $grade->student_id, $grade->score)) {
+                        $evaluation = new Evaluation([
+                            'test_id' => $grade->test_id,
+                            'student_id' => $grade->student_id,
+                            'score' => $grade->score,
+                        ]);
+                        $evaluation->save();
+                    }
                 }
             }
-            return response()->json(['message' => 'Evaluations saved successfully'], 200);
+
+            return redirect()->route('evaluations.index')->with('success', 'Avaliações criadas com sucesso!');
         } 
         catch (Exception $e) 
         {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return redirect()->route('evaluations.index')->with('error', 'Falha ao criar as avaliações. Por favor, tente novamente.');
         }
     }
+    
     
 
     public function createForStudent(Student $student)
