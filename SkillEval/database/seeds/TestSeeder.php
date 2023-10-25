@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TestSeeder extends Seeder
 {
@@ -13,42 +14,36 @@ class TestSeeder extends Seeder
     {
         DB::table('tests')->insert([
             'type_id'    => 1,
-            'date'       =>  date('y-m-d'),
             'moment'     => 'Inicial',
             'created_at' => now(),
             'updated_at' => now()
         ]);
         DB::table('tests')->insert([
             'type_id'    => 2,
-            'date'       =>  date('y-m-d'),
             'moment'     => 'Inicial',
             'created_at' => now(),
             'updated_at' => now()
         ]);
         DB::table('tests')->insert([
             'type_id'    => 1,
-            'date'       =>  date('y-m-d'),
             'moment'     => 'Intermédio',
             'created_at' => now(),
             'updated_at' => now()
         ]);
         DB::table('tests')->insert([
             'type_id'    => 2,
-            'date'       =>  date('y-m-d'),
             'moment'     => 'Intermédio',
             'created_at' => now(),
             'updated_at' => now()
         ]);
         DB::table('tests')->insert([
             'type_id'    => 1,
-            'date'       =>  date('y-m-d'),
             'moment'     => 'Final',
             'created_at' => now(),
             'updated_at' => now()
         ]);
         DB::table('tests')->insert([
             'type_id'    => 2,
-            'date'       =>  date('y-m-d'),
             'moment'     => 'Final',
             'created_at' => now(),
             'updated_at' => now()

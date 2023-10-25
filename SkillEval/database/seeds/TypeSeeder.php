@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TypeSeeder extends Seeder
 {
@@ -12,13 +13,13 @@ class TypeSeeder extends Seeder
     public function run()
     {
         DB::table('types')->insert([
-            'type' => 'Tecnico',
+            'type' => 'Técnico',
             'created_at' => now(),
             'updated_at' => now()
           ]);
     
           DB::table('types')->insert([
-            'type' => 'Psiquico',
+            'type' => 'Psicotécnico',
             'created_at' => now(),
             'updated_at' => now()
           ]);

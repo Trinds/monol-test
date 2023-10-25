@@ -16,10 +16,10 @@ foreach ($classroom->students as $student) {
     $studentNames[] = $student->name;
 
     foreach ($student->evaluations as $evaluation) {
-        if ($evaluation->test->type->type === 'Tecnico') {
+        if ($evaluation->test->type->type === 'Técnico') {
             $allTecnico[] = $evaluation->score;
             $studentTecnicoScores[] = $evaluation->score;
-        } elseif ($evaluation->test->type->type === 'Psiquico') {
+        } elseif ($evaluation->test->type->type === 'Psicotécnico') {
             $allPsiquico[] = $evaluation->score;
             $studentPsiquicoScores[] = $evaluation->score;
         }
