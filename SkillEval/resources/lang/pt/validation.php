@@ -30,7 +30,7 @@ return [
     'array' => 'O :attribute deve ter entre :min e :max itens.',
 ],
 'boolean' => 'O campo :attribute deve ser verdadeiro ou falso.',
-'confirmed' => 'A confirmação do :attribute não corresponde.',
+'confirmed' => 'A confirmação do :attribute não coincide.',
 'date' => 'O :attribute não é uma data válida.',
 'date_equals' => 'O :attribute deve ser uma data igual a :date.',
 'date_format' => 'O :attribute não corresponde ao formato :format.',
@@ -184,6 +184,11 @@ return [
         'mimes' => 'A imagem deve ser um ficheiro do tipo: :values.',
         'max' => 'A imagem é demasiado grande. Não pode exceder os :max kilobytes.',
     ],
+    'password' => [
+        'required' => 'A password é obrigatória.',
+        'min' => 'A password deve ter pelo menos :min caracteres.',
+        'confirmed' => 'A confirmação da password não coincide.',
+    ],
 ],
 
 /*
@@ -215,5 +220,6 @@ return [
     'roles' => 'funções',
     'permissions' => 'permissões',
     'role' => 'função',
+    'permission' => 'permissão',
 ],
 ];

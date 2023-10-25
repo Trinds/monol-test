@@ -61,8 +61,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-            'email' => 'required|email',
-            'password' => 'required|confirmed|min:6',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|confirmed|min:6|max:255',
             'roles' => 'required',
         ]);
 
@@ -100,21 +100,13 @@ class UserController extends Controller
     {
         $imagePath = null;
 
-        $customMessages = [
-            'required' => 'O :attribute é obrigatório.',
-            'email' => 'O :attribute deve ser um endereço de email válido.',
-            'confirmed' => 'A confirmação :attribute não coincide.',
-            'password.min' => 'A password deve ter pelo menos :min caracteres.',
-            'image' => 'A imagem deve ser um ficheiro do tipo jpeg, png, jpg, gif ou svg com um tamanho máximo de 5 megabytes.'
-        ];
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-            'email' => 'required|email',
-            'password' => 'sometimes|confirmed',
+            'email' => 'required|email|unique:users,email,' . $user->id . '|max:255',
+            'password' => 'sometimes|confirmed|min:6|max:255',
             'roles' => 'required',
-        ], $customMessages);
+        ],);
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/images');
@@ -145,7 +137,6 @@ class UserController extends Controller
                         ->withInput()
                         ->with('error', 'Oops! Algo correu mal ao atualizar o utilizador. Por favor verifique o(s) seguinte(s) erro:');
                 }
-
                 $user->password = bcrypt($request->input('password'));
             }
 
@@ -171,6 +162,6 @@ class UserController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Ocorreu um erro ao eliminar o utilizador.');
         }
-        return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'Utilizador eliminado com sucesso!');
     }
 }
