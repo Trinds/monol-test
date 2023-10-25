@@ -1,48 +1,32 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+use App\Test;
+use App\Student;
 use Illuminate\Database\Seeder;
 
 class EvaluationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-//    public function run()
-//    {
-//        $students = App\Student::all();
-//        $testIds = range(1, 6);
-//
-//        foreach ($students as $student) {
-//            shuffle($testIds);
-//            $selectedTestIds = array_slice($testIds, 0, 6);
-//
-//            foreach ($selectedTestIds as $testId) {
-//                factory(App\Evaluation::class)->create([
-//                    'student_id' => $student->id,
-//                    'test_id' => $testId,
-//                ]);
-//            }
-//        }
-//    }
     public function run()
     {
-        $students = App\Student::all();
+        $students = Student::all();
 
-        foreach ($students as $student) 
+        $tests = Test::all();   
+
+        foreach ($students as $student)
         {
-
-            for ($i = 1; $i < 7; $i++) 
+            foreach ($tests as $test)
             {
-                factory(App\Evaluation::class)->create([
-
+                DB::table('evaluations')->insert([
                     'student_id' => $student->id,
-                    'test_id' =>  $i,
-
+                    'test_id' => $test->id,
+                    'score' => rand(0, 20),
+                    'date' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
             }
-
         }
+        
     }
 }

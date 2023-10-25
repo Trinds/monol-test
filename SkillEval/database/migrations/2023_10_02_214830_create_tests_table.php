@@ -17,7 +17,6 @@ class CreateTestsTable extends Migration
             $table->id();
             $table->foreignId('type_id')->constrained()->onDelete('cascade');
             $table->enum('moment', ['Inicial', 'Intermédio', 'Final']);
-            $table->date('date');
             $table->timestamps();
             $table->softDeletes();
             $table->unique(['type_id', 'moment']);

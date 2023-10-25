@@ -17,6 +17,7 @@
             $studentPsiquicoScores = [];
             $studentNames[] = $student->name;
 
+<<<<<<< HEAD
             foreach ($student->evaluations as $evaluation) 
             {
                 if ($evaluation->test->type->type === 'Tecnico') 
@@ -38,6 +39,15 @@
 
             $tecnicoAverages[] = $tecnicoAverage;
             $psiquicoAverages[] = $psiquicoAverage;
+=======
+    foreach ($student->evaluations as $evaluation) {
+        if ($evaluation->test->type->type === 'Técnico') {
+            $allTecnico[] = $evaluation->score;
+            $studentTecnicoScores[] = $evaluation->score;
+        } elseif ($evaluation->test->type->type === 'Psicotécnico') {
+            $allPsiquico[] = $evaluation->score;
+            $studentPsiquicoScores[] = $evaluation->score;
+>>>>>>> 2cd3bea7e8de956342f4dacc5fd135a90cd9c7fe
         }
 
         // Pass all PHP variables and arrays to JavaScript
