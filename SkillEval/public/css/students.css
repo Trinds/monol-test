@@ -59,16 +59,15 @@ td i {
 "evaluations evaluations";
     gap: 2rem;
     padding: 3rem;
+    align-items: center;
 }
 
 .details-container {
     grid-area: details;
 }
 
-.chart-container {
+.chart-area {
     grid-area: chart;
-    width: 100%;
-    max-height: 100%;
     display: flex;
     justify-content: center;
 }
@@ -78,9 +77,8 @@ td i {
 }
 
 .student-eval-chart {
-    min-width: 20rem;
     max-width: 40rem;
-    height: 100%;
+    height: fit-content;
 }
 
 td i:hover {

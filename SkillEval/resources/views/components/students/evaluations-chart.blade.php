@@ -1,7 +1,4 @@
-<canvas class="student-eval-chart"   id="barChart">
-
-    
-</canvas>
+<canvas class="student-eval-chart"   id="barChart"></canvas>
 
 <script>
     var ctx = document.getElementById('barChart').getContext('2d');
@@ -20,62 +17,63 @@
                         '{{$evaluation->score}}',
                     @endforeach
                 ],
-                backgroundColor: [
-         
-                    @foreach($studentEvaluations as $evaluation)
-                        @if($evaluation->score >= 10)
-                            'rgba(0, 255, 0, 0.2)',
-                        @else
-                            'rgba(255, 0, 0, 0.2)',
-                        @endif
-                    @endforeach
-                ],
-                borderColor: [
-                    @foreach($studentEvaluations as $evaluation)
-                        @if($evaluation->score >= 10)
-                            'rgba(0, 255, 0, 1)',
-                        @else
-                            'rgba(255, 0, 0, 1)',
-                        @endif
-                    @endforeach
-                ],
+                backgroundColor: {!! $studentEvaluations !!}.map(evaluation =>
+                    evaluation.score <= 6 ?
+                        '#b91c1c'
+                        : evaluation.score < 9.49 ?
+                            '#ea580c'
+                            : evaluation.score < 13 ?
+                                '#facc15'
+                                : evaluation.score < 17 ?
+                                    '#166534'
+                                    : '#22c55e'),
+                borderColor:{!! $studentEvaluations !!}.map(evaluation =>
+                    evaluation.score <= 6 ?
+                        '#b91c1c'
+                        : evaluation.score < 9.49 ?
+                            '#ea580c'
+                            : evaluation.score < 13 ?
+                                '#facc15'
+                                : evaluation.score < 17 ?
+                                    '#166534'
+                                    : '#22c55e'),
                 borderWidth: 1
             }]
         },
-        options: 
+        options:
             {
-                scales: 
+                scales:
                 {
                     y: {
                         min: 0,
                         max: 20,
                         ticks: {
                             stepSize: 1,
-                            color: 'blue'
+                            color: '#4E4E4E'
                         }
                     },
                     x: {
                         ticks: {
-                            color: 'blue'
+                            color: '#4E4E4E'
                         }
                     }
                 },
-                plugins: 
+                plugins:
                 {
-                    legend: 
+                    legend:
                     {
                         display: false,
-                        labels: 
-                        {   
+                        labels:
+                        {
                             boxWidth:0,
                         }
                     },
-                    title: 
+                    title:
                     {
                         display: true,
                         text: 'Notas de testes',
-                        color: 'blue',
-                        font: 
+                        color: '#4E4E4E',
+                        font:
                         {
                             size: 15,
                         },

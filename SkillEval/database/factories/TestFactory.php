@@ -9,6 +9,6 @@ $factory->define(Test::class, function (Faker $faker) {
     return [
         'type_id' => rand(1, 2),
         'date' => $faker->dateTimeBetween('now', '+30 days'),
-        'moment' => $faker->randomElement(['start', 'mid', 'end']),
+        'moment' => $faker->randomElement(['Inicial', 'Intermédio', 'Final']),
     ];
 });

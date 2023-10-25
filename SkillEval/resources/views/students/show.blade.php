@@ -2,7 +2,6 @@
 
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script type="module" src="{{asset('js/createStudentChart.js')}}"></script>
 <script type="module" src="{{asset('js/editStudentCard.js')}}"></script>
 <script type="module" src="{{asset('js/classroomsFilter.js')}}"></script>
 
@@ -22,7 +21,7 @@
 </div>
 
 <div class="grid-container">
-    <div class="chart-container">
+    <div class="chart-area">
         @component('components.students.evaluations-chart' , ['studentEvaluations'=>$student->evaluations])
         @endcomponent
     </div>
@@ -47,7 +46,7 @@
             <tbody>
             @foreach($student->evaluations as $evaluation)
                 <tr class="table-row">
-                    <td>{{$evaluation->test->id}}</td>
+                    <td>{{$evaluation->test->moment}}</td>
                     <td>{{$evaluation->test->type->type}}</td>
                     <td>{{$evaluation->score}}</td>
                     <td>
