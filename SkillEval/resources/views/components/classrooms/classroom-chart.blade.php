@@ -3,98 +3,107 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
 <canvas class="classroom_chart" id="barChart"></canvas>
+<?php
+    $studentNames = [];
+    $aTec1=[];
+    $aTec2=[];
+    $aTec3=[];
+    $aPsi1=[];
+    $aPsi2=[];
+    $aPsi3=[];
 
-    <?php
-        $allTecnico = [];
-        $allPsiquico = [];
-        $studentNames = [];
-        $tecnicoAverages = [];
-        $psiquicoAverages = [];
 
-        foreach ($classroom->students as $student) 
-        {
-            $studentTecnicoScores = [];
-            $studentPsiquicoScores = [];
-            $studentNames[] = $student->name;
+    foreach ($classroom->students as $student) 
+    {
+        $studentNames[] = $student->name;
 
-<<<<<<< HEAD
-            foreach ($student->evaluations as $evaluation) 
+        foreach($student->evaluations as $evaluation)
+        {  
+
+            switch ($evaluation->test_id)
             {
-                if ($evaluation->test->type->type === 'Tecnico') 
-                {
-                    $allTecnico[] = $evaluation->score;
-                    $studentTecnicoScores[] = $evaluation->score;
-                } 
-                elseif ($evaluation->test->type->type === 'Psiquico') 
-                {
-                    $allPsiquico[] = $evaluation->score;
-                    $studentPsiquicoScores[] = $evaluation->score;
-                }
-            }
+                case 1:
+                    $aTec1[]=$evaluation->score;
+                break;
+                case 2:
+                    $aTec2[]=$evaluation->score;
+                break;
+                case 3:
+                    $aTec3[]=$evaluation->score;
+                break;
+                case 4:
+                    $aPsi1[]=$evaluation->score;
+                break;
+                case 5:
+                    $aPsi2[]=$evaluation->score;
+                break;
+                case 6:
+                    $aPsi3[]=$evaluation->score;
+                break;
+            }                
+        } 
+    }
 
-            $averageAllTecnico = array_sum($allTecnico) / count($allTecnico);
-            $averageAllPsiquico = array_sum($allPsiquico) / count($allPsiquico);
-            $tecnicoAverage = array_sum($studentTecnicoScores) / count($studentTecnicoScores);
-            $psiquicoAverage = array_sum($studentPsiquicoScores) / count($studentPsiquicoScores);
 
-            $tecnicoAverages[] = $tecnicoAverage;
-            $psiquicoAverages[] = $psiquicoAverage;
-=======
-    foreach ($student->evaluations as $evaluation) {
-        if ($evaluation->test->type->type === 'Técnico') {
-            $allTecnico[] = $evaluation->score;
-            $studentTecnicoScores[] = $evaluation->score;
-        } elseif ($evaluation->test->type->type === 'Psicotécnico') {
-            $allPsiquico[] = $evaluation->score;
-            $studentPsiquicoScores[] = $evaluation->score;
->>>>>>> 2cd3bea7e8de956342f4dacc5fd135a90cd9c7fe
-        }
 
-        // Pass all PHP variables and arrays to JavaScript
-        echo '<script>';
-        echo 'var allTecnico = ' . json_encode($allTecnico) . ';';
-        echo 'var allPsiquico = ' . json_encode($allPsiquico) . ';';
-        echo 'var studentNames = ' . json_encode($studentNames) . ';';
-        echo 'var tecnicoAverages = ' . json_encode($tecnicoAverages) . ';';
-        echo 'var psiquicoAverages = ' . json_encode($psiquicoAverages) . ';';
-        echo 'var averageAllTecnico = ' . json_encode($averageAllTecnico) . ';';
-        echo 'var averageAllPsiquico = ' . json_encode($averageAllPsiquico) . ';';
-        echo '</script>';
-    ?>
-
-    <!----------------------------------------------------------------------------------------------------->
-    <!----------------------------------------------------------------------------------------------------->
-    <!----------------------------------------------------------------------------------------------------->
+?><!-------------------------------------------------------------------------------~------------------------------><!------->
 
     <script>
-        //get php variables
-            var allTecnico = <?php echo json_encode($allTecnico); ?>;
-            var allPsiquico = <?php echo json_encode($allPsiquico); ?>;
-            var studentNames = <?php echo json_encode($studentNames); ?>;
-            var tecnicoAverages = <?php echo json_encode($tecnicoAverages); ?>;
-            var psiquicoAverages = <?php echo json_encode($psiquicoAverages); ?>;
-            var averageAllTecnico = <?php echo json_encode($averageAllTecnico); ?>;
-            var averageAllPsiquico = <?php echo json_encode($averageAllPsiquico); ?>;
+           
+        var studentNames = <?php echo json_encode($studentNames); ?>;
+        <?php echo json_encode($aTec1); ?>
+        
+        
+        var ctx = document.getElementById('barChart').getContext('2d');
         
         var datasets = 
         [
+
             {
-                label: 'Psíquico: ' + averageAllPsiquico.toFixed(2),
-                data: tecnicoAverages,
-                backgroundColor: tecnicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'),
-                borderColor: tecnicoAverages.map(average => average > 9 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)'),
+                label: 'Tec1: ',
+                data: <?php echo json_encode($aTec1); ?>,
+                backgroundColor: 'blue',
+                borderColor: 'blue',
                 borderWidth: 1
             },
             {
-                label: 'Técnico: ' + averageAllTecnico.toFixed(2),
-                data: psiquicoAverages,
+                label: 'Tec2: ', 
+                data: <?php echo json_encode($aTec2); ?>,
                 backgroundColor: 'orange',
                 borderColor: 'orange',
+                borderWidth: 1,
+            },            
+            {
+                label: 'Tec3: ', 
+                data: <?php echo json_encode($aTec3); ?>,
+                backgroundColor: 'green',
+                borderColor: 'green',
+                borderWidth: 1,
+            },           
+            {
+                label: 'Psi1: ', 
+                data: <?php echo json_encode($aPsi1); ?>,
+                backgroundColor: 'pink',
+                borderColor: 'pink',
+                borderWidth: 1,
+            },           
+            {
+                label: 'Psi2: ', 
+                data: <?php echo json_encode($aPsi2); ?>,
+                backgroundColor: 'yellow',
+                borderColor: 'yellow',
+                borderWidth: 1,
+            },           
+            {
+                label: 'Psi3: ', 
+                data: <?php echo json_encode($aPsi3); ?>,
+                backgroundColor: 'grey',
+                borderColor: 'grey',
                 borderWidth: 1,
             }
         ];
 
-        var ctx = document.getElementById('barChart').getContext('2d');
+       
         
         var myChart = new Chart(ctx, 
         {
@@ -169,7 +178,7 @@
                                 type: 'line',
                                 borderWidth: 3,
                                 mode: 'horizontal',
-                                value: averageAllTecnico,
+                                value: 0,
                                 borderColor: 'rgb(48, 133, 195)',
                             },
                             {
@@ -178,7 +187,7 @@
                                 scaleID: 'y',
                                 borderWidth: 3,
                                 mode: 'horizontal',
-                                value: averageAllPsiquico,
+                                value: 0,
                                 borderColor: 'rgb(249, 148, 23)',
                             }
                         ],
