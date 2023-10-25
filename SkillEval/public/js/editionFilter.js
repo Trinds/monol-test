@@ -74,16 +74,15 @@ document.addEventListener("DOMContentLoaded", function ()
                 if(!seledctedDate)seledctedDate=new Date();
                 if(studentId)
                 {
-                const studentData = 
-                {                     
-                    test_id: selectedTestId,
-                    student_id: studentId, 
-                    moment: selectedMomentId,
-                    score: grade, 
-                    testDate: seledctedDate
-                };
-                
-                data.push(studentData);
+                    const studentData = 
+                    {                     
+                        test_id: selectedTestId,
+                        student_id: studentId, 
+                        moment: selectedMomentId,
+                        score: grade, 
+                        testDate: seledctedDate
+                    };                
+                    data.push(studentData);
                 }
 
 
