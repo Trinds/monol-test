@@ -6,49 +6,45 @@ $allPsiquico = [];
 $studentNames = [];
 $tecnicoAverages = [];
 $psiquicoAverages = [];
-$averageAllTecnico =0;
+$averageAllTecnico = 0;
 $averageAllPsiquico = 0;
 
 
-if(count($classroom->students)>0)
-{
+foreach ($classroom->students as $student) {
+    $studentTecnicoScores = [];
+    $studentPsiquicoScores = [];
+    $studentNames[] = $student->name;
 
-    foreach ($classroom->students as $student) 
-    {
-        $studentTecnicoScores = [];
-        $studentPsiquicoScores = [];
-        $studentNames[] = $student->name;
-
-        foreach ($student->evaluations as $evaluation) {
-            if ($evaluation->test->type->type === 'Tecnico') {
-                $allTecnico[] = $evaluation->score;
-                $studentTecnicoScores[] = $evaluation->score;
-            } elseif ($evaluation->test->type->type === 'Psiquico') {
-                $allPsiquico[] = $evaluation->score;
-                $studentPsiquicoScores[] = $evaluation->score;
-            }
+    foreach ($student->evaluations as $evaluation) {
+        if ($evaluation->test->type->type === 'Tecnico') {
+            $allTecnico[] = $evaluation->score;
+            $studentTecnicoScores[] = $evaluation->score;
+        } elseif ($evaluation->test->type->type === 'Psiquico') {
+            $allPsiquico[] = $evaluation->score;
+            $studentPsiquicoScores[] = $evaluation->score;
         }
-
-        $averageAllTecnico = array_sum($allTecnico) / count($allTecnico);
-        $averageAllPsiquico = array_sum($allPsiquico) / count($allPsiquico);
-        $tecnicoAverage = array_sum($studentTecnicoScores) / count($studentTecnicoScores);
-        $psiquicoAverage = array_sum($studentPsiquicoScores) / count($studentPsiquicoScores);
-
-        $tecnicoAverages[] = $tecnicoAverage;
-        $psiquicoAverages[] = $psiquicoAverage;
     }
 
-    // Pass all PHP variables and arrays to JavaScript
-    echo '<script>';
-    echo 'var allTecnico = ' . json_encode($allTecnico) . ';';
-    echo 'var allPsiquico = ' . json_encode($allPsiquico) . ';';
-    echo 'var studentNames = ' . json_encode($studentNames) . ';';
-    echo 'var tecnicoAverages = ' . json_encode($tecnicoAverages) . ';';
-    echo 'var psiquicoAverages = ' . json_encode($psiquicoAverages) . ';';
-    echo 'var averageAllTecnico = ' . json_encode($averageAllTecnico) . ';';
-    echo 'var averageAllPsiquico = ' . json_encode($averageAllPsiquico) . ';';
-    echo '</script>';
+    $averageAllTecnico = array_sum($allTecnico) / count($allTecnico);
+    $averageAllPsiquico = array_sum($allPsiquico) / count($allPsiquico);
+    $tecnicoAverage = array_sum($studentTecnicoScores) / count($studentTecnicoScores);
+    $psiquicoAverage = array_sum($studentPsiquicoScores) / count($studentPsiquicoScores);
+
+    $tecnicoAverages[] = $tecnicoAverage;
+    $psiquicoAverages[] = $psiquicoAverage;
 }
+
+// Pass all PHP variables and arrays to JavaScript
+echo '<script>';
+echo 'var allTecnico = ' . json_encode($allTecnico) . ';';
+echo 'var allPsiquico = ' . json_encode($allPsiquico) . ';';
+echo 'var studentNames = ' . json_encode($studentNames) . ';';
+echo 'var tecnicoAverages = ' . json_encode($tecnicoAverages) . ';';
+echo 'var psiquicoAverages = ' . json_encode($psiquicoAverages) . ';';
+echo 'var averageAllTecnico = ' . json_encode($averageAllTecnico) . ';';
+echo 'var averageAllPsiquico = ' . json_encode($averageAllPsiquico) . ';';
+echo '</script>';
+
 ?><!----><!---->
 
 
