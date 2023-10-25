@@ -1,0 +1,41 @@
+.input-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 4rem;
+
+    & .col{
+        max-width: 20rem;
+        min-width: 10rem;
+    }
+
+    &
+}
+
+#insert_button{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.table-container{
+    height: auto;
+    padding: 2rem 0;
+
+    & input {
+        /*remover setas*/
+        -webkit-appearance: none; /*chrome, edge, opera, etc*/
+        -moz-appearance: textfield; /*firefox*/
+
+        border: 1px solid var(--davys-gray);
+        border-radius: .3rem;
+        padding: .3rem .3rem;
+        line-height: 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    & input:focus{
+        outline: none;
+    }
+}

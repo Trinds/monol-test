@@ -39,7 +39,9 @@ class StudentController extends Controller
                 ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
                 ->paginate(9)->withQueryString();
         }
+
         $hasResults = $students->isNotEmpty();
+
         return view('students.index', [
             'students' => $students,
             'classrooms' => Classroom::all()->sortBy('course_id'),
@@ -50,16 +52,15 @@ class StudentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function create()
     {
         $courses = \App\Course::all();
         $classrooms = \App\Classroom::all();
-        if ($courses->isEmpty()){
+        if ($courses->isEmpty()) {
             return redirect()->route('courses.create')->with('error', 'Não existem cursos. Por favor, crie um curso primeiro.');
-        }
-        elseif ($classrooms->isEmpty()){
+        } elseif ($classrooms->isEmpty()) {
             return redirect()->route('classrooms.create')->with('error', 'Não existem turmas. Por favor, crie uma turma primeiro.');
         }
         return view('students.create', ['courses' => $courses, 'classrooms' => $classrooms]);
@@ -68,7 +69,7 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -105,7 +106,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Student  $student
+     * @param \App\Student $student
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show(Student $student)
@@ -118,8 +119,8 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
+     * @param \App\Student $student
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit(Student $student)
     {
@@ -132,9 +133,9 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Student $student
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Student $student)
     {
@@ -177,8 +178,8 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
+     * @param \App\Student $student
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Student $student)
     {

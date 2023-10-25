@@ -7,6 +7,7 @@ use App\Course;
 use App\Student;
 use App\Classroom;
 use App\Evaluation;
+use App\Type;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -15,35 +16,32 @@ class EvaluationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index(Request $request)
     {
+        $test_types = Type::all();
         $tests = Test::all();
         $courses = Course::all();
         $students = Student::all();
         $classrooms = Classroom::all();
         // If a course is selected, filter classrooms based on the selected course
-        if ($request->has('course_id')) 
-        {
-            $selectedCourseId = $request->input('course_id');
-            $classrooms = Classroom::where('course_id', $selectedCourseId)->get();
+        if ($request->has('course_filter')) {
+            $classrooms = Classroom::where('course_id', $request->input('course_filter'))->get();
         }
-        // If a classrom is selected, filter students based on the selected classrom
-        if ($request->has('classroom_id')) 
-        {
-            $selectedClassRoomId = $request->input('classroom_id');
-            $students = Student::where('classroom_id', $selectedClassRoomId)->get();
-        }
-        else
-            $students =[];
-    
-        return view('evaluations.index', 
+        // If a classrom is selected, filter students based on the selected classroom
+        if ($request->has('classroom_filter')) {
+            $students = Student::where('classroom_id', $request->input('classroom_filter'))->get();
+        } else
+            $students = [];
+
+        return view('evaluations.index',
             [
-            'tests' => $tests,
-            'courses' => $courses,
-            'students' => $students,
-            'classrooms' => $classrooms,
+                'test_types' => $test_types,
+                'tests' => $tests,
+                'courses' => $courses,
+                'students' => $students,
+                'classrooms' => $classrooms,
             ]);
     }
 
@@ -69,12 +67,10 @@ class EvaluationController extends Controller
     }
 
 
-
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
 
@@ -104,12 +100,10 @@ class EvaluationController extends Controller
     }
 
 
-
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Evaluation  $evaluation
+     * @param \App\Evaluation $evaluation
      * @return \Illuminate\Http\Response
      */
     public function show(Evaluation $evaluation)
@@ -120,7 +114,7 @@ class EvaluationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Evaluation  $evaluation
+     * @param \App\Evaluation $evaluation
      * @return \Illuminate\Http\Response
      */
     public function edit(Evaluation $evaluation)
@@ -131,8 +125,8 @@ class EvaluationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Evaluation  $evaluation
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Evaluation $evaluation
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Evaluation $evaluation)
@@ -143,7 +137,7 @@ class EvaluationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Evaluation  $evaluation
+     * @param \App\Evaluation $evaluation
      * @return \Illuminate\Http\Response
      */
     public function destroy(Evaluation $evaluation)

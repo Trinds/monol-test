@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const courseSelect = document.getElementById("course_id");
-    const classroomSelect = document.getElementById("classroom_id");
-   
+    const courseSelect = document.getElementById("course_filter");
+    const classroomSelect = document.getElementById("classroom_filter");
+
 
     function clearClassrooms() {
         for (const option of classroomSelect.options) {

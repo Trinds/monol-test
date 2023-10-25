@@ -304,8 +304,12 @@ table {
     color: var(--carrot-orange);
 }
 
-.page-link:focus, .page-link:focus-visible {
-    box-shadow: 0 0 0 0.2rem rgba(242, 147, 31, 0.25);
+.page-link:focus,
+.page-link:focus-visible,
+.form-control:focus,
+.form-control:focus-visible
+{
+    box-shadow: 0 0 0 0.2rem rgba(242, 147, 31, 0.4);
 }
 
 
