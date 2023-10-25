@@ -7,6 +7,8 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -154,10 +156,20 @@ class UserController extends Controller
         $countAdmins = User::whereHas('roles', function ($query) {
             $query->where('name', 'admin');
         })->count();
-        if ($countAdmins == 1 && $user->hasRole('admin')) {
+        if ($countAdmins == 1 && $user->hasRole('admin')) { // se o utilizador a eliminar for o único administrador existente
             return redirect()->back()->with('error', 'Não é possível eliminar o único administrador existente.');
         }
-        try{
+        if ($user->id == Auth::user()->id) { // se o utilizador a eliminar for o utilizador autenticado
+            try{
+                Auth::logout();
+                $user->delete();
+                Session::flush();
+                return redirect()->route('login')-> with('status', 'Conta eliminada com sucesso!');
+            } catch (Exception $e) {
+                return redirect()->back()->with('error', 'Ocorreu um erro ao eliminar o utilizador.');
+            }
+        }
+        try{ // se o utilizador a eliminar for um utilizador normal
             $user->delete();
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Ocorreu um erro ao eliminar o utilizador.');

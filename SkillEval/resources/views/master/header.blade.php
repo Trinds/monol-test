@@ -66,9 +66,14 @@
 
 <script type="text/javascript">
 
-    function goToUserProfile() {
-        location.href = "{{ route('users.show', Auth::user()->id) }}"
-    }
+function goToUserProfile() {
+    @auth
+        location.href = "{{ route('users.show', Auth::user()->id) }}";
+    @else
+        location.href = "{{ route('login') }}";
+    @endauth
+}
+
 
     function goToHome(){
         location.href = "{{route('home')}}"
