@@ -20,6 +20,7 @@ class CreateTestsTable extends Migration
             $table->date('date');
             $table->timestamps();
             $table->softDeletes();
+            $table->unique(['type_id', 'moment']);
         });
     }
 
