@@ -6,9 +6,11 @@ document.addEventListener("DOMContentLoaded", function ()
     const momentSelect = document.getElementById("moment_id");
     const submitGrades = document.getElementById("submit-grades");
     const gradesForm = document.getElementById("gradesForm");
-    
+    const testDate = document.getElementById("testDate");
+
     var selectedTestId;
     var selectedMomentId;
+    var seledctedDate;
 
     clearClassrooms();    
 
@@ -50,30 +52,49 @@ document.addEventListener("DOMContentLoaded", function ()
         selectedMomentId = momentSelect.value;
     });
 
+    testDate.addEventListener("change", function () 
+    {
+        seledctedDate = testDate.value;
+    });
 
 
     submitGrades.addEventListener("click", function() 
     {
-        const grades = [];
+        var data = [];
 
         const inputFields = document.querySelectorAll('input[name="grades"]');
         inputFields.forEach(function(input) 
             {            
-                const studentId = input.getAttribute("student_Id");
-                const grade = input.value;
+                var studentIdValue = input.getAttribute("student_Id");
+                var studentId = parseInt(studentIdValue, 10);
+                var test_id = 1;
+                var grade = input.value;
+                if(!grade) grade=1;
+                if(!selectedTestId)selectedTestId='1';
+                if(!seledctedDate)seledctedDate=new Date();
+                if(studentId)
+                {
                 const studentData = 
                 {                     
-                    studentId: studentId, 
-                    testId: selectedTestId,
-                    momentId: selectedMomentId,
-                    grade: grade 
+                    test_id: selectedTestId,
+                    student_id: studentId, 
+                    moment: selectedMomentId,
+                    score: grade, 
+                    testDate: seledctedDate
                 };
-                grades.push(studentData);
+                
+                data.push(studentData);
+                }
+
+
             });
-        document.getElementById("grades").value = JSON.stringify(grades);
-    
+        document.getElementById("grades").value = JSON.stringify(data);
+        console.log(data)
         gradesForm.submit();
     });
+
+    
+
     
     updateClassrooms();
 });

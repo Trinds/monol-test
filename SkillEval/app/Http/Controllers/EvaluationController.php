@@ -57,35 +57,34 @@ class EvaluationController extends Controller
 
     public function store(Request $request)
     {
-        try 
-        {
-            $grades = json_decode(request('grades'));
+        try {
+            $grades = json_decode($request->input('grades'));
     
-            foreach ($grades as $grade) 
-            {                
-                if (!empty($grade->grade)) 
-                {
+            foreach ($grades as $grade) {
+
+                
+
+                if (!empty($grade->grade)) {
                     $request->validate([
                         'test_id' => 'required',
-                        'score' => 'required|numeric|min:0|max:20'
+                        'student_id' => 'required',
+                        'grade' => 'required|numeric',
                     ]);
-    
                     $evaluation = new Evaluation([
-                        'test_id' => $grade->testId,
-                        'score' => $grade->grade,
-                        'student_id' => $grade->studentId 
+                        'test_id' => $grade->test_id,
+                        'student_id' => $grade->student_id,
+                        'grade' => $grade->grade,
                     ]);
     
                     $evaluation->save();
                 }
             }
-        } 
-        catch (Exception $e) 
-        {
-            // Handle exceptions
+            return response()->json(['message' => 'Evaluations saved successfully'], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-        
     }
+    
 
     public function createForStudent(Student $student)
     {

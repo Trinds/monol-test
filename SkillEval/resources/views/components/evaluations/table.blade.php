@@ -16,7 +16,7 @@
                         {{ $student->classroom->course->abbreviation }} {{ $student->classroom->edition }}
                     </td>
                     <td>
-                    <input type="number" name="grades" student_Id="{{ $student->id }}" studentstep="0.01" min="0" max="20">
+                    <input type="number" name="grades" student_Id="{{ $student->id }}" studentstep="0.01" min="0" max="20" value="0">
                     </td>
                 </tr>
                 @endforeach

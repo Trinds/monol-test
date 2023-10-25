@@ -54,9 +54,9 @@
                 @endforeach
             </select>
         </div>
-        <div class="col">
-            <label for="date">Data:</label>
-                    <input type="date" id="testDate" name="testDate" value=""class="form-control">
+            <div class="col">
+                <label for="testDate">Data:</label>
+                <input type="date" id="testDate" name="testDate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
             </div>
         </div>
     </div>
