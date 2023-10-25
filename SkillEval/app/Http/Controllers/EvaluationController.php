@@ -60,7 +60,6 @@ class EvaluationController extends Controller
         try 
         {
             $grades = json_decode($request->input('grades'));
-    dd($grades);
             foreach ($grades as $grade) 
             {              
 
@@ -76,7 +75,6 @@ class EvaluationController extends Controller
                         'student_id' => $grade->student_id,
                         'score' => $grade->grade,
                     ]);
-                    dd($evaluation);
                     $evaluation->save();
                 }
             }
