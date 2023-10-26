@@ -1,6 +1,6 @@
 @if ($students)
         <div class="table-container"> 
-            <table>
+            <table class="large-table">
                 <thead>
                     <tr class="table-header">
                         <th scope="col">Nome</th>

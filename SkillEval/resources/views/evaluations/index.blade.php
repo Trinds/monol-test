@@ -50,7 +50,7 @@
                 </select>
             </form>
         </div>
-<form method="POST" id="gradesForm" action="{{ route('evaluations.store') }}">
+<form method="POST" action="{{ route('evaluations.store') }}">
     @csrf
         <div class="col">
             <label for="type">Teste:</label>
