@@ -10,7 +10,7 @@
 
 @section('content')
 
-    <h1 class="title">Inserção de Pauta</h1>
+    <h1 class="title">Registar Avaliação</h1>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="errors-list">
@@ -50,9 +50,11 @@
                 </select>
             </form>
         </div>
+<form method="POST" id="gradesForm" action="{{ route('evaluations.store') }}">
+    @csrf
         <div class="col">
-            <label for="test_id">Teste:</label>
-            <select name="test_id" id="test_id" class="form-control">
+            <label for="type">Teste:</label>
+            <select name="type" id="type" class="form-control">
                 <option value="">Selecione...</option>
                 @foreach ($test_types as $type)
                     <option value="{{ $type->id }}">{{ $type->type }}</option>
@@ -60,22 +62,22 @@
             </select>
         </div>
         <div class="col">
-            <label for="moment_id">Momento:</label>
-            <select name="moment_id" id="moment_id" class="form-control">
+            <label for="moment">Momento:</label>
+            <select name="moment" id="moment" class="form-control">
                 <option value="">Selecione...</option>
-                @foreach ($tests as $test)
-                    <option value="{{ $test->id }}">{{ $test->moment }}</option>
+                @foreach ($tests->unique('moment') as $test)
+                    <option value="{{ $test->moment }}">{{ $test->moment }}</option>
                 @endforeach
             </select>
         </div>
             <div class="col">
-                <label for="testDate">Data:</label>
-                <input type="date" id="testDate" name="testDate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                <label for="date">Data:</label>
+                <input type="date" id="date" name="date" class="form-control" value="<?php echo date('Y-m-d'); ?>">
             </div>
         </div>
     </div>
     @if($students)
-        @component('components.evaluations.table', [ 'students' =>$students ])
+        @component('components.evaluations.table', [ 'students' =>$students])
         @endcomponent
     @endif
 @endsection
