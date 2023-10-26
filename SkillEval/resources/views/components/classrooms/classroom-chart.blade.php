@@ -1,198 +1,93 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<canvas class="classroom_chart" id="classroomChart"></canvas>
+<select onchange="momentScores(this)">
+    <option value="Todos">Todos</option>
+    <option value="Inicial">Inicial</option>
+    <option value="Intermédio">Intermédio</option>
+    <option value="Final">Final</option>
+</select>
+<input type="checkbox" checked value="0" onclick="typeScores(this)"> Técnico
+<input type="checkbox" checked value="1" onclick="typeScores(this)"> Psicotécnico
 
-<canvas class="classroom_chart" id="barChart"></canvas>
-<?php
-    $studentNames = [];
-    $Tec1=[];
-    $Tec2=[];
-    $Tec3=[];
-    $Psi1=[];
-    $Psi2=[];
-    $Psi3=[];
+<script>
 
+    function typeScores(type) {
+        const isVisible = gradeChart.isDatasetVisible(type.value)
 
-    foreach ($classroom->students as $student)
-    {
-        $studentNames[] = $student->name;
+        if (isVisible === false)
+            gradeChart.show(type.value)
 
-        foreach($student->evaluations as $evaluation)
-        {
+        if (isVisible === true)
+            gradeChart.hide(type.value)
+    }
 
-            switch ($evaluation->test_id)
+    function momentScores(moment) {
+        gradeChart.config.options.parsing.yAxisKey = moment.value
+        gradeChart.update()
+    }
+
+    {{--        SETUP BLOCK         --}}
+    const data = {
+        datasets: [
             {
-                case 1:
-                    $Tec1[]=$evaluation->score;
-                break;
-                case 2:
-                    $Psi1[]=$evaluation->score;
-                break;
-                case 3:
-                    $Tec2[]=$evaluation->score;
-                break;
-                case 4:
-                    $Psi2[]=$evaluation->score;
-                break;
-                case 5:
-                    $Tec3[]=$evaluation->score;
-                break;
-                case 6:
-                    $Psi3[]=$evaluation->score;
-                break;
-            }
+                label: 'Técnico',
+                data: {!! json_encode($classTechEval) !!},
+                backgroundColor: 'rgba(56, 118, 191, .4)',
+                borderColor: 'rgba(56, 118, 191, 1)',
+                borderWidth:1
+            },
+            {
+                label: 'Psicotécnico',
+                data: {!! json_encode($classPsychoEval) !!},
+                backgroundColor: 'rgba(249, 148, 23, .4)',
+                borderColor: 'rgba(249, 148, 23, 1)',
+                borderWidth:1
+            },
+        ]
+    }
+
+    {{--        CONFIG BLOCK         --}}
+    const configs = {
+        type: 'bar',
+        data,
+        options: {
+            aspectRatio: -16,
+            responsive: true,
+            plugins:{
+                legend: {
+                    onClick: null
+                },
+            },
+            parsing:{
+                xAxisKey: 'x',
+                yAxisKey: 'Todos'
+            },
+            scales:
+                {
+                    y:
+                        {
+                            min: 0,
+                            max: 20,
+                            ticks:
+                                {
+                                    stepSize: 1,
+                                    color: 'rgba(78, 78, 78, 1)'
+                                }
+                        },
+                    x:
+                        {
+                            ticks:
+                                {
+                                    color: 'rgba(78, 78, 78, 1)'
+                                }
+                        }
+                }
         }
     }
 
+    {{--        RENDER BLOCK         --}}
+    var gradeChart = new Chart(
+        document.getElementById('classroomChart').getContext('2d'),
+        configs
+    )
 
-
-?><!-------------------------------------------------------------------------------~------------------------------><!------->
-
-    <script>
-
-        var studentNames = <?php echo json_encode($studentNames); ?>;
-        var ctx = document.getElementById('barChart').getContext('2d');
-
-        var datasets =
-        [
-
-            {
-                label: 'Tec1: ',
-                data: <?php echo json_encode($Tec1); ?>,
-                backgroundColor: 'blue',
-                borderColor: 'blue',
-                borderWidth: 1
-            },
-            {
-                label: 'Tec2: ',
-                data: <?php echo json_encode($Tec2); ?>,
-                backgroundColor: 'orange',
-                borderColor: 'orange',
-                borderWidth: 1,
-            },
-            {
-                label: 'Tec3: ',
-                data: <?php echo json_encode($Tec3); ?>,
-                backgroundColor: 'green',
-                borderColor: 'green',
-                borderWidth: 1,
-            },
-            {
-                label: 'Psi1: ',
-                data: <?php echo json_encode($Psi1); ?>,
-                backgroundColor: 'pink',
-                borderColor: 'pink',
-                borderWidth: 1,
-            },
-            {
-                label: 'Psi2: ',
-                data: <?php echo json_encode($Psi2); ?>,
-                backgroundColor: 'yellow',
-                borderColor: 'yellow',
-                borderWidth: 1,
-            },
-            {
-                label: 'Psi3: ',
-                data: <?php echo json_encode($Psi3); ?>,
-                backgroundColor: 'grey',
-                borderColor: 'grey',
-                borderWidth: 1,
-            }
-        ];
-
-
-
-        var myChart = new Chart(ctx,
-        {
-            type: 'bar',
-            data:
-            {
-                labels: studentNames,
-                datasets: datasets
-            },
-            options:
-            {
-                aspectRatio: -16,
-                responsive: true,
-                scales:
-                {
-                    y:
-                    {
-                        min: 0,
-                        max: 20,
-                        ticks:
-                        {
-                            stepSize: 1,
-                            color: 'blue'
-                        }
-                    },
-                    x:
-                    {
-                        ticks:
-                        {
-                            color: 'blue'
-                        }
-                    }
-                },
-                plugins:
-                {
-                    legend:
-                    {
-                        display: true,
-                        labels:
-                        {
-                            boxWidth:0,
-                        }
-                    },
-                    title:
-                    {
-                        display: true,
-                        color: 'rgb(13, 18, 130)',
-                        text: 'Médias de testes',
-                        font:
-                        {
-                            size: 14,
-                        },
-                    },
-                    tooltip:
-                    {
-                        backgroundColor: 'rgb(56, 118, 191)',
-                        callbacks: {
-                            label: (tooltipItem) =>
-                            {
-                                const value = tooltipItem.parsed.y.toFixed(2);
-                                const datasetIndex = tooltipItem.datasetIndex;
-                                const type = datasetIndex === 0 ? 'Técnico' : 'Psíquico';
-                                return `${type}: ${value}`;
-                            }
-                        }
-                    },
-                    annotation:
-                    {
-                        annotations:
-                        [
-                            {
-                                z: 1,
-                                scaleID: 'y',
-                                type: 'line',
-                                borderWidth: 3,
-                                mode: 'horizontal',
-                                value: 0,
-                                borderColor: 'rgb(48, 133, 195)',
-                            },
-                            {
-                                z: 1,
-                                type: 'line',
-                                scaleID: 'y',
-                                borderWidth: 3,
-                                mode: 'horizontal',
-                                value: 0,
-                                borderColor: 'rgb(249, 148, 23)',
-                            }
-                        ],
-                        drawTime: 'beforeDatasetsDraw',
-                    },
-                }
-            }
-        });
-    </script>
+</script>

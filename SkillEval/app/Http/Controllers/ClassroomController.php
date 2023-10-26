@@ -7,6 +7,7 @@ use App\Course;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ClassroomImport;
+use mysql_xdevapi\Collection;
 
 class ClassroomController extends Controller
 {
@@ -99,12 +100,54 @@ class ClassroomController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Classroom  $classroom
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show(Classroom $classroom)
     {
+        $classTechEval = [];
+        $classPsychoEval = [];
+        foreach ($classroom->students as $student) {
+            $techStudent = ['x' => $student->name];
+            $psychStudent = ['x' => $student->name];
+
+            $techEval = $student->evaluations->where('test.type.type', 'Técnico');
+            $psychEval = $student->evaluations->where('test.type.type', 'Psicotécnico');
+
+            $techScores = [];
+            $psychScores = [];
+
+            foreach (['Inicial', 'Intermédio', 'Final'] as $moment) {
+                $techMomentEval = $techEval->where('test.moment', $moment)->first();
+                $psychMomentEval = $psychEval->where('test.moment', $moment)->first();
+                if ($techMomentEval && $techMomentEval->score !== null && $psychMomentEval && $psychMomentEval->score !== null) {
+                    $techScores[] = $techMomentEval->score;
+                    $psychScores[] = $psychMomentEval->score;
+                }
+                $techStudent[$moment] = $techMomentEval ? $techMomentEval->score : null;
+                $psychStudent[$moment] = $psychMomentEval ? $psychMomentEval->score : null;
+            }
+
+            !empty($techScores) ?
+                $techAverage = array_sum($techScores) / count($techScores)
+                :
+                $techAverage = null;
+
+            !empty($psychScores) ?
+                $psychAverage = array_sum($psychScores) / count($psychScores)
+                :
+                $psychAverage = null;
+
+            $techStudent['Todos'] = $techAverage;
+            $classTechEval[] = $techStudent;
+
+            $psychStudent['Todos'] = $psychAverage;
+            $classPsychoEval[] = $psychStudent;
+        }
+
+//        dd($classTechEval, $classPsychoEval);
+
         $failures = null;
-        return view('classrooms.show', ['classroom' => $classroom, 'failures' => $failures]);
+        return view('classrooms.show', ['classroom' => $classroom, 'failures' => $failures, 'classTechEval' => $classTechEval, 'classPsychoEval' => $classPsychoEval]);
     }
 
     /**
