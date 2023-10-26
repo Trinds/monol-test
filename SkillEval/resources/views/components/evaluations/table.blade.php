@@ -23,7 +23,7 @@
                 </tbody>
             </table>
             <div id="insert_button">
-                <button type="submit" id="submit-grades">Inserir Pauta</button>
+                <button type="submit" id="submit-grades">Inserir <i class="fa-solid fa-check"></i></button>
             </div>
         </form>
     </div>

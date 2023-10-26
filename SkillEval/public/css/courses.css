@@ -204,6 +204,13 @@ label.light {
     z-index: 1000;
 }
 
+.fa-briefcase
+{
+    font-size: 0.8em;
+    margin-left: 5px;
+    color: #f2931f;
+}
+
 
 @media screen and (min-width: 480px) {
     form {

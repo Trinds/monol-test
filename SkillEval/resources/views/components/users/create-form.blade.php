@@ -59,7 +59,7 @@
         </fieldset>
 
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">3</span>Funções</legend>
+            <legend class="legend"><span class="number">3</span>Funções <i class="fa-solid fa-briefcase"></i></legend>
             <label for="roles" class="form-label">Funções:</label>
             <select name="roles[]" id="roles" class="form-control-select" multiple required>
                 @foreach ($roles as $role)

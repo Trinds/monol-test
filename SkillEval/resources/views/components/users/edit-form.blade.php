@@ -1,8 +1,8 @@
 <div class="container">
-    <form action="{{ url('users/' . $user->id) }}" method="POST" enctype="multipart/form-data">
+    <h1>Editar Utilizador</h1>
+    <form action="{{ url('users/' . $user->id) }}" method="POST" enctype="multipart/form-data" class="create-form">
         @csrf
         @method('PUT')
-        <h1>Editar Utilizador</h1>
 
         @if ($errors->any() || session('error'))
             <div class="alert alert-danger">
@@ -18,70 +18,59 @@
             </div>
         @endif
 
-        <fieldset>
-            <legend><span class="number">1</span>Dados Pessoais</legend>
-
-            <label for="name">Nome:</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="Nome do utilizador"
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">1</span>Dados Pessoais <i class="fa-regular fa-address-card" id="fa-address-card"></i></legend>
+            <label for="name" class="form-label">Nome:</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Nome do utilizador"
                 @error('name')
         is-invalid
         @enderror value="{{ $user->name }}" required
                 aria-describedat="nameHelp">
-            <small id="nameHelp" class="form-text text-muted">Ex: João Silva</small>
-
-
-            <fieldset>
-                <label for="image">Foto de perfil</label>
-                <input type="file" id="image" name="image" class="form-control" placeholder="Foto de perfil do utilizador"
+                <label for="image" class="form-label">Foto de perfil</label>
+                <input type="file" id="image" name="image" class="form-input" placeholder="Foto de perfil do utilizador"
                     @error('image')
                     is-invalid
                     @enderror value="{{ $user->image }}"
                     aria-describedat="imageHelp">
-                <small id="imageHelp" class="form-text text-muted">Ex: Foto de perfil do utilizador</small>
-
-            </fieldset>
         </fieldset>
 
-        <fieldset>
-            <legend><span class="number">2</span>Credenciais</legend>
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">2</span>Credenciais <i class="fa-solid fa-gears"></i></legend>
         
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="E-mail do utilizador" @error('email') is-invalid @enderror value="{{ $user->email }}" required aria-describedat="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">Ex: User@edu.atec.pt</small>
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="E-mail do utilizador" @error('email') is-invalid @enderror value="{{ $user->email }}" required aria-describedat="emailHelp">
         
             @if ($user->id === auth()->user()->id)
-            <label for="password">Password</label>
+            <label for="password" class="form-label">Password</label>
             <div class="input-group">
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password do utilizador" @error('password') is-invalid @enderror value="" aria-describedat="passwordHelp">
+                <input type="password" id="password" name="password" class="form-input" placeholder="Password do utilizador" @error('password') is-invalid @enderror value="" aria-describedat="passwordHelp">
                 <span class="input-group-btn">
                     <button class="btn btn-default reveal-password" type="button">
                         <i class="fas fa-eye"></i>
                     </button>
                 </span>
             </div>
-            <small id="passwordHelp" class="form-text text-muted">Ex: 12345678</small>
         
-            <label for="password_confirmation">Confirmação da Password</label>
+            <label for="password_confirmation" class="form-label">Confirmação da Password</label>
             <div class="input-group">
-                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Confirmação da Password do utilizador" @error('password_confirmation') is-invalid @enderror value="" aria-describedat="password_confirmationHelp">
+                <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" placeholder="Confirmação da Password do utilizador" @error('password_confirmation') is-invalid @enderror value="" aria-describedat="password_confirmationHelp">
             </div>
-            <small id="password_confirmationHelp" class="form-text text-muted">Ex: 12345678</small>
             @endif
         </fieldset>
 
-        <fieldset>
-            <legend><span class="number">3</span>Funções</legend>
-            <label for="roles">Funções:</label>
-            <select name="roles[]" id="roles" class="form-control" multiple>
+        <fieldset class="fieldset">
+            <legend class="legend"><span class="number">3</span>Funções <i class="fa-solid fa-briefcase"></i></legend>
+            <label for="roles" class="form-label">Funções:</label>
+            <select name="roles[]" id="roles" class="form-control-select" multiple>
                 @foreach ($roles as $role)
                     <option value="{{ $role->id }}" @if ($user->roles->contains($role)) selected @endif>
-                        {{ $role->name }}</option>
+                        {{ Str::ucfirst($role->name)}}</option>
                 @endforeach
             </select>
         </fieldset>
 
         <div class="form-group">
-            <button type="submit">Editar</button>
+            <button type="submit">Editar <i class="fa-solid fa-user-pen"></i></button>
         </div>
     </form>
 </div>

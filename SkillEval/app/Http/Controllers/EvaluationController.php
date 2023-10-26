@@ -129,7 +129,6 @@ class EvaluationController extends Controller
         
         if (!$test) {
             return redirect()->route('evaluations.create-for-student', ['student' => $student->id])->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
-
         }
 
         $testId = $test->id;    
