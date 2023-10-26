@@ -43,7 +43,7 @@ class ClassroomSheetImport implements ToModel, WithValidation, WithHeadingRow
     {
         return [
             'abreviacao_do_curso' => 'required|exists:courses,abbreviation',
-            'edicao' => 'required|max:255',
+            'edicao' => ['required','max:255','regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/'],
             'data_de_inicio_ddmmaaaa' => 'required',
             'data_de_termino_ddmmaaaa' => 'required',
         ];
@@ -56,6 +56,7 @@ class ClassroomSheetImport implements ToModel, WithValidation, WithHeadingRow
             'abreviacao_do_curso.exists' => 'A abreviação do curso preenchida no Excel não existe.',
             'edicao.required' => 'A edição deve ser preenchida no ficheiro Excel.',
             'edicao.max' => 'A edição preenchida no Excel não pode ter mais de 255 caracteres.',
+            'edicao.regex' => 'A edição preenchida no Excel não é válida.',
             'data_de_inicio_ddmmaaaa.required' => 'A data de início deve ser preenchida no ficheiro Excel.',
             'data_de_termino_ddmmaaaa.required' => 'A data de término deve ser preenchida no ficheiro Excel.',
         ];
@@ -79,7 +80,7 @@ class StudentsSheetImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'no_de_formando' => 'required|unique:students,student_number',
+            'no_de_formando' => 'required|unique:students,student_number|regex:/^T\d{7}$/',
             'nome' => 'required|max:255',
             'email' => 'required|email|unique:students,email',
             'data_de_nascimento_ddmmaaaa' => 'required',
@@ -91,6 +92,7 @@ class StudentsSheetImport implements ToModel, WithHeadingRow, WithValidation
         return [
             'no_de_formando.required' => 'O número de formando deve ser preenchido no ficheiro Excel.',
             'no_de_formando.unique' => 'O número de formando preenchido no Excel já existe.',
+            'no_de_formando.regex' => 'O número de formando preenchido no Excel não é válido.',
             'nome.required' => 'O nome deve ser preenchido no ficheiro Excel.',
             'nome.max' => 'O nome preenchido no Excel não pode ter mais de 10 caracteres.',
             'email.required' => 'O email deve ser preenchido no ficheiro Excel.',
