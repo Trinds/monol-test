@@ -40,7 +40,7 @@
             <div class="col larger-input">
                 <form method="get" action="/evaluations">
                     <label for="classroom_filter">Turma</label>
-                    <select class="form-control" id="classroom_filter" name="classroom_filter" required>
+                    <select class="form-control" id="classroom_filter" name="classroom_filter" required
                             onchange="this.form.submit()">
                         <option value="">Selecione...</option>
                         @foreach ($classrooms as $classroom)
