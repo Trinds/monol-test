@@ -14,7 +14,7 @@
         </ul>
     </div>
     @endif
-    <form method="POST" action="{{ route('students.update', ['student' => $student]) }}">
+    <form method="POST" action="{{ route('students.update', ['student' => $student]) }}" enctype="multipart/form-data">
         <fieldset>
             @csrf
             @method('PUT')
