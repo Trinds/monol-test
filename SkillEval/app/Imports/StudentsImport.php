@@ -13,9 +13,15 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
 {
     protected $classroom;
     
+    public function __construct(Classroom $classroom = null)
+    {
+        $this->classroom = $classroom;
+    }
     public function model(array $row)
     {
-        $this->classroom = Classroom::latest()->first();
+        if($this->classroom == null){
+            $this->classroom = Classroom::latest()->first();
+        }
         return new Student([
             'student_number' => $row['no_de_formando'],
             'name' => $row['nome'],
