@@ -31,7 +31,7 @@ class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, Wit
     {
         return [
             'abreviacao_do_curso' => 'required|exists:courses,abbreviation',
-            'edicao' => 'required|max:255',
+            'edicao' => ['required','max:255','regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/'],
             'data_de_inicio_ddmmaaaa' => 'required',
             'data_de_termino_ddmmaaaa' => 'required',
         ];
@@ -44,6 +44,7 @@ class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, Wit
             'abreviacao_do_curso.exists' => 'A abreviação do curso preenchida no Excel não existe.',
             'edicao.required' => 'A edição deve ser preenchida no ficheiro Excel.',
             'edicao.max' => 'A edição preenchida no Excel não pode ter mais de 255 caracteres.',
+            'edicao.regex' => 'A edição preenchida no Excel não é válida.',
             'data_de_inicio_ddmmaaaa.required' => 'A data de início deve ser preenchida no ficheiro Excel.',
             'data_de_termino_ddmmaaaa.required' => 'A data de término deve ser preenchida no ficheiro Excel.',
         ];
