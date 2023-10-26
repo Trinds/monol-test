@@ -62,7 +62,7 @@
                                 @endif
                             </td>
                             <td>
-                                <button class="delete-button" data-student-id="{{ $evaluation->student_id }}" data-test-id="{{ $evaluation->test_id }}"><i class="fa-solid fa-trash"></i></button>
+                                <a class="delete-button" data-student-id="{{ $evaluation->student_id }}" data-test-id="{{ $evaluation->test_id }}"><i class="fa-regular fa-trash-can removeBtn"></i></a>
                             </td>
                         </tr>
                         <form method="POST" class="hidden-form" id="evaluationRmvForm_{{ $evaluation->student_id }}_{{ $evaluation->test_id }}" action="{{ route('evaluations.destroy', ['studentId' => $evaluation->student_id, 'testId' => $evaluation->test_id]) }}" method="POST">
