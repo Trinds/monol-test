@@ -34,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/students/{student}', 'StudentController@destroy')->name('students.destroy');
     Route::get('/students/{student}/edit', 'StudentController@edit')->name('students.edit');
     Route::put('/students/{student}', 'StudentController@update')->name('students.update');
+
+
+    //NAO TOCAR NESTAS ROTAS POR FAVOR O ROUTE RESOURCE NAO FUNCIONA NO NOSSO CASO
     Route::get('evaluations/create/{student}', 'EvaluationController@createForStudent')->name('evaluations.create.student');
     Route::post('evaluations/store/student', 'EvaluationController@storeForStudent')->name('evaluations.store.student');
 
