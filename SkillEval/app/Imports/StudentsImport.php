@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 class StudentsImport implements ToModel, WithHeadingRow, WithValidation
 {
     protected $classroom;
-    public function __construct(Classroom $classroom)
+    public function __construct($classroom)
     {
         $this->classroom = $classroom;
     }
@@ -24,7 +24,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
             'name' => $row['nome'],
             'email' => $row['email'],
             'birth_date' => Date::excelToDateTimeObject($row['data_de_nascimento_ddmmaaaa'])->format('Y-m-d'),
-            'classroom_id' => $this->classroom->id,
+            'classroom_id' => $this->classroom->id + 1,
             'image' => 'images/default/student.png',
         ]);
     }
@@ -32,7 +32,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'no_de_formando' => 'required|unique:students,student_number',
+            'no_de_formando' => 'required|unique:students,student_number|regex:/^T\d{7}$/',
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:students,email',
             'data_de_nascimento_ddmmaaaa' => 'required|before:today',
@@ -44,6 +44,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
         return [
             'no_de_formando.required' => 'O número de formando deve ser preenchido no ficheiro Excel.',
             'no_de_formando.unique' => 'Um número de formando preenchido no Excel já existe.',
+            'no_de_formando.regex' => 'O número de formando preenchido no Excel não é válido.',
             'nome.required' => 'Todos os campos Nome dos formandos devem ser preenchidos no ficheiro Excel.',
             'nome.string' => 'O nome preenchido no Excel não é válido.',
             'email.required' => 'Todos os campos de email do formando devem ser preenchidos no ficheiro Excel.',
