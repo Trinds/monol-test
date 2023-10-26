@@ -39,11 +39,7 @@
         @foreach ($students as $student)
         <tr class="table-row">
             <td>
-                @if ($student->image !== null)
-                <img src="{{ asset('storage/' . $student->image) }}" alt="Fotografia" style="height: 60px; width:60px; border-radius: 50%;" />
-                @else
-                <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $student->name }} Profile Image" />
-                @endif
+                <img src="{{ asset('storage/' . $student->image) }}" alt="Fotografia"/>
             </td>
             <td>{{ $student->name }}</td>
             <td>{{ $student->email }}</td>
