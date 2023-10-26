@@ -73,6 +73,7 @@ class StudentsSheetImport implements ToModel, WithHeadingRow, WithValidation
             'email' => $row['email'],
             'birth_date' => Date::excelToDateTimeObject($row['data_de_nascimento_ddmmaaaa'])->format('Y-m-d'),
             'classroom_id' => $lastClassroom->id,
+            'image' => 'images/default/student.png'
         ]);
     }
 
