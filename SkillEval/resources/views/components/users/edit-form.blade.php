@@ -19,7 +19,7 @@
         @endif
 
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">1</span>Dados Pessoais <i class="fa-regular fa-address-card" id="fa-address-card"></i></legend>
+            <legend class="legend"><span class="number">1</span> Dados Pessoais <i class="fa-regular fa-address-card" id="fa-address-card"></i></legend>
             <label for="name" class="form-label">Nome:</label>
             <input type="text" id="name" name="name" class="form-input" placeholder="Nome do utilizador"
                 @error('name')
@@ -35,7 +35,7 @@
         </fieldset>
 
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">2</span>Credenciais <i class="fa-solid fa-gears"></i></legend>
+            <legend class="legend"><span class="number">2</span> Credenciais <i class="fa-solid fa-gears"></i></legend>
         
             <label for="email" class="form-label">E-mail</label>
             <input type="email" id="email" name="email" class="form-input" placeholder="E-mail do utilizador" @error('email') is-invalid @enderror value="{{ $user->email }}" required aria-describedat="emailHelp">
@@ -59,7 +59,7 @@
         </fieldset>
 
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">3</span>Funções <i class="fa-solid fa-briefcase"></i></legend>
+            <legend class="legend"><span class="number">3</span> Funções <i class="fa-solid fa-briefcase"></i></legend>
             <label for="roles" class="form-label">Funções:</label>
             <select name="roles[]" id="roles" class="form-control-select" multiple>
                 @foreach ($roles as $role)
