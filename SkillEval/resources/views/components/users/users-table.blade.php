@@ -22,7 +22,7 @@
     <h1>Lista de Utilizadores</h1>
 </div>
 <div class="table-container">
-    <table id="usersTable">
+    <table class="large-table" id="usersTable">
         <thead>
             <tr class="table-header">
                 <th scope="col"></th>

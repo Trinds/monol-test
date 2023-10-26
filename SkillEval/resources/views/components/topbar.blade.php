@@ -14,13 +14,13 @@
                     @if( isset($classrooms) && $dir=='students' )
                         @foreach ($classrooms as $classroom)
                             <option
-                                value={{ $classroom->id }} {{ request('filter') == $classroom->id ? 'selected' : '' }}>{{ $classroom->course->abbreviation . $classroom->edition }}</option>
+                                value="{{ $classroom->id }}" {{ request('filter') == $classroom->id ? 'selected' : '' }}>{{ $classroom->course->abbreviation . $classroom->edition }}</option>
                         @endforeach
                     @endif
                     @if( isset($courses)  && $dir=='classrooms' )
                         @foreach ($courses as $course)
                             <option
-                                value={{ $course->id }} {{ request('filter') == $course->id ? 'selected' : '' }}>{{ $course->abbreviation }}</option>
+                                value="{{ $course->id }}" {{ request('filter') == $course->id ? 'selected' : '' }}>{{ $course->abbreviation }}</option>
                         @endforeach
                     @endif
                 </select>

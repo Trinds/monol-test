@@ -27,7 +27,7 @@
         Não foram encontrados resultados.
     </div>
     @else
-    <table id="coursesTable">
+    <table class="large-table" id="coursesTable">
         <tr class="table-header">
             <th scope="col">Sigla</th>
             <th scope="col">Nome</th>

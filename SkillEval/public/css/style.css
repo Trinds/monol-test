@@ -200,11 +200,11 @@ input[type="file"]::before {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 82vh;
     justify-content: space-between;
 }
 
-table {
+.large-table{
+    width: 90%;
     border-collapse: separate;
     border-spacing: 0;
 
