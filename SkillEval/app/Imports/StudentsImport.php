@@ -32,7 +32,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
     {
         return [
             'no_de_formando' => 'required|unique:students,student_number',
-            'nome' => 'required',
+            'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:students,email',
             'data_de_nascimento_ddmmaaaa' => 'required|before:today',
         ];
@@ -44,6 +44,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
             'no_de_formando.required' => 'O número de formando deve ser preenchido no ficheiro Excel.',
             'no_de_formando.unique' => 'Um número de formando preenchido no Excel já existe.',
             'nome.required' => 'Todos os campos Nome dos formandos devem ser preenchidos no ficheiro Excel.',
+            'nome.string' => 'O nome preenchido no Excel não é válido.',
             'email.required' => 'Todos os campos de email do formando devem ser preenchidos no ficheiro Excel.',
             'email.email' => 'O email preenchido no Excel não é válido.',
             'email.unique' => 'Um email preenchido no Excel já está associado a outro formando.',

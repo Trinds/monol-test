@@ -166,7 +166,7 @@ class ClassroomController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:xlsx,xls',
+            'file' => ['required', 'file', 'mimes:xlsx,xls']
         ]);
         try {
             Excel::import(new ClassroomImport, $request->file('file'));

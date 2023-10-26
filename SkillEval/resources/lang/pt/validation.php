@@ -189,6 +189,9 @@ return [
         'min' => 'A password deve ter pelo menos :min caracteres.',
         'confirmed' => 'A confirmação da password não coincide.',
     ],
+    'roles' => [
+        'required' => 'A escolha de pelo menos uma função é obrigatória.',
+    ],
 ],
 
 /*
