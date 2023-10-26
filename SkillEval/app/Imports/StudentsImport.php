@@ -18,13 +18,14 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
     }
     public function model(array $row)
     {
-        
+
         return new Student([
             'student_number' => $row['no_de_formando'],
             'name' => $row['nome'],
             'email' => $row['email'],
             'birth_date' => Date::excelToDateTimeObject($row['data_de_nascimento_ddmmaaaa'])->format('Y-m-d'),
             'classroom_id' => $this->classroom->id,
+            'image' => 'images/default/student.png',
         ]);
     }
 

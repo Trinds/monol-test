@@ -4,7 +4,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script type="module" src="{{asset('js/editStudentCard.js')}}"></script>
     <script type="module" src="{{asset('js/classroomsFilter.js')}}"></script>
-
 @endsection
 @section('styles')
     <link rel="stylesheet" href="{{asset('css/students.css')}}">
@@ -18,7 +17,7 @@
 
     <div class="grid-container">
         <div class="chart-area">
-            @component('components.students.evaluations-chart' , ['studentEvaluations'=>$student->evaluations])
+            @component('components.students.evaluations-chart' , ['techScores' => $techScores, 'psychScores' => $psychScores])
             @endcomponent
         </div>
 

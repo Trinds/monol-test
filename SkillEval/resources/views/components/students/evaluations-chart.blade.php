@@ -1,87 +1,102 @@
-<canvas class="student-eval-chart"   id="barChart"></canvas>
+<canvas class="student-eval-chart" id="studentChart"></canvas>
+<div class="chart-options input-group-prepend">
+    <select class="custom-select" onchange="momentScores(this)">
+        <option value="Todos">Todos</option>
+        <option value="Inicial">Inicial</option>
+        <option value="Intermédio">Intermédio</option>
+        <option value="Final">Final</option>
+    </select>
+    <input type="checkbox" checked value="0" onclick="typeScores(this)"> Técnico
+    <input type="checkbox" checked value="1" onclick="typeScores(this)"> Psicotécnico
+</div>
 
 <script>
-    var ctx = document.getElementById('barChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [
-                @foreach($studentEvaluations as $evaluation)
-                    '{{$evaluation->test->type->type}}',
-                @endforeach
-            ],
-            datasets: [{
-                label: 'Nota',
-                data: [
-                    @foreach($studentEvaluations as $evaluation)
-                        '{{$evaluation->score}}',
-                    @endforeach
-                ],
-                backgroundColor: {!! $studentEvaluations !!}.map(evaluation =>
-                    evaluation.score <= 6 ?
-                        '#b91c1c'
-                        : evaluation.score < 9.49 ?
-                            '#ea580c'
-                            : evaluation.score < 13 ?
-                                '#facc15'
-                                : evaluation.score < 17 ?
-                                    '#166534'
-                                    : '#22c55e'),
-                borderColor:{!! $studentEvaluations !!}.map(evaluation =>
-                    evaluation.score <= 6 ?
-                        '#b91c1c'
-                        : evaluation.score < 9.49 ?
-                            '#ea580c'
-                            : evaluation.score < 13 ?
-                                '#facc15'
-                                : evaluation.score < 17 ?
-                                    '#166534'
-                                    : '#22c55e'),
-                borderWidth: 1
-            }]
-        },
-        options:
+
+    console.log({!! json_encode($techScores) !!})
+
+    function typeScores(type) {
+        const isVisible = studentChart.isDatasetVisible(type.value)
+
+        if (isVisible === false)
+            studentChart.show(type.value)
+
+        if (isVisible === true)
+            studentChart.hide(type.value)
+    }
+
+    function momentScores(moment) {
+        studentChart.config.options.parsing.yAxisKey = moment.value
+        studentChart.update()
+    }
+
+    {{--        SETUP BLOCK         --}}
+    const data = {
+        datasets: [
             {
-                scales:
-                {
-                    y: {
-                        min: 0,
-                        max: 20,
-                        ticks: {
-                            stepSize: 1,
-                            color: '#4E4E4E'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: '#4E4E4E'
-                        }
-                    }
+                label: 'Técnico',
+                data: [
+                    {!! json_encode($techScores) !!}
+                ],
+                backgroundColor: 'rgba(56, 118, 191, .4)',
+                borderColor: 'rgba(56, 118, 191, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Psicotécnico',
+                data: [
+                    {!! json_encode($psychScores) !!}
+                ],
+                backgroundColor: 'rgba(249, 148, 23, .4)',
+                borderColor: 'rgba(249, 148, 23, 1)',
+                borderWidth: 1
+            },
+        ]
+    }
+
+    {{--        CONFIG BLOCK         --}}
+    const configs = {
+        type: 'bar',
+        data,
+        options: {
+            aspectRatio: -16,
+            responsive: true,
+            plugins: {
+                legend: {
+                    onClick: null
                 },
-                plugins:
+            },
+            parsing: {
+                xAxisKey: 'x',
+                yAxisKey: 'Todos'
+            },
+            scales:
                 {
-                    legend:
-                    {
-                        display: false,
-                        labels:
+                    y:
                         {
-                            boxWidth:0,
-                        }
-                    },
-                    title:
-                    {
-                        display: true,
-                        text: 'Notas de testes',
-                        color: '#4E4E4E',
-                        font:
-                        {
-                            size: 15,
+                            min: 0,
+                            max: 20,
+                            ticks:
+                                {
+                                    stepSize: 1,
+                                    color: 'rgba(78, 78, 78, 1)'
+                                }
                         },
-                        padding: 10,
-                    },
+                    x:
+                        {
+                            ticks:
+                                {
+                                    color: 'rgba(78, 78, 78, 1)'
+                                }
+                        }
                 }
         }
-    });
+    }
+
+    {{--        RENDER BLOCK         --}}
+    var studentChart = new Chart(
+        document.getElementById('studentChart').getContext('2d'),
+        configs
+    )
 
 </script>
 
