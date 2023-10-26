@@ -14,6 +14,7 @@ class Evaluation extends Model
         'student_id',
         'test_id',
         'score',
+        'date',
     ];
     public function test()
     {

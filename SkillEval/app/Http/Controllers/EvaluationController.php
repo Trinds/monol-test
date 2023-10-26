@@ -58,32 +58,38 @@ class EvaluationController extends Controller
 
     public function store(Request $request)
     {
-        try 
-        {
-            $grades = json_decode($request->input('grades'));
+        $selectedTestTypeId = $request->input('type');
+        $selectedMoment = $request->input('moment');
+        $grades = $request->input('grades');
+        $test = Test::where('moment', $selectedMoment)
+            ->where('type_id', $selectedTestTypeId)
+            ->first();
     
-            if ($grades) {
-                foreach ($grades as $grade) 
-                {              
-                   
-                    if (isset($grade->test_id, $grade->student_id, $grade->score)) {
-                        $evaluation = new Evaluation([
-                            'test_id' => $grade->test_id,
-                            'student_id' => $grade->student_id,
-                            'score' => $grade->score,
-                        ]);
-                        $evaluation->save();
-                    }
-                }
+        if (!$test) {
+            return redirect()->route('evaluations.index')->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
+        }
+    
+        $date = $request->input('date');
+    
+        try {
+            foreach ($grades as $studentId => $grade) {
+                $evaluation = new Evaluation([
+                    'test_id' => $test->id,
+                    'score' => $grade,
+                    'student_id' => $studentId,
+                    'date' => $date
+                ]);
+                $evaluation->save();
             }
-
+    
             return redirect()->route('evaluations.index')->with('success', 'Avaliações criadas com sucesso!');
-        } 
-        catch (Exception $e) 
-        {
-            return redirect()->route('evaluations.index')->with('error', 'Falha ao criar as avaliações. Por favor, tente novamente.');
+        } catch (Exception $e) {
+            return redirect()->route('evaluations.index')->with('error', 'Ocorreu um erro ao criar as avaliações: ' . $e->getMessage());
         }
     }
+    
+    
+
     
     
 
