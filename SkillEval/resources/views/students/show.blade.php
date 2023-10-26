@@ -62,17 +62,13 @@
                                 @endif
                             </td>
                             <td>
-                                <a><i class="fa-solid fa-pencil editBtn"></i></a>
-                                <a onclick="event.preventDefault();
-                                    document.getElementById('evaluationRmvForm').submit();">
-                                    <i class="fa-regular fa-trash-can removeBtn"></i>
-                                </a>
-                                {{--                                <form id="evaluationRmvForm" action="{{route('evaluations.destroy', $evaluation->id)}}" method="POST">--}}
-                                {{--                                    @csrf--}}
-                                {{--                                    @method('DELETE')--}}
-                                {{--                                </form>--}}
+                                <button class="delete-button" data-student-id="{{ $evaluation->student_id }}" data-test-id="{{ $evaluation->test_id }}"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
+                        <form method="POST" class="hidden-form" id="evaluationRmvForm_{{ $evaluation->student_id }}_{{ $evaluation->test_id }}" action="{{ route('evaluations.destroy', ['studentId' => $evaluation->student_id, 'testId' => $evaluation->test_id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                        </form>
                     @endforeach
                     </tbody>
                 </table>
@@ -80,5 +76,20 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        document.addEventListener("click", function(event) {
+            if (event.target.classList.contains("delete-button")) {
+                event.preventDefault();
+                const studentId = event.target.getAttribute("data-student-id");
+                const testId = event.target.getAttribute("data-test-id");
+                const form = document.getElementById(`evaluationRmvForm_${studentId}_${testId}`);
+                if (form) {
+                        form.submit();
+                }
+            }
+        });
+    </script>
 
 @endsection

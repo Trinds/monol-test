@@ -17,6 +17,7 @@ class CreateEvaluationsTable extends Migration
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->foreignId('test_id')->constrained()->onDelete('cascade');
             $table->double('score');
+            $table->unique(['student_id', 'test_id', 'date']);
             $table->date('date');
             $table->timestamps();
             $table->softDeletes();

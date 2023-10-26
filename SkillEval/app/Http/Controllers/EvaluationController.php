@@ -10,7 +10,9 @@ use App\Course;
 use App\Student;
 use App\Classroom;
 use App\Evaluation;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EvaluationController extends Controller
 {
@@ -118,34 +120,53 @@ class EvaluationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function storeForStudent(Request $request, Student $student)
-    {
-        $testMoment = $request->input('moment');
-        $testTypeId = $request->input('type');
-
-        $test = Test::where('moment', $testMoment)
-            ->where('type_id', $testTypeId)
-            ->first();
+     public function storeForStudent(Request $request, Student $student)
+     {
+         try {
         
-        if (!$test) {
-            return redirect()->route('evaluations.create-for-student', ['student' => $student->id])->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
+             $rules = [
+                 'moment' => 'required',
+                 'type' => 'required',
+                 'score' => 'required|numeric|min:0|max:20',
+                 'date' => 'required|date',
+             ];
+     
+             $request->validate($rules);
+     
+        
+             $testMoment = $request->input('moment');
+             $testTypeId = $request->input('type');
+     
+             $test = Test::where('moment', $testMoment)
+                 ->where('type_id', $testTypeId)
+                 ->first();
+     
+             if (!$test) {
+                 return redirect()->route('evaluations.create-for-student', ['student' => $student->id])
+                     ->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
+             }
+     
+             $testId = $test->id;
+     
+             $evaluation = new Evaluation([
+                 'student_id' => $request->input('student_id'),
+                 'test_id' => $testId,
+                 'score' => $request->input('score'),
+                 'date' => $request->input('date'),
+             ]);
+     
+             $evaluation->save();
+          
+             $student = Student::findOrFail($request->input('student_id'));
+     
+             return redirect()->route('students.show', ['student' => $student->id]);
+         } catch (\Exception $e) {
+         if (Str::contains($e->getMessage(), 'Integrity constraint violation')) {
+            return redirect()->back()->with('error', 'O formando já tem uma avalição para esse teste.');
         }
-
-        $testId = $test->id;    
-
-        $student = Student::findOrFail($request->input('student_id'));
-
-        $evaluation = new Evaluation([
-            'student_id' => $student->id,
-            'test_id' => $testId,
-            'score' => $request->input('score'),
-            'date' => $request->input('date'),
-        ]);
-
-        $evaluation->save();
-
-        return redirect()->route('students.show', $student->id)->with('success', 'Avaliação criada com sucesso!');
     }
+}
+        
 
 
     /**
@@ -188,8 +209,13 @@ class EvaluationController extends Controller
      * @param \App\Evaluation $evaluation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Evaluation $evaluation)
+    public function destroy($studentId, $testId)
     {
-        //
+        DB::delete('DELETE FROM evaluations WHERE student_id = ? AND test_id = ?', [$studentId, $testId]);
+    
+
+        return redirect()->route('students.show', ['student' => $studentId])
+        ->with('success', 'Evaluation deleted successfully.');
+
     }
 }
