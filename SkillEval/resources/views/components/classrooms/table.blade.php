@@ -34,7 +34,7 @@
                     <th scope="col">Edição</th>
                     <th scope="col">Data de Início</th>
                     <th scope="col">Data de Conclusão</th>
-                    <th scope="col"></th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>

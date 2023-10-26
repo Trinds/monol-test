@@ -1,5 +1,5 @@
 @if ($students)
-        <div class="table-container"> 
+    <div class="table-container">
             <table class="large-table">
                 <thead>
                     <tr class="table-header">
@@ -16,7 +16,7 @@
                                 {{ $student->classroom->course->abbreviation }} {{ $student->classroom->edition }}
                             </td>
                             <td>
-                                <input type="number" name="grades[{{ $student->id }}]" min="0" max="20" step="0.1" value="0">
+                                <input type="number" name="grades[{{ $student->id }}]" min="0" max="20" step="0.1" value="">
                             </td>
                         </tr>
                     @endforeach
@@ -25,6 +25,6 @@
             <div id="insert_button">
                 <button type="submit" id="submit-grades">Inserir Pauta</button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 @endif

@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/students/{student}', 'StudentController@destroy')->name('students.destroy');
     Route::get('/students/{student}/edit', 'StudentController@edit')->name('students.edit');
     Route::put('/students/{student}', 'StudentController@update')->name('students.update');
+    Route::get('evaluations/create/{student}', 'EvaluationController@createForStudent')->name('evaluations.create.student');
+
 });
 
 
@@ -42,8 +44,6 @@ Route::middleware(['auth'])->group(function () {
 
 // Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-// Route::get('evaluations/create/{student}', 'EvaluationController@createForStudent')->name('evaluations.create.student');
-// Route::post('evaluations/store/student', 'EvaluationController@storeForStudent')->name('evaluations.store.student');
 
 
 // Route::get('/users', 'UserController@index')->name('users.index');

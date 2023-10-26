@@ -29,7 +29,7 @@
             <!-- Edit Name -->
             <label for="name" id="studentNameInput" hidden>Nome: <input type="text" name="name" value="{{$student->name}}"></label>
             <!-- Upload Image -->
-            <label id="studentImageInput" hidden>Foto:<input type="file" name="image"></label>
+            <label id="studentImageInput" hidden>Foto:<input type="file" name="image" id="image"></label>
             <!-- Email -->
             <label>Email:<input type="text" name="email" id="email" value="{{$student->email}}" readonly></label>
             <!-- Classroom View-->
@@ -63,7 +63,7 @@
             <label id="birthDateView">Data de nascimento:<input type="text" value="{{date('d-m-Y', strtotime($student->birth_date))}}" readonly></label>
             <label for="birth_date" id="birthDateInput" hidden>Data de nascimento <input type="date" name="birth_date" value="{{$student->birth_date}}"> </label>
             <!-- Save Button -->
-            <button type="submit" id="buttonSave" style="width: 100%;" hidden>Guardar</button>
+            <button type="submit" id="buttonSave" hidden>Guardar</button>
         </fieldset>
     </form>
     <button id="buttonCancel" hidden>Cancelar</button>

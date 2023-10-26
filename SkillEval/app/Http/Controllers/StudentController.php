@@ -152,7 +152,20 @@ class StudentController extends Controller
         $classrooms = \App\Classroom::all();
         $courses = \App\Course::all();
         try {
-            $student->update($request->all());
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('public/images');
+                $imagePath = str_replace('public/', '', $imagePath);
+            }
+            $student->update(
+                [
+                    'student_number' => $request->input('student_number'),
+                    'classroom_id' => $request->input('classroom_id'),
+                    'email' => $request->input('email'),
+                    'name' => $request->input('name'),
+                    'birth_date' => $request->input('birth_date'),
+                    'image' => isset($request->image) ? $imagePath : $student->image,
+                ]
+            );
             return redirect()
                 ->route('students.show', $student)
                 ->with('classrooms', $classrooms)

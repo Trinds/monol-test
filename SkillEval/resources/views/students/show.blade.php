@@ -28,11 +28,16 @@
         </div>
         {{-- transformar tabela ou lista de avaliações em componente--}}
         <div class="evaluations-container">
+            <h1 class="subtitle">Histórico de avaliações</h1>
             <div class="add-evaluation">
-                <a href="{{ route('evaluations.create', $student->id) }}">Adicionar Avaliação<i
+                <a href="{{ route('evaluations.create.student', $student->id) }}">Adicionar Avaliação <i
                         class="fa-solid fa-plus-circle addBtn"></i></a>
             </div>
-            <h1 class="subtitle">Historico de avaliações</h1>
+            @if($student->evaluations->count() == 0)
+                <div class="alert alert-info m-5">
+                    Não foram encontrados resultados.
+                </div>
+            @else
             <div class="table-container">
                 <table class="large-table">
                     <thead>
@@ -41,7 +46,7 @@
                         <th scope="col">Tipo</th>
                         <th scope="col">Nota</th>
                         <th scope="col">Data</th>
-                        <th></th>
+                        <th>Ações</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,8 +56,8 @@
                             <td>{{$evaluation->test->type->type}}</td>
                             <td>{{$evaluation->score}}</td>
                             <td>
-                                @if($evaluation->test->date)
-                                    {{date('d/m/Y', strtotime($evaluation->test->date))}}
+                                @if($evaluation->date)
+                                    {{date('d/m/Y', strtotime($evaluation->date))}}
                                 @else
                                     Não realizado
                                 @endif
@@ -72,6 +77,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                @endif
             </div>
         </div>
     </div>

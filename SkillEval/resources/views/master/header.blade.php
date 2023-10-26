@@ -20,7 +20,7 @@
             </li>
             <li id="userRole">
                 @foreach(Auth::user()->roles as $role)
-                    <p>{{ $role->name }} </p>
+                    <p>{{Str::ucfirst($role->name)}} </p>
                 @endforeach
             </li>
         @endif

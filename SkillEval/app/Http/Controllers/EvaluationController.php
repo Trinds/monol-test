@@ -70,9 +70,14 @@ class EvaluationController extends Controller
         }
     
         $date = $request->input('date');
+
+        $filteredGrades = array_filter($grades, function ($grade) {
+            return $grade !== null && $grade !== '';
+        });
     
         try {
-            foreach ($grades as $studentId => $grade) {
+            foreach ($filteredGrades as $studentId => $grade) {
+ 
                 $evaluation = new Evaluation([
                     'test_id' => $test->id,
                     'score' => $grade,
@@ -97,10 +102,11 @@ class EvaluationController extends Controller
     {
 
         $tests = Test::all();
+        $types = Type::all();   
 
         return view(
             'evaluations.create-for-student',
-            compact('student', 'tests')
+            compact('student', 'tests', 'types')
         );
     }
 
@@ -114,27 +120,32 @@ class EvaluationController extends Controller
 
     public function storeForStudent(Request $request, Student $student)
     {
-        try {
-            $request->validate([
-                'test_id' => 'required',
-                'score' => 'required|numeric|min:0|max:20'
-            ]);
+        $testMoment = $request->input('moment');
+        $testTypeId = $request->input('type');
 
-            $evaluation = new Evaluation([
-                'test_id' => $request->input('test_id'),
-                'score' => $request->input('score'),
-                'student_id' => $request->input('student_id')
-            ]);
+        $test = Test::where('moment', $testMoment)
+            ->where('type_id', $testTypeId)
+            ->first();
+        
+        if (!$test) {
+            return redirect()->route('evaluations.create-for-student', ['student' => $student->id])->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
 
-            $evaluation->save();
-
-            $student = Student::findOrFail($request->input('student_id'));
-
-            return redirect()->route('students.show', ['student' => $student->id])->with('success', 'Avaliação criada com sucesso!');
-
-        } catch (Exception $e) {
-            return redirect()->route('students.show', ['student' => $student->id])->with('error', 'Falha ao criar a avaliação. Por favor, tente novamente.');
         }
+
+        $testId = $test->id;    
+
+        $student = Student::findOrFail($request->input('student_id'));
+
+        $evaluation = new Evaluation([
+            'student_id' => $student->id,
+            'test_id' => $testId,
+            'score' => $request->input('score'),
+            'date' => $request->input('date'),
+        ]);
+
+        $evaluation->save();
+
+        return redirect()->route('students.show', $student->id)->with('success', 'Avaliação criada com sucesso!');
     }
 
 

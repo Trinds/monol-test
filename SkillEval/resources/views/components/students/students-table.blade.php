@@ -34,7 +34,7 @@
             <th scope="col">Email</th>
             <th scope="col">Data de Nascimento</th>
             <th scope="col">Turma</th>
-            <th scope="col"></th>
+            <th scope="col">Ações</th>
         </tr>
         @foreach ($students as $student)
         <tr class="table-row">
