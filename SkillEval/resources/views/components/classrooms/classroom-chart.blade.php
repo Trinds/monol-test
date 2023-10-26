@@ -13,6 +13,7 @@
 
 </div>
 <script>
+    console.log({!! json_encode($classTechEval) !!})
 
     function typeScores(type) {
         const isVisible = gradeChart.isDatasetVisible(type.value)

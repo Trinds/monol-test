@@ -1,8 +1,6 @@
 <div class="container">
-    <div class="heading mb-3">
-        <h1>{{$course->abbreviation}}</h1>
-        <h5>{{$course->name}}</h5>
-    </div>
+        <h1 class="title">{{$course->abbreviation}}</h1>
+        <h5 class="subtitle">{{$course->name}}</h5>
     <div class="row">
 
         @if($course->classrooms->count() == 0)

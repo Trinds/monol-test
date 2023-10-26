@@ -113,7 +113,15 @@ class StudentController extends Controller
     {
         $courses = \App\Course::all();
         $classrooms = \App\Classroom::all();
-        return view('students.show', ['student' => $student, 'classrooms' => $classrooms, 'courses' => $courses]);
+        list($techStudent,$psychStudent) = $student->getStudentScores($student);
+
+        return view('students.show', [
+            'student' => $student,
+            'classrooms' => $classrooms,
+            'courses' => $courses,
+            'techScores' => $techStudent,
+            'psychScores' => $psychStudent
+        ]);
     }
 
     /**

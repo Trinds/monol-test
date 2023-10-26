@@ -107,40 +107,8 @@ class ClassroomController extends Controller
         $classTechEval = [];
         $classPsychoEval = [];
         foreach ($classroom->students as $student) {
-            $techStudent = ['x' => $student->name];
-            $psychStudent = ['x' => $student->name];
-
-            $techEval = $student->evaluations->where('test.type.type', 'Técnico');
-            $psychEval = $student->evaluations->where('test.type.type', 'Psicotécnico');
-
-            $techScores = [];
-            $psychScores = [];
-
-            foreach (['Inicial', 'Intermédio', 'Final'] as $moment) {
-                $techMomentEval = $techEval->where('test.moment', $moment)->first();
-                $psychMomentEval = $psychEval->where('test.moment', $moment)->first();
-                if ($techMomentEval && $techMomentEval->score !== null && $psychMomentEval && $psychMomentEval->score !== null) {
-                    $techScores[] = $techMomentEval->score;
-                    $psychScores[] = $psychMomentEval->score;
-                }
-                $techStudent[$moment] = $techMomentEval ? $techMomentEval->score : null;
-                $psychStudent[$moment] = $psychMomentEval ? $psychMomentEval->score : null;
-            }
-
-            !empty($techScores) ?
-                $techAverage = array_sum($techScores) / count($techScores)
-                :
-                $techAverage = null;
-
-            !empty($psychScores) ?
-                $psychAverage = array_sum($psychScores) / count($psychScores)
-                :
-                $psychAverage = null;
-
-            $techStudent['Todos'] = $techAverage;
+            list($techStudent,$psychStudent) = $student->getStudentScores($student);
             $classTechEval[] = $techStudent;
-
-            $psychStudent['Todos'] = $psychAverage;
             $classPsychoEval[] = $psychStudent;
         }
 
