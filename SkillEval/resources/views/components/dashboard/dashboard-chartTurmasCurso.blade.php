@@ -48,6 +48,8 @@ $abbreviationCounts = array_count_values($abbreviationArray);
             data: data,
             options:
                 {
+                    aspectRatio: 1,
+                    responsive: true,
                     cutout: '65%',
                     plugins:
                         {

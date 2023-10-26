@@ -13,12 +13,12 @@
     $Psi3=[];
 
 
-    foreach ($classroom->students as $student) 
+    foreach ($classroom->students as $student)
     {
         $studentNames[] = $student->name;
 
         foreach($student->evaluations as $evaluation)
-        {  
+        {
 
             switch ($evaluation->test_id)
             {
@@ -40,8 +40,8 @@
                 case 6:
                     $Psi3[]=$evaluation->score;
                 break;
-            }                
-        } 
+            }
+        }
     }
 
 
@@ -49,11 +49,11 @@
 ?><!-------------------------------------------------------------------------------~------------------------------><!------->
 
     <script>
-           
+
         var studentNames = <?php echo json_encode($studentNames); ?>;
         var ctx = document.getElementById('barChart').getContext('2d');
-        
-        var datasets = 
+
+        var datasets =
         [
 
             {
@@ -64,35 +64,35 @@
                 borderWidth: 1
             },
             {
-                label: 'Tec2: ', 
+                label: 'Tec2: ',
                 data: <?php echo json_encode($Tec2); ?>,
                 backgroundColor: 'orange',
                 borderColor: 'orange',
                 borderWidth: 1,
-            },            
+            },
             {
-                label: 'Tec3: ', 
+                label: 'Tec3: ',
                 data: <?php echo json_encode($Tec3); ?>,
                 backgroundColor: 'green',
                 borderColor: 'green',
                 borderWidth: 1,
-            },           
+            },
             {
-                label: 'Psi1: ', 
+                label: 'Psi1: ',
                 data: <?php echo json_encode($Psi1); ?>,
                 backgroundColor: 'pink',
                 borderColor: 'pink',
                 borderWidth: 1,
-            },           
+            },
             {
-                label: 'Psi2: ', 
+                label: 'Psi2: ',
                 data: <?php echo json_encode($Psi2); ?>,
                 backgroundColor: 'yellow',
                 borderColor: 'yellow',
                 borderWidth: 1,
-            },           
+            },
             {
-                label: 'Psi3: ', 
+                label: 'Psi3: ',
                 data: <?php echo json_encode($Psi3); ?>,
                 backgroundColor: 'grey',
                 borderColor: 'grey',
@@ -100,63 +100,65 @@
             }
         ];
 
-       
-        
-        var myChart = new Chart(ctx, 
+
+
+        var myChart = new Chart(ctx,
         {
             type: 'bar',
-            data: 
+            data:
             {
                 labels: studentNames,
                 datasets: datasets
             },
-            options: 
+            options:
             {
-                scales: 
+                aspectRatio: -16,
+                responsive: true,
+                scales:
                 {
-                    y: 
+                    y:
                     {
                         min: 0,
                         max: 20,
-                        ticks: 
+                        ticks:
                         {
                             stepSize: 1,
                             color: 'blue'
                         }
                     },
-                    x: 
+                    x:
                     {
-                        ticks: 
+                        ticks:
                         {
                             color: 'blue'
                         }
                     }
                 },
-                plugins: 
+                plugins:
                 {
-                    legend: 
+                    legend:
                     {
                         display: true,
-                        labels: 
-                        {   
+                        labels:
+                        {
                             boxWidth:0,
                         }
                     },
-                    title: 
+                    title:
                     {
                         display: true,
                         color: 'rgb(13, 18, 130)',
                         text: 'Médias de testes',
-                        font: 
+                        font:
                         {
                             size: 14,
                         },
                     },
-                    tooltip: 
+                    tooltip:
                     {
                         backgroundColor: 'rgb(56, 118, 191)',
                         callbacks: {
-                            label: (tooltipItem) => 
+                            label: (tooltipItem) =>
                             {
                                 const value = tooltipItem.parsed.y.toFixed(2);
                                 const datasetIndex = tooltipItem.datasetIndex;
@@ -165,9 +167,9 @@
                             }
                         }
                     },
-                    annotation: 
+                    annotation:
                     {
-                        annotations: 
+                        annotations:
                         [
                             {
                                 z: 1,
