@@ -13,20 +13,8 @@ use Illuminate\Support\Facades\Validator;
 
 
 
-class ClassroomImport implements WithMultipleSheets
+class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, WithHeadingRow
 {
-    public function sheets(): array
-    {
-        return [
-            0 => new ClassroomSheetImport(),
-            1 => new StudentsSheetImport(),
-        ];
-    }
-}
-
-class ClassroomSheetImport implements ToModel, WithValidation, WithHeadingRow
-{
-
     public function model(array $row)
     {
         $courseAbreviation = $row['abreviacao_do_curso'];
@@ -60,44 +48,11 @@ class ClassroomSheetImport implements ToModel, WithValidation, WithHeadingRow
             'data_de_termino_ddmmaaaa.required' => 'A data de término deve ser preenchida no ficheiro Excel.',
         ];
     }
-}
-
-class StudentsSheetImport implements ToModel, WithHeadingRow, WithValidation
-{
-    public function model(array $row)
-    {
-        $lastClassroom = Classroom::latest()->first();
-        return new Student([
-            'student_number' => $row['no_de_formando'],
-            'name' => $row['nome'],
-            'email' => $row['email'],
-            'birth_date' => Date::excelToDateTimeObject($row['data_de_nascimento_ddmmaaaa'])->format('Y-m-d'),
-            'classroom_id' => $lastClassroom->id,
-            'image' => 'images/default/student.png'
-        ]);
-    }
-
-    public function rules(): array
+    public function sheets(): array
     {
         return [
-            'no_de_formando' => 'required|unique:students,student_number',
-            'nome' => 'required|max:255',
-            'email' => 'required|email|unique:students,email',
-            'data_de_nascimento_ddmmaaaa' => 'required',
-        ];
-    }
-
-    public function customValidationMessages()
-    {
-        return [
-            'no_de_formando.required' => 'O número de formando deve ser preenchido no ficheiro Excel.',
-            'no_de_formando.unique' => 'O número de formando preenchido no Excel já existe.',
-            'nome.required' => 'O nome deve ser preenchido no ficheiro Excel.',
-            'nome.max' => 'O nome preenchido no Excel não pode ter mais de 10 caracteres.',
-            'email.required' => 'O email deve ser preenchido no ficheiro Excel.',
-            'email.email' => 'O email preenchido no Excel não é válido.',
-            'email.unique' => 'O email preenchido no Excel já existe.',
-            'data_de_nascimento_ddmmaaaa.required' => 'A data de nascimento deve ser preenchida no ficheiro Excel.',
+            0 => new ClassroomImport(),
+            1 => new StudentsImport(Classroom::orderBy('created_at', 'desc')->first()),
         ];
     }
 }
