@@ -40,7 +40,7 @@
             <div class="col larger-input">
                 <form method="get" action="/evaluations">
                     <label for="classroom_filter">Turma</label>
-                    <select class="form-control" id="classroom_filter" name="classroom_filter"
+                    <select class="form-control" id="classroom_filter" name="classroom_filter" required>
                             onchange="this.form.submit()">
                         <option value="">Selecione...</option>
                         @foreach ($classrooms as $classroom)
@@ -59,7 +59,7 @@
             <div class="row">
                 <div class="col smaller-input">
                     <label for="type">Teste:</label>
-                    <select name="type" id="type" class="form-control">
+                    <select name="type" id="type" class="form-control" required>
                         <option value="">Selecione...</option>
                         @foreach ($test_types as $type)
                             <option value="{{ $type->id }}">{{ $type->type }}</option>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="col smaller-input">
                     <label for="moment">Momento:</label>
-                    <select name="moment" id="moment" class="form-control">
+                    <select name="moment" id="moment" class="form-control" required>
                         <option value="">Selecione...</option>
                         @foreach ($tests->unique('moment') as $test)
                             <option value="{{ $test->moment }}">{{ $test->moment }}</option>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="col smaller-input">
                     <label for="date">Data:</label>
-                    <input type="date" id="date" name="date" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                    <input type="date" id="date" name="date" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
                 </div>
             </div>
     </div>

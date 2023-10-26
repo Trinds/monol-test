@@ -215,7 +215,7 @@ class EvaluationController extends Controller
     
 
         return redirect()->route('students.show', ['student' => $studentId])
-        ->with('success', 'Evaluation deleted successfully.');
+        ->with('success', 'Avaliação apagada com sucesso.');
 
     }
 }
