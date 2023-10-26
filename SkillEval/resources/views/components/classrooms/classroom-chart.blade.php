@@ -1,13 +1,17 @@
-<canvas class="classroom_chart" id="classroomChart"></canvas>
-<select onchange="momentScores(this)">
-    <option value="Todos">Todos</option>
-    <option value="Inicial">Inicial</option>
-    <option value="Intermédio">Intermédio</option>
-    <option value="Final">Final</option>
-</select>
-<input type="checkbox" checked value="0" onclick="typeScores(this)"> Técnico
-<input type="checkbox" checked value="1" onclick="typeScores(this)"> Psicotécnico
+<div class="classroom-chart">
+    <canvas class="classroom_chart" id="classroomChart"></canvas>
+</div>
+<div class="chart-options input-group-prepend">
+    <select class="custom-select" onchange="momentScores(this)">
+        <option value="Todos">Todos</option>
+        <option value="Inicial">Inicial</option>
+        <option value="Intermédio">Intermédio</option>
+        <option value="Final">Final</option>
+    </select>
+    <input type="checkbox" checked value="0" onclick="typeScores(this)"> Técnico
+    <input type="checkbox" checked value="1" onclick="typeScores(this)"> Psicotécnico
 
+</div>
 <script>
 
     function typeScores(type) {
@@ -33,14 +37,14 @@
                 data: {!! json_encode($classTechEval) !!},
                 backgroundColor: 'rgba(56, 118, 191, .4)',
                 borderColor: 'rgba(56, 118, 191, 1)',
-                borderWidth:1
+                borderWidth: 1
             },
             {
                 label: 'Psicotécnico',
                 data: {!! json_encode($classPsychoEval) !!},
                 backgroundColor: 'rgba(249, 148, 23, .4)',
                 borderColor: 'rgba(249, 148, 23, 1)',
-                borderWidth:1
+                borderWidth: 1
             },
         ]
     }
@@ -52,12 +56,12 @@
         options: {
             aspectRatio: -16,
             responsive: true,
-            plugins:{
+            plugins: {
                 legend: {
                     onClick: null
                 },
             },
-            parsing:{
+            parsing: {
                 xAxisKey: 'x',
                 yAxisKey: 'Todos'
             },

@@ -144,8 +144,6 @@ class ClassroomController extends Controller
             $classPsychoEval[] = $psychStudent;
         }
 
-//        dd($classTechEval, $classPsychoEval);
-
         $failures = null;
         return view('classrooms.show', ['classroom' => $classroom, 'failures' => $failures, 'classTechEval' => $classTechEval, 'classPsychoEval' => $classPsychoEval]);
     }

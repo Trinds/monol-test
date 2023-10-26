@@ -32,10 +32,10 @@
             </div>
         </form>
     </div>
-    <div class="classroom-chart">
+
         @component('components.classrooms.classroom-chart', ['classroom' => $classroom, 'classTechEval' => $classTechEval, 'classPsychoEval' => $classPsychoEval])
         @endcomponent
-    </div>
+
     <div class="student-cards-container">
         @if ($classroom->students->count() == 0)
             <div class="alert alert-info" role="alert">
