@@ -49,11 +49,12 @@ class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, Wit
             'data_de_termino_ddmmaaaa.required' => 'A data de término deve ser preenchida no ficheiro Excel.',
         ];
     }
+
     public function sheets(): array
     {
         return [
             0 => new ClassroomImport(),
-            1 => new StudentsImport(Classroom::orderBy('created_at', 'desc')->first()),
+            1 => new StudentsImport(),
         ];
     }
 }
