@@ -12,19 +12,16 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 class StudentsImport implements ToModel, WithHeadingRow, WithValidation
 {
     protected $classroom;
-    public function __construct($classroom)
-    {
-        $this->classroom = $classroom;
-    }
+    
     public function model(array $row)
     {
-
+        $this->classroom = Classroom::latest()->first();
         return new Student([
             'student_number' => $row['no_de_formando'],
             'name' => $row['nome'],
             'email' => $row['email'],
             'birth_date' => Date::excelToDateTimeObject($row['data_de_nascimento_ddmmaaaa'])->format('Y-m-d'),
-            'classroom_id' => $this->classroom->id + 1,
+            'classroom_id' => $this->classroom->id,
             'image' => 'images/default/student.png',
         ]);
     }
