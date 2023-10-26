@@ -70,5 +70,8 @@
         @endforeach
     </table>
     @endif
+</div>
+
+<div class="pagination-container">
     {{ $students->onEachSide(3)->links() }}
 </div>

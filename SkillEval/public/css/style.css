@@ -289,6 +289,14 @@ input[type="file"]::before {
     }
 }
 
+.pagination-container{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    width: calc(100vw - 250px);
+}
 /*#endregion*/
 
 /*#region Pagination*/
