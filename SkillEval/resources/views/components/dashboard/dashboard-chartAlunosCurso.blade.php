@@ -51,6 +51,8 @@ foreach ($Turmas as $turma) {
             }],
         },
         options: {
+            maintainAspectRatio: false,
+            responsive: true,
             cutout: '65%',
             plugins: {
                 legend: {
@@ -119,4 +121,4 @@ else {
         });
 }
 </script>
-    
+
