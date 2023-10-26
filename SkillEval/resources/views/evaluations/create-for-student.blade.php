@@ -33,14 +33,14 @@
         <label for='moment' class="form-label">
             Momento:
         </label>
-        <select name="moment" id="moment" class="form-control-select">
+        <select name="moment" id="moment" class="form-control-select" required>
             @foreach ($tests->unique('moment') as $test)
             <option value="{{ $test->moment }}">{{ $test->moment }}</option>
             @endforeach
         </select>
         <input class="form-input" required type="hidden" name="student_id" value="{{ $student->id }}">
         <label for="type" class="form-label">Tipo de Avaliação:</label>    
-        <select name="type" id="type" class="form-control-select">
+        <select name="type" id="type" class="form-control-select" required>
             <option value="">Selecione...</option>
             @foreach ($types as $type)
             <option value="{{ $type->id }}">{{ $type->type }}</option>
