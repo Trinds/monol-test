@@ -36,13 +36,7 @@
             @foreach($users as $user)
             <tr class="table-row">
                 <td>
-
-                    @if($user->image !== null)
-                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia" style="height: 60px; width:60px; border-radius: 50%;" />
-                    @else
-
-                    <img src="{{ asset('imgs/defaultuser.png') }}" alt="{{ $user->name }} Profile Image" />
-                    @endif
+                    <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia"/>
                 </td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
@@ -72,4 +66,7 @@
             @endforeach
         </tbody>
     </table>
+</div>
+<div class="pagination-container">
+    {{ $users->onEachSide(3)->links() }}
 </div>

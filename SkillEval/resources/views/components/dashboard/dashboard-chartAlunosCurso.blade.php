@@ -36,6 +36,7 @@ foreach ($Turmas as $turma) {
 
     if (tiposDeCurso.length === 0) {
         document.getElementById('noDataMessage').style.display = 'block';
+        document.getElementById('AlunosPCurso').classList.add('text-center');
     tiposDeCurso = ['Nenhum Dado'];
     numeroDeAlunosPorTipo = [1];
     var donutChart = new Chart(ctx, {
@@ -50,6 +51,8 @@ foreach ($Turmas as $turma) {
             }],
         },
         options: {
+            maintainAspectRatio: false,
+            responsive: true,
             cutout: '65%',
             plugins: {
                 legend: {
@@ -118,4 +121,4 @@ else {
         });
 }
 </script>
-    
+

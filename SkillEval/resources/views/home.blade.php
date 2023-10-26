@@ -54,23 +54,22 @@
 
 
         </div>
-        <div class="dashboard-charts">
-            <div class="chart-container">
-                <label for="donutChart" class="subtitle text-center">Alunos por Curso</label>
+
+        <div class="dashboard-chart-container">
+            <div class="dashboard-chart">
+                <label for="donutChart" id="AlunosPCurso" class="subtitle">Alunos por Curso</label>
                 <div class="charts">
                     @component('components.dashboard.dashboard-chartAlunosCurso', [
-
                         'Turmas'=>  $classrooms, //Array de Turmas
                         'dir' => route('courses.index'),
                     ])
                     @endcomponent
                 </div>
             </div>
-            <div class="chart-container">
-                <label for="myPieChart" class="subtitle text-center">Turmas por Curso</label>
+            <div class="dashboard-chart">
+                <label for="myPieChart" id="TurmasPCurso" class="subtitle">Turmas por Curso</label>
                 <div class="charts">
                     @component('components.dashboard.dashboard-ChartTurmasCurso', [
-
                         'Turmas'=>  $classrooms, //Array de Turmas
                         'dir' => route('courses.index'),
                     ])

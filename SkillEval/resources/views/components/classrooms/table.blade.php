@@ -66,5 +66,7 @@
             </tbody>
         </table>
         @endif
+    </div>
+    <div class="pagination-container">
         {{ $classrooms->onEachSide(3)->links() }}
     </div>

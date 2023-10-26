@@ -1,4 +1,7 @@
-<canvas id="myPieChart"></canvas>
+<div style="position: relative;">
+    <canvas id="myPieChart"></canvas>
+    <p id="noDataMessage2" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; font-size: large;">Sem Dados</p>
+</div>
 
 <?php
 $abbreviationArray = [];
@@ -15,6 +18,44 @@ $abbreviationCounts = array_count_values($abbreviationArray);
 
     var labels = Object.keys({!! json_encode($abbreviationCounts, JSON_HEX_TAG) !!});
     var values = Object.values({!! json_encode($abbreviationCounts, JSON_HEX_TAG) !!});
+
+    if(labels.length === 0) {
+        document.getElementById('noDataMessage2').style.display = 'block';
+        document.getElementById('TurmasPCurso').classList.add('text-center');
+        labels = ['Nenhum Dado'];
+        values = [1];
+
+        var myPieChart = new Chart(ctx,
+            {
+                type: "pie",
+                data:
+                    {
+                        labels: labels,
+                        datasets:
+                            [
+                                {
+                                    data: values,
+                                    backgroundColor: 'rgba(21, 120, 167, 0.1)',
+                                },
+                            ],
+                    },
+                options:
+                    {
+                        cutout: '65%',
+                        plugins:
+                            {
+                                legend:
+                                    {
+                                        display: false,
+                                    },
+                            },
+                    },
+            });
+        ctx.globalAlpha = 0.5;
+        ctx.shadowColor = 'rgba(21, 120, 167, 0.5)';
+        ctx.shadowBlur = 10;
+    }else {
+
 
     const backgroundColors =
         [
@@ -48,6 +89,8 @@ $abbreviationCounts = array_count_values($abbreviationArray);
             data: data,
             options:
                 {
+                    aspectRatio: 1,
+                    responsive: true,
                     cutout: '65%',
                     plugins:
                         {
@@ -67,5 +110,6 @@ $abbreviationCounts = array_count_values($abbreviationArray);
                         },
                 },
         });
+    }
 </script>
 

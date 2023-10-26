@@ -6,6 +6,7 @@
 
 .classroom-chart{
     width: 100% !important;
+    min-width: 40rem !important;
     height: 35rem !important;
 }
 
