@@ -6,8 +6,8 @@
 
 @section('content')
     <h1 class="title">Relatório de médias</h1>
-    @component('components.reports.report-form', ['classEditions' => $classEditions, 'courses' => $courses])
+    @component('components.reports.report-form', ['courses' => $courses, 'classrooms' => $classrooms])
     @endcomponent
-    @component('components.reports.table', ['students' => $students, 'classrooms' => $classrooms])
+    @component('components.reports.table', ['classrooms' => $classrooms])
     @endcomponent
 @endsection
