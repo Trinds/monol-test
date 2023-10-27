@@ -29,7 +29,8 @@ class Student extends Model
         return $this->hasMany('App\Evaluation');
     }
 
-    public function getStudentScores(Student $student){
+    public function getStudentScores(Student $student)
+    {
         $techStudent = ['x' => $student->name];
         $psychStudent = ['x' => $student->name];
 
@@ -67,16 +68,12 @@ class Student extends Model
         return [$techStudent, $psychStudent];
     }
 
-    public static function boot ()
-    {
+    public static function boot(){
         parent::boot();
 
-        self::deleting(function (Student $event) {
+        self::deleting(function (Student $student) {
 
-            foreach ($event->evaluations as $evaluation)
-            {
-                $evaluation->delete();
-            }
+            $student->evaluations()->delete();
         });
     }
 }
