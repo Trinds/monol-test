@@ -75,9 +75,29 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student_number' => 'required|string|max:255|unique:students',
+            'student_number' => [
+                'required', 'string', 'max:255', 
+                function ($attribute, $value, $fail) {
+                    $existingStudent = Student::where('student_number', $value)
+                        ->whereNull('deleted_at')
+                        ->first();
+                    if ($existingStudent) {
+                        $fail('O número de formando introduzido já está em uso.');
+                    }
+                },
+            ],
             'classroom_id' => 'required|integer|exists:classrooms,id',
-            'email' => 'required|email|max:255|unique:students',
+            'email' => [
+                'required', 'email', 'max:255',
+                function ($attribute, $value, $fail) {
+                    $existingStudent = Student::where('email', $value)
+                        ->whereNull('deleted_at')
+                        ->first();
+                    if ($existingStudent) {
+                        $fail('O email introduzido já está em uso.');
+                    }
+                },
+            ],
             'name' => 'required|string|max:255',
             'birth_date' => 'required|date|before:today',
             'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
@@ -149,9 +169,29 @@ class StudentController extends Controller
     {
         $request->validate(
             [
-                'student_number' => 'required|string|max:255|unique:students,student_number,' . $student->id,
+                'student_number' => ['required','string','max:255',
+                    function ($attribute, $value, $fail) use ($request, $student) {
+                        $existingStudent = Student::where('student_number', $value)
+                            ->where('id', '<>', $student->id)
+                            ->whereNull('deleted_at')
+                            ->first();
+                        if ($existingStudent && $existingStudent->id != $student->id) {
+                            $fail('O número de formando introduzido já está em uso.');
+                        }
+                    },
+                ],
                 'classroom_id' => 'required|integer|exists:classrooms,id',
-                'email' => 'required|email|max:255|unique:students,email,' . $student->id,
+                'email' => ['required', 'email', 'max:255',
+                    function ($attribute, $value, $fail) use ($request, $student) {
+                        $existingStudent = Student::where('email', $value)
+                            ->where('id', '<>', $student->id)
+                            ->whereNull('deleted_at')
+                            ->first();
+                        if ($existingStudent && $existingStudent->id != $student->id) {
+                            $fail('O email introduzido já está em uso.');
+                        }
+                    },
+                ],
                 'name' => 'required|string|max:255',
                 'birth_date' => 'required|date|before:today',
                 'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',

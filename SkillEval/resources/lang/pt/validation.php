@@ -162,6 +162,7 @@ return [
         'required' => 'O número de formando é obrigatório.',
         'string' => 'O número de formando deve conter apenas texto.',
         'max' => 'O número de formando não pode exceder os :max caracteres.',
+        'unique' => 'O número de formando introduzido já está em uso.',
     ],
     'classroom_id' => [
         'required' => 'A escolha da turma é obrigatória.',
