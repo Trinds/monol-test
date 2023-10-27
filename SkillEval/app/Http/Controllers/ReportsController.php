@@ -13,7 +13,7 @@ class ReportsController extends Controller
     public function index(Request $request)
     {
         $courses = Course::all();
-        $classrooms = [];
+        $classrooms = Classroom::all();
 
         if ( $request->input('course_id') && $request->input('course_id') !== "" ){
             $classroomQuery = Classroom::query();

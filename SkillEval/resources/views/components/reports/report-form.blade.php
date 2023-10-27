@@ -6,8 +6,7 @@
                     <p class="text-center font-weight-bold">Filtrar Turmas</p>
                     <div class="form-group">
                         <label for="courseDropdown">Curso</label>
-                        <select id="courseDropdown" name="course_id" class="form-control" required
-                                onchange="this.form.submit()">
+                        <select id="course_id" name="course_id" class="form-control">
                             <option value="">Selecionar Curso</option>
                             @foreach($courses as $course)
                                 <option
@@ -19,12 +18,13 @@
                     </div>
                     <div class="form-group">
                         <label for="classroomEditionDropdown">Turma</label>
-                        <select id="classroomEditionDropdown" name="classroom_edition" class="form-control"
+                        <select id="classroom_id" name="classroom_edition" class="form-control"
                                 onchange="this.form.submit()">
                             <option value="" selected>Selecionar Turma</option>
                             @foreach($classrooms as $classroom)
                                     <option
                                         value="{{ $classroom->edition }}"
+                                        data-course="{{$classroom->course->abbreviation}}"
                                         {{ (old('classroom_edition', request('classroom_edition')) == $classroom->edition) ? 'selected' : '' }} >
                                         {{ $classroom->edition }}
                                     </option>
@@ -84,6 +84,5 @@
             </div>
         </div>
         <button class="shadow-lg " type="submit">Atualizar <i class="fa-solid fa-arrows-rotate"></i></button>
-
     </form>
 </div>

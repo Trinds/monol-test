@@ -70,10 +70,10 @@
                                 <td>{{ date('d-m-Y', strtotime($classroom->start_date)) }}</td>
                                 <td>{{ date('d-m-Y', strtotime($classroom->end_date)) }}</td>
                                 <td>
-                                    <a href="/students/{{ $student->id }}">
+                                    <a class="text-decoration-none" href="/students/{{ $student->id }}">
                                         <button>Formando</button>
                                     </a>
-                                    <a href="/classrooms/{{ $student->classroom_id }}">
+                                    <a class="text-decoration-none" href="/classrooms/{{ $student->classroom_id }}">
                                         <button>Turma</button>
                                     </a>
                                 </td>

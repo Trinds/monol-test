@@ -4,16 +4,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateClassrooms() {
         const selectedCourseId = course_id.value;
-        
+
         for (const option of classroomSelect.options) {
-            selectedCourseId === "" ||
             option.dataset.course === selectedCourseId
                 ? (option.style.display = "block")
-                : 
+                :
                 ((option.style.display = "none"));
             }
         }
-        
+
         course_id.addEventListener("change", function () {
             updateClassrooms();
                 classroomSelect.value = "";

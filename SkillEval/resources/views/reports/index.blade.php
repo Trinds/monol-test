@@ -1,5 +1,9 @@
 @extends('master.main')
 
+@section('scripts')
+    <script src="{{ asset('js/classroomsFilter.js') }}"></script>
+@endsection
+
 @section('styles')
     <link href="{{ asset('css/reports.css') }}" rel="stylesheet">
 @endsection
