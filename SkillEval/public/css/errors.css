@@ -8,6 +8,10 @@
     justify-content: center;
 }
 
+.flex-column{
+    flex-direction: column;
+}
+
 .position-ref {
     position: relative;
 }
@@ -22,4 +26,8 @@
 .message {
     font-size: 18px;
     text-align: center;
+}
+
+.go-back{
+
 }

@@ -1,10 +1,10 @@
-
 @extends('master.main')
 @section('styles')
     <link rel="stylesheet" href="{{asset('css/errors.css')}}">
 @endsection
 @section('content')
-        <div class="flex-center position-ref full-height">
+    <div class="flex-center position-ref full-height flex-column">
+        <div class="flex-center">
             <div class="code">
                 @yield('code')
             </div>
@@ -13,9 +13,10 @@
                 @yield('message')
             </div>
         </div>
-    <div class="flex-center position-ref full-height">
-        <div class="go-back">
-            <button>Voltar</button>
+        <div class="flex-center go-back p-3">
+            <a href="{{ url()->previous() }}">
+                <button>Voltar</button>
+            </a>
         </div>
     </div>
 @endsection
