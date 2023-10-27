@@ -211,6 +211,28 @@ label.light {
     color: #f2931f;
 }
 
+.button-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+#cancel-button
+{
+    background-color: #f2381f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
 
 @media screen and (min-width: 480px) {
     form {
