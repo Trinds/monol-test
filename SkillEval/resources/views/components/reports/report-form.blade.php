@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        <button class="shadow-lg " type="submit">Atualizar</button>
+        <button class="shadow-lg " type="submit">Atualizar <i class="fa-solid fa-arrows-rotate"></i></button>
 
     </form>
 </div>
