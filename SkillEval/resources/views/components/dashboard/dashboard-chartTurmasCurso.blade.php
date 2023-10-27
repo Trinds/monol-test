@@ -43,17 +43,16 @@
                                 },
                             ],
                     },
-                options:
-                    {
-                        cutout: '65%',
-                        plugins:
-                            {
-                                legend:
-                                    {
-                                        display: false,
-                                    },
-                            },
+                    options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
                     },
+                },
             });
         ctx.globalAlpha = 0.5;
         ctx.shadowColor = 'rgba(21, 120, 167, 0.5)';

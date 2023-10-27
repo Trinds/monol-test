@@ -51,7 +51,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:courses,name'],
             'abbreviation' => ['required', 'string', 'max:10', 'unique:courses,abbreviation'],
         ]);
         try {
@@ -97,7 +97,7 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:courses,name,' . $course->id],
             'abbreviation' => ['required', 'string', 'max:10', 'unique:courses,abbreviation,' . $course->id],
         ]);
         try {

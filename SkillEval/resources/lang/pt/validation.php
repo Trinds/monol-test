@@ -173,6 +173,7 @@ return [
         'required' => 'O nome é obrigatório.',
         'string' => 'O nome deve conter apenas texto.',
         'max' => 'O nome não pode exceder os :max caracteres.',
+        'unique' => 'O nome introduzido já está em uso.',
     ],
     'birth_date' => [
         'required' => 'A data de nascimento é obrigatória.',
