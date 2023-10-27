@@ -1,12 +1,12 @@
-@if(!$students->isEmpty() && request('classroom_edition') != "")
-    <div class="table-container">
+@if(request('course_id'))
+    <div class="table-container shadow">
         <table class="large-table">
             <thead>
             <tr class="table-header">
                 <th>Formando</th>
                 <th>Turma</th>
-                <th>Média  Técnica</th>
-                <th>Média  Psicotécnica</th>
+                <th>Média Técnica</th>
+                <th>Média Psicotécnica</th>
                 <th>Data de Início</th>
                 <th>Data de Conclusão</th>
                 <th>Detalhes</th>
@@ -46,7 +46,7 @@
                             $maxAveragePsi = request('max_average_psi', 20);
 
                         @endphp
-                        
+
                         @if($tecAverage >= $minAverageTec && $psiAverage >= $minAveragePsi && $tecAverage <= $maxAverageTec && $psiAverage <= $maxAveragePsi)
                             <tr class="table-row">
                                 <td>{{ $student->name }}</td>
@@ -59,7 +59,7 @@
                                         '<span class="text-primary font-weight-bold">' . number_format($tecAverage, 2) . '</span><br>';
                                     @endphp
                                 </td>
-                                <td >
+                                <td>
                                     @php
                                         echo ($psiAverage < 10) ?
                                         '<span class="text-danger font-weight-bold">' . number_format($psiAverage, 2) . '</span><br>'
@@ -70,10 +70,10 @@
                                 <td>{{ date('d-m-Y', strtotime($classroom->start_date)) }}</td>
                                 <td>{{ date('d-m-Y', strtotime($classroom->end_date)) }}</td>
                                 <td>
-                                    <a href="/students/{{ $student->id }}">
+                                    <a class="text-decoration-none" href="/students/{{ $student->id }}">
                                         <button>Formando</button>
                                     </a>
-                                    <a href="/classrooms/{{ $student->classroom_id }}">
+                                    <a class="text-decoration-none" href="/classrooms/{{ $student->classroom_id }}">
                                         <button>Turma</button>
                                     </a>
                                 </td>
@@ -85,6 +85,5 @@
             @endforeach
             </tbody>
         </table>
-        @endif
-
     </div>
+@endif
