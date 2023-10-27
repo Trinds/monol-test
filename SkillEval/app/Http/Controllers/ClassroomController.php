@@ -83,6 +83,7 @@ class ClassroomController extends Controller
                 function ($attribute, $value, $fail) use ($request) {
                     $existingClassroom = Classroom::where('edition', $value)
                         ->where('course_id', $request->input('course_id'))
+                        ->whereNull('deleted_at')
                         ->first();
                     if ($existingClassroom) {
                         $fail('Já existe uma turma com a mesma edição e curso selecionado.');
