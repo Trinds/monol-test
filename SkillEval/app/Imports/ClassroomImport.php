@@ -21,9 +21,20 @@ class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, Wit
             session()->flash('error', '- Erro: A edição do curso inserida não corresponde a nenhum curso ativo.');
             return null;
         }
+
+        // Validação para verificar se já existe uma turma com a mesma edição e curso
+        $edition = $row['edicao'];
+        $existingClassroom = Classroom::where('edition', $edition)
+            ->where('course_id', $course->id)
+            ->first();
+        if ($existingClassroom) {
+            session()->flash('error', '- Erro: Já existe uma turma com a mesma edição e curso.');
+            return null;
+        }
+
         return new Classroom([
             'course_id' => $course->id,
-            'edition' => $row['edicao'],
+            'edition' => $edition,
             'start_date' => Date::excelToDateTimeObject($row['data_de_inicio_ddmmaaaa'])->format('Y-m-d'),
             'end_date' => Date::excelToDateTimeObject($row['data_de_termino_ddmmaaaa'])->format('Y-m-d'),
         ]);
