@@ -1,5 +1,4 @@
-@if(request('classroom_edition') != "")
-
+@if(!$students->isEmpty() && request('classroom_edition') != "")
     <div class="table-container shadow">
         <table class="large-table">
             <thead>
@@ -47,8 +46,8 @@
                             $maxAveragePsi = request('max_average_psi', 20);
 
                         @endphp
-
-                        @if($tecAverage > $minAverageTec && $psiAverage > $minAveragePsi && $tecAverage < $maxAverageTec && $psiAverage < $maxAveragePsi)
+                        
+                        @if($tecAverage >= $minAverageTec && $psiAverage >= $minAveragePsi && $tecAverage <= $maxAverageTec && $psiAverage <= $maxAveragePsi)
                             <tr class="table-row">
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->classroom->course->abbreviation }} {{ $student->classroom->edition }}</td>

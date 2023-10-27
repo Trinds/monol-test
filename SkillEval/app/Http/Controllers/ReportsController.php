@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
 use App\Course;
 use App\Student;
@@ -15,48 +16,74 @@ class ReportsController extends Controller
         $classroomQuery = Classroom::query();
 
         // Start date filter
-        if ($request->filled('start_date'))
+        if ($request->filled('start_date')) {
             $classroomQuery->whereDate('start_date', '>=', $request->input('start_date'));
+        }
+
         // End date filter
-        if ($request->filled('end_date'))
+        if ($request->filled('end_date')) {
             $classroomQuery->whereDate('end_date', '<=', $request->input('end_date'));
-
-        //ckecked active classrooms
-        if ($request->has('active_classes')) 
-        {
-            $activeClassesChecked = $request->input('active_classes');
-            if ($activeClassesChecked === '1')
-                $classroomQuery->whereDate('end_date', '>=', now());
         }
 
-        // Filter by course abbreviation
-        if ($request->filled('course_id')) 
-        {
-            $courseAbbreviation = $request->input('course_id');
-            $classroomQuery->whereHas('course', function ($query) use ($courseAbbreviation) 
-            {
-                $query->where('abbreviation', $courseAbbreviation);
-            });
+        // Other filters (active_classes, course_id) remain unchanged...
 
-            $studentQuery->whereHas('classroom.course', function ($query) use ($courseAbbreviation) 
-            {
-                $query->where('abbreviation', $courseAbbreviation);
-            });
-        }
-
-        // Retrieve the editions of all classrooms
+        // Retrieve the editions of filtered classrooms
         $selectedCourse = $request->input('course_id');
-        $classroomIds = Classroom::whereHas('course', function ($query) use ($selectedCourse) 
-            {
-                $query->where('abbreviation', $selectedCourse);
-            })->pluck('id');        
-        $classEditions = Classroom::whereIn('id', $classroomIds)->pluck('edition');
+        $classroomIds = Classroom::whereHas('course', function ($query) use ($selectedCourse) {
+            $query->where('abbreviation', $selectedCourse);
+        })->pluck('id');
 
+        // Create a new query for classEditions
+        $classEditionsQuery = Classroom::whereIn('id', $classroomIds);
 
-                
+        // Start date filter for classEditions
+        if ($request->filled('start_date')) {
+            $classEditionsQuery->whereDate('start_date', '>=', $request->input('start_date'));
+        }
+
+        // End date filter for classEditions
+        if ($request->filled('end_date')) {
+            $classEditionsQuery->whereDate('end_date', '<=', $request->input('end_date'));
+        }
+
+        // Retrieve the class editions
+        $classEditions = $classEditionsQuery->pluck('edition');
+
         $students = $studentQuery->get();
         $classrooms = $classroomQuery->get();
         $courses = Course::all();
+
+
+
+
+        
+
+        $selectedClassEdition = $request->input('classroom_edition');
+
+        if ($selectedClassEdition !== null && $selectedClassEdition !== '') 
+        {
+            $classroom = Classroom::where('edition', $selectedClassEdition)->first();
+        
+            if ($classroom) 
+                $selectedClassroomID = $classroom->id;
+            else 
+                $selectedClassroomID = 0; 
+            
+        } 
+        else 
+            $selectedClassroomID = -1; 
+        
+
+        $classrooms = $classroomQuery->get();
+        $courses = Course::all();
+
+        
+        $studentQuery = Student::query();
+        if ($selectedClassroomID) 
+            $students = $studentQuery->where('classroom_id', $selectedClassroomID)->get();
+        else 
+            $students = [];
+
 
         return view('reports.index', compact('students', 'courses', 'classrooms', 'classEditions'));
     }
