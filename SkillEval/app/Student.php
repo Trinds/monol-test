@@ -67,13 +67,16 @@ class Student extends Model
         return [$techStudent, $psychStudent];
     }
 
-    public static function boot(){
+    public static function boot ()
+    {
         parent::boot();
 
-        self::deleting(function (Student $student) {
+        self::deleting(function (Student $event) {
 
-            $student->evaluations()->delete();
+            foreach ($event->evaluations as $evaluation)
+            {
+                $evaluation->delete();
+            }
         });
     }
-    
 }
