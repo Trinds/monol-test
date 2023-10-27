@@ -33,7 +33,13 @@
         </form>
     </div>
 
-        @component('components.classrooms.classroom-chart', ['classroom' => $classroom, 'classTechEval' => $classTechEval, 'classPsychoEval' => $classPsychoEval])
+        @component('components.classrooms.classroom-chart', [
+    'classroom' => $classroom,
+    'classTechEval' => $classTechEval,
+    'classPsychoEval' => $classPsychoEval,
+    'techAvg' => $techAvg,
+    'psychAvg' => $psychAvg
+    ])
         @endcomponent
 
     <div class="student-cards-container">

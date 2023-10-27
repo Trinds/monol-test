@@ -395,3 +395,11 @@ input[type="file"]::before {
         }
     }
 }
+
+.chart-options{
+    width: 25rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem 2rem;
+}

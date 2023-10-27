@@ -1,5 +1,12 @@
 .input_container {
     display: inline-block;
-   
-    margin-right: 10px; /* Add margin for spacing between input fields */
+    margin-right: 10px;
+}
+
+.report-form-container{
+    padding: 3rem;
+
+    & button{
+        margin: 2rem auto;
+    }
 }

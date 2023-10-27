@@ -27,11 +27,3 @@
     text-align: center;
     z-index: 1000;
 }
-
-.chart-options{
-    width: 25rem;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    padding: 1rem 2rem;
-}

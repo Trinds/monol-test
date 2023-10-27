@@ -1,13 +1,12 @@
 @extends('master.main')
 
 @section('styles')
-    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/reports.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    @component('components.reports.table', ['classEditions'=>$classEditions,
-                                            'classrooms' => $classrooms, 
-                                            'courses' => $courses,
-                                            'students' => $students])
+    @component('components.reports.report-form', ['classEditions' => $classEditions, 'courses' => $courses])
+    @endcomponent
+    @component('components.reports.table', ['students' => $students, 'classrooms' => $classrooms])
     @endcomponent
 @endsection

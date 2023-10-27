@@ -2,6 +2,9 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+
 @endsection
 
 @section('styles')
@@ -10,7 +13,14 @@
 
 @section('content')
 
-    @component('components.classrooms.show-component', ['classroom' => $classroom, 'failures' => $failures, 'classTechEval' => $classTechEval, 'classPsychoEval' => $classPsychoEval])
+    @component('components.classrooms.show-component', [
+    'classroom' => $classroom,
+    'failures' => $failures,
+    'classTechEval' => $classTechEval,
+    'classPsychoEval' => $classPsychoEval,
+    'techAvg' => $techAvg,
+    'psychAvg' => $psychAvg
+    ])
 
     @endcomponent
 

@@ -3,30 +3,34 @@
 </div>
 <div class="chart-options input-group-prepend">
     <select class="custom-select" onchange="momentScores(this)">
-        <option value="Todos">Todos</option>
-        <option value="Inicial">Inicial</option>
+        <option value="Inicial" selected>Inicial</option>
         <option value="Intermédio">Intermédio</option>
         <option value="Final">Final</option>
+        <option value="Todos">Todos</option>
     </select>
     <input type="checkbox" checked value="0" onclick="typeScores(this)"> Técnico
     <input type="checkbox" checked value="1" onclick="typeScores(this)"> Psicotécnico
 
 </div>
 <script>
-    console.log({!! json_encode($classTechEval) !!})
-
     function typeScores(type) {
         const isVisible = gradeChart.isDatasetVisible(type.value)
 
-        if (isVisible === false)
+        if (isVisible === false){
             gradeChart.show(type.value)
+            gradeChart.config.options.plugins.annotation.annotations[type.value].display = true
+        }
 
-        if (isVisible === true)
+        if (isVisible === true){
             gradeChart.hide(type.value)
+            gradeChart.config.options.plugins.annotation.annotations[type.value].display = false
+        }
     }
 
     function momentScores(moment) {
         gradeChart.config.options.parsing.yAxisKey = moment.value
+        gradeChart.config.options.plugins.annotation.annotations[0].value = {!! json_encode($techAvg) !!}[moment.value]
+        gradeChart.config.options.plugins.annotation.annotations[1].value = {!! json_encode($psychAvg) !!}[moment.value]
         gradeChart.update()
     }
 
@@ -36,16 +40,18 @@
             {
                 label: 'Técnico',
                 data: {!! json_encode($classTechEval) !!},
-                backgroundColor: 'rgba(56, 118, 191, .4)',
+                backgroundColor: 'rgba(56, 118, 191, .7)',
                 borderColor: 'rgba(56, 118, 191, 1)',
-                borderWidth: 1
+                borderWidth: 2,
+                borderRadius: 3
             },
             {
                 label: 'Psicotécnico',
                 data: {!! json_encode($classPsychoEval) !!},
-                backgroundColor: 'rgba(249, 148, 23, .4)',
+                backgroundColor: 'rgba(249, 148, 23, .7)',
                 borderColor: 'rgba(249, 148, 23, 1)',
-                borderWidth: 1
+                borderWidth: 2,
+                borderRadius: 3
             },
         ]
     }
@@ -61,10 +67,40 @@
                 legend: {
                     onClick: null
                 },
+                annotation: {
+                    annotations:
+                        {
+                            0: {
+                                display: true,
+                                type: 'line',
+                                scaleID: 'y',
+                                value: {!! json_encode($techAvg) !!}['Inicial'],
+                                borderColor: 'rgba(56, 118, 191, .4)',
+                                borderWidth: 2,
+                                drawTime: 'beforeDatasetsDraw',
+                                options: {
+                                    z: 10
+                                }
+                            },
+                            1: {
+                                display: true,
+                                type: 'line',
+                                scaleID: 'y',
+                                value: {!! json_encode($psychAvg) !!}['Inicial'],
+                                borderColor: 'rgba(249, 148, 23, .4)',
+                                borderWidth: 2,
+                                drawTime: 'beforeDatasetsDraw',
+                                options: {
+                                    z: 10
+                                }
+                            }
+                        }
+
+                }
             },
             parsing: {
                 xAxisKey: 'x',
-                yAxisKey: 'Todos'
+                yAxisKey: 'Inicial'
             },
             scales:
                 {

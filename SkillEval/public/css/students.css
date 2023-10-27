@@ -105,7 +105,9 @@ td i {
 .chart-area {
     grid-area: chart;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .evaluations-container {
@@ -163,15 +165,15 @@ input[readonly]:focus {
     z-index: 1000;
 }
 
-.add-evaluation 
+.add-evaluation
 {
     margin: 1rem;
 }
 
 .user-img
 {
-    height: 60px; 
-    width:60px; 
+    height: 60px;
+    width:60px;
     border-radius: 50%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 

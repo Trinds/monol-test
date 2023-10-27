@@ -72,7 +72,7 @@ class ClassroomController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -99,27 +99,44 @@ class ClassroomController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Classroom  $classroom
+     * @param \App\Classroom $classroom
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show(Classroom $classroom)
     {
+        $techAvg = [];
+        $psychAvg = [];
         $classTechEval = [];
         $classPsychoEval = [];
         foreach ($classroom->students as $student) {
-            list($techStudent,$psychStudent) = $student->getStudentScores($student);
+            list($techStudent, $psychStudent) = $student->getStudentScores($student);
             $classTechEval[] = $techStudent;
             $classPsychoEval[] = $psychStudent;
+            foreach (['Todos', 'Inicial', 'Intermédio', 'Final'] as $moment) {
+                $techAvg[$moment][] = $techStudent[$moment];
+                $psychAvg[$moment][] = $psychStudent[$moment];
+            }
+        }
+        foreach (['Todos', 'Inicial', 'Intermédio', 'Final'] as $moment) {
+            $techAvg[$moment] = floatval(array_sum($techAvg[$moment]) / count($techAvg[$moment]));
+            $psychAvg[$moment] = floatval(array_sum($psychAvg[$moment]) / count($psychAvg[$moment]));
         }
 
         $failures = null;
-        return view('classrooms.show', ['classroom' => $classroom, 'failures' => $failures, 'classTechEval' => $classTechEval, 'classPsychoEval' => $classPsychoEval]);
+        return view('classrooms.show', [
+            'classroom' => $classroom,
+            'failures' => $failures,
+            'classTechEval' => $classTechEval,
+            'classPsychoEval' => $classPsychoEval,
+            'techAvg' => $techAvg,
+            'psychAvg' => $psychAvg
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Classroom  $classroom
+     * @param \App\Classroom $classroom
      * @return \Illuminate\Http\Response
      */
     public function edit(Classroom $classroom)
@@ -131,8 +148,8 @@ class ClassroomController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Classroom  $classroom
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Classroom $classroom
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Classroom $classroom)
@@ -159,7 +176,7 @@ class ClassroomController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Classroom  $classroom
+     * @param \App\Classroom $classroom
      * @return \Illuminate\Http\Response
      */
     public function destroy(Classroom $classroom)
@@ -193,8 +210,8 @@ class ClassroomController extends Controller
         $lastClassroom = Classroom::latest()->first();
         $failures = null;
         return redirect()
-        ->route('classrooms.show', $lastClassroom->id)
-        ->with('failures', $failures)
-        ->with('success', 'Turma e formandos importados com sucesso!');
+            ->route('classrooms.show', $lastClassroom->id)
+            ->with('failures', $failures)
+            ->with('success', 'Turma e formandos importados com sucesso!');
     }
 }
