@@ -39,7 +39,9 @@
         @foreach ($students as $student)
         <tr class="table-row">
             <td>
-                <img src="{{ asset('storage/' . $student->image) }}" alt="Fotografia"/>
+                <div>
+                    <img src="{{ asset('storage/' . $student->image) }}" alt="Fotografia"/>
+                </div>
             </td>
             <td>{{ $student->name }}</td>
             <td>{{ $student->email }}</td>
