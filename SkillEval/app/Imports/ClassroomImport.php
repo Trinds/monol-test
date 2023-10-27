@@ -11,14 +11,16 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Facades\Validator;
 
-
-
 class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, WithHeadingRow
 {
     public function model(array $row)
     {
         $courseAbreviation = $row['abreviacao_do_curso'];
         $course = Course::where('abbreviation', $courseAbreviation)->first();
+        if (!$course) {
+            session()->flash('error', '- Erro: A edição do curso inserida não corresponde a nenhum curso ativo.');
+            return null;
+        }
         return new Classroom([
             'course_id' => $course->id,
             'edition' => $row['edicao'],

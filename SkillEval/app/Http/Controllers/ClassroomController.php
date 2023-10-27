@@ -78,7 +78,7 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'edition' => ['required', 'string', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/' ],
+            'edition' => ['required', 'string', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/'],
             'course_id' => ['required', 'integer'],
             'start_date' => ['required', 'date', 'before:end_date'],
             'end_date' => ['required', 'date', 'after:start_date'],
@@ -134,10 +134,10 @@ class ClassroomController extends Controller
             if (count($psychAvg[$moment]) > 0) {
                 $psychAvg[$moment] = floatval(array_sum($psychAvg[$moment]) / count($psychAvg[$moment]));
             } else {
-                $psychAvg[$moment] = 0; 
+                $psychAvg[$moment] = 0;
             }
         }
-        
+
         $failures = null;
         return view('classrooms.show', [
             'classroom' => $classroom,
@@ -212,22 +212,27 @@ class ClassroomController extends Controller
         ]);
         try {
             Excel::import(new ClassroomImport, $request->file('file'));
+            $lastClassroom = Classroom::latest()->first();
+            $failures = null;
+            return redirect()
+            ->route('classrooms.show', $lastClassroom->id)
+            ->with('failures', $failures)
+            ->with('success', 'Turma e formandos importados com sucesso!');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
+            $courses = Course::all();
+            if (session()->has('error')) {
+                $failures = null;
+                $error = session('error');
+                return redirect()->route('classrooms.create')->with('error', $error)->with('failures', $failures)->with('courses', $courses);
+            }
             foreach ($failures as $failure) {
                 $failure->row();
                 $failure->attribute();
                 $failure->errors();
                 $failure->values();
             }
-            $courses = Course::all();
             return view('classrooms.create', ['courses' => $courses, 'failures' => $failures]);
         }
-        $lastClassroom = Classroom::latest()->first();
-        $failures = null;
-        return redirect()
-            ->route('classrooms.show', $lastClassroom->id)
-            ->with('failures', $failures)
-            ->with('success', 'Turma e formandos importados com sucesso!');
     }
 }

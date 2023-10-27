@@ -29,6 +29,7 @@
         @endif
         @if(session('error'))
             <div class="alert alert-danger">
+            <h4>Ocorreu um erro ao importar o Excel.</h4>
                 {{ session('error') }}
             </div>
         @endif
