@@ -1,13 +1,13 @@
 @if(request('classroom_edition') != "")
 
-    <div class="table-container">
+    <div class="table-container shadow">
         <table class="large-table">
             <thead>
             <tr class="table-header">
                 <th>Formando</th>
                 <th>Turma</th>
-                <th>Média Testes Técnico</th>
-                <th>Média Testes Psiquico</th>
+                <th>Média  Técnica</th>
+                <th>Média  Psicotécnica</th>
                 <th>Data de Início</th>
                 <th>Data de Conclusão</th>
                 <th>Detalhes</th>
@@ -60,7 +60,7 @@
                                         '<span class="text-primary font-weight-bold">' . number_format($tecAverage, 2) . '</span><br>';
                                     @endphp
                                 </td>
-                                <td>
+                                <td >
                                     @php
                                         echo ($psiAverage < 10) ?
                                         '<span class="text-danger font-weight-bold">' . number_format($psiAverage, 2) . '</span><br>'
