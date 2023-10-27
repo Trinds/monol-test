@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Course;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
@@ -51,8 +52,8 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:courses,name'],
-            'abbreviation' => ['required', 'string', 'max:255', 'unique:courses,abbreviation'],
+            'name' => ['required', 'string', 'max:255', 'unique_not_deleted:courses'],
+            'abbreviation' => ['required', 'string', 'max:255', 'unique_not_deleted:courses'],
         ]);
         try {
             Course::create($request->all());
@@ -97,8 +98,8 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:courses,name,' . $course->id],
-            'abbreviation' => ['required', 'string', 'max:10', 'unique:courses,abbreviation,' . $course->id],
+            'name' => ['required', 'string', 'max:255', Rule::unique('courses', 'name')->ignore($course->id)->whereNull('deleted_at')],
+            'abbreviation' => ['required', 'string', 'max:10', Rule::unique('courses', 'abbreviation')->ignore($course->id)->whereNull('deleted_at')],
         ]);
         try {
             $course->update($request->all());

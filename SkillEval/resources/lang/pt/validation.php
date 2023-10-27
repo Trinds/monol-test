@@ -136,6 +136,8 @@ return [
         'string' => 'A sigla deve conter apenas texto.',
         'max' => 'A sigla não pode exceder os :max caracteres.',
         'unique' => 'A sigla introduzida já está em uso.',
+        'regex' => 'A sigla deve ter o formato correto.',
+        'unique_not_deleted' => 'A sigla introduzida já está em uso.',
     ],
     'edition' => [
         'required' => 'A edição é obrigatória.',
@@ -175,6 +177,7 @@ return [
         'string' => 'O nome deve conter apenas texto.',
         'max' => 'O nome não pode exceder os :max caracteres.',
         'unique' => 'O nome introduzido já está em uso.',
+        'unique_not_deleted' => 'O nome introduzido já está em uso.',
     ],
     'birth_date' => [
         'required' => 'A data de nascimento é obrigatória.',

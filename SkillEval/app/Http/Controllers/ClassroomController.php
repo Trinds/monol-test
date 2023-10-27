@@ -78,14 +78,17 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'edition' => ['required', 'string', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/',
+            'edition' => [
+                'required', 'string', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/',
                 function ($attribute, $value, $fail) use ($request) {
                     $existingClassroom = Classroom::where('edition', $value)
                         ->where('course_id', $request->input('course_id'))
                         ->first();
                     if ($existingClassroom) {
                         $fail('Já existe uma turma com a mesma edição e curso selecionado.');
-                    }}],
+                    }
+                }
+            ],
             'course_id' => ['required', 'integer'],
             'start_date' => ['required', 'date', 'before:end_date'],
             'end_date' => ['required', 'date', 'after:start_date'],
@@ -178,14 +181,16 @@ class ClassroomController extends Controller
     public function update(Request $request, Classroom $classroom)
     {
         $this->validate($request, [
-            'edition' => ['required', 'string', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/',
-                function ($attribute, $value, $fail) use ($request) {
+            'edition' => [
+                'required', 'string', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/',
+                function ($attribute, $value, $fail) use ($request, $classroom) {
                     $existingClassroom = Classroom::where('edition', $value)
                         ->where('course_id', $request->input('course_id'))
                         ->first();
-                    if ($existingClassroom && $existingClassroom->id != $request->input('id')) {
+                    if ($existingClassroom && $existingClassroom->id != $classroom->id) {
                         $fail('Já existe uma turma com a mesma edição e curso selecionado.');
-                    }}    
+                    }
+                }
             ],
             'course_id' => ['required', 'integer'],
             'start_date' => ['required', 'date', 'before:end_date'],
@@ -230,9 +235,9 @@ class ClassroomController extends Controller
             $lastClassroom = Classroom::latest()->first();
             $failures = null;
             return redirect()
-            ->route('classrooms.show', $lastClassroom->id)
-            ->with('failures', $failures)
-            ->with('success', 'Turma e formandos importados com sucesso!');
+                ->route('classrooms.show', $lastClassroom->id)
+                ->with('failures', $failures)
+                ->with('success', 'Turma e formandos importados com sucesso!');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $courses = Course::all();
