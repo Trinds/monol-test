@@ -36,7 +36,7 @@
             @foreach($users as $user)
             <tr class="table-row">
                 <td>
-                    <div>
+                    <div class="image-container">
                         <img src="{{ asset('storage/' . $user->image) }}" alt="Fotografia"/>
                     </div>
                 </td>

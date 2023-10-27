@@ -39,7 +39,7 @@
         @foreach ($students as $student)
         <tr class="table-row">
             <td>
-                <div>
+                <div class="image-container">
                     <img src="{{ asset('storage/' . $student->image) }}" alt="Fotografia"/>
                 </div>
             </td>
