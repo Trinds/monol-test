@@ -27,3 +27,64 @@
     text-align: center;
     z-index: 1000;
 }
+
+.excel-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 0 1.5rem;
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+}
+
+.excel-container a
+{
+    color: #f2931f;
+    font-size: 1.1rem;
+    font-weight: 500;
+}   
+
+.excel-form
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+    background-color: #f4f7f8;
+    border-radius: 5px;
+}
+
+.excel-form input
+{
+    padding: 0 0.5rem;
+}
+
+.excel-form label
+{
+    color: black;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1rem 0;
+}
+
+.excel-form button 
+{
+    
+    width: 20%;
+    height: 2rem;
+    font-size: 0.9rem;
+}
+
+.form-group-excel-form
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0;
+    > * {
+        margin: 0.5rem 0;
+    }
+}

@@ -3,12 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Evaluation extends Model
 {
-    use softDeletes;
     public $incrementing=false;
+
     protected $primaryKey = ['student_id', 'test_id'];
 
     protected $fillable = [

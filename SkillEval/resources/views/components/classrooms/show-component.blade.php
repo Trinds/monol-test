@@ -18,15 +18,15 @@
 
         <h1 class="title">{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
         <h5 class="subtitle">{{$classroom->course->name}}</h5>
-        <h6 class="text-center">Início: {{$classroom->start_date}} <br>Fim: {{$classroom->end_date}}</h6>
-    <div class="d-flex justify-content-end">
-        <form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data">
+        <h6 class="text-center">Início: {{ date('d-m-Y', strtotime($classroom->start_date))}} Fim: {{ date('d-m-Y', strtotime($classroom->end_date))}}</h6>
+    <div class="d-flex justify-content-center excel-container">
+        <form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data" class="excel-form">
             @csrf
             <label for="file">Adicionar Formandos à Turma</label>
             <div class="form-group">
                 <a href="{{ asset('templates/AdicionarAlunos.xlsx') }}" download>Download do Template Excel</a>
             </div>
-            <div class="form-group">
+            <div class="form-group-excel-form">
                 <input type="file" name="file" id="file" accept=".xlsx,.xls" required>
                 <button type="submit">Enviar</button>
             </div>
