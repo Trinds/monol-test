@@ -73,8 +73,9 @@
                 <input type="hidden" name="roles[]" value="2">
             @endif
 
-        <div class="form-group">
+        <div class="form-group button-container">
             <button type="submit">Editar <i class="fa-solid fa-user-pen"></i></button>
+            <button type="button" id="cancel-button"><i class="fa-solid fa-circle-arrow-left"></i> Voltar </button>
         </div>
     </form>
 </div>
@@ -82,6 +83,12 @@
 
 <script>
     $(document).ready(function () {
+
+    
+        $("#cancel-button").on("click", function () {
+            window.history.back();
+        });
+
         $(".reveal-password").on("click", function () {
             var passwordInput = $("#password");
             var passwordConfirmationInput = $("#password_confirmation");
