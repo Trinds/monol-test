@@ -59,6 +59,7 @@
         </fieldset>
 
         <fieldset class="fieldset">
+            @if (auth()->user()->isAdmin())
             <legend class="legend"><span class="number">3</span> Funções <i class="fa-solid fa-briefcase"></i></legend>
             <label for="roles" class="form-label">Funções:</label>
             <select name="roles[]" id="roles" class="form-control-select" multiple>
@@ -68,6 +69,9 @@
                 @endforeach
             </select>
         </fieldset>
+            @else
+                <input type="hidden" name="roles[]" value="2">
+            @endif
 
         <div class="form-group">
             <button type="submit">Editar <i class="fa-solid fa-user-pen"></i></button>

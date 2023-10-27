@@ -21,9 +21,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('users', 'UserController');
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('users', 'UserController');
+    
     Route::resource('courses', 'CourseController');
     Route::resource('reports', 'ReportsController');
     Route::resource('students', 'StudentController');
@@ -47,14 +51,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('evaluations/{studentId}/{testId}', 'EvaluationController@destroy')->name('evaluations.destroy');
 
 
-
     Route::get('evaluations/create', 'EvaluationController@create')->name('evaluations.create');
     Route::post('evaluations/store', 'EvaluationController@store')->name('evaluations.store');
+});
 
 
-}
 
-);
 
 
 // Route::post('/login', 'Auth\LoginController@login')->name('login');

@@ -145,7 +145,12 @@ class UserController extends Controller
             $user->roles()->sync($request->input('roles'));
             $user->save();
 
-            return redirect()->route('users.index')->with('success', 'Utlizador atualizado com sucesso.');
+            if(auth()->user()->isAdmin()){
+                return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso.');
+            }
+            else{
+                return redirect()->route('users.show', $user)->with('success', 'Dados atualizados com sucesso.');
+            }
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Ocorreu um erro ao atualizar o utlizador.');
         }
