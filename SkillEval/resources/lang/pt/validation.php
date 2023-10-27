@@ -141,6 +141,7 @@ return [
         'required' => 'A edição é obrigatória.',
         'string' => 'A edição deve conter apenas texto.',
         'max' => 'A edição não pode exceder os :max caracteres.',
+        'regex' => 'A edição deve ter o formato correto.',
     ],
     'course_id' => [
         'required' => 'A escolha do curso é obrigatória.',

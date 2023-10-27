@@ -52,7 +52,7 @@ class CourseController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:courses,name'],
-            'abbreviation' => ['required', 'string', 'max:10', 'unique:courses,abbreviation'],
+            'abbreviation' => ['required', 'string', 'max:255', 'unique:courses,abbreviation'],
         ]);
         try {
             Course::create($request->all());

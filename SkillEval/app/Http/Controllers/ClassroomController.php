@@ -78,7 +78,7 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'edition' => ['required', 'string', 'max:255'],
+            'edition' => ['required', 'string', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/' ],
             'course_id' => ['required', 'integer'],
             'start_date' => ['required', 'date', 'before:end_date'],
             'end_date' => ['required', 'date', 'after:start_date'],
@@ -171,7 +171,7 @@ class ClassroomController extends Controller
     public function update(Request $request, Classroom $classroom)
     {
         $this->validate($request, [
-            'edition' => ['required', 'string', 'max:255'],
+            'edition' => ['required', 'string', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/'],
             'course_id' => ['required', 'integer'],
             'start_date' => ['required', 'date', 'before:end_date'],
             'end_date' => ['required', 'date', 'after:start_date'],
