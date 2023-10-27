@@ -6,7 +6,8 @@
                     <p class="text-primary">Filtrar Turmas</p>
                     <div class="form-group">
                         <label for="courseDropdown">Curso</label>
-                        <select  id="courseDropdown" name="course_id" class="form-control" style="font-weight: bold">
+                        <select  id="courseDropdown" name="course_id" class="form-control" style="font-weight: bold" required
+                            onchange="this.form.submit()">
                             <option value="">Selecionar Curso</option>
                             @foreach($courses as $course)
                                 <option value="{{ $course->abbreviation }}" {{ (old('course_id', request('course_id')) == $course->abbreviation) ? 'selected' : '' }}>
@@ -17,10 +18,11 @@
                     </div>
                     <div class="form-group">
                         <label for="classroomEditionDropdown">Turma</label>
-                        <select id="classroomEditionDropdown" name="classroom_edition" class="form-control">
+                        <select id="classroomEditionDropdown" name="classroom_edition" class="form-control" required
+                            onchange="this.form.submit()">
                             <option value="">Todas as Turmas</option>
                             @foreach($classEditions as $edition)
-                                <option value="{{ $edition }}" {{ (old('classroom_edition', request('classroom_edition')) == $edition) ? 'selected' : '' }}>
+                                <option value="{{ $edition }}" {{ (old('classroom_edition', request('classroom_edition')) == $edition) ? 'selected' : '' }} >
                                     {{ $edition }}
                                 </option>
                             @endforeach
@@ -65,19 +67,16 @@
                 </div>
             </div>
 
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="active_classes" value="1" {{ request('active_classes', 0) ? 'checked' : '' }}> Só turmas Ativas
-                </label>
-            </div>
 
-            <button type="submit">Extrair Relatório</button>
+
+            <button type="submit">Atualizar</button>
         </form>
-    <div class="table-container">
-        @if(request('course_id') != "")
-        <table class="table mt-4">
+        @if(request('classroom_edition') !="")
+    
+            <div class=" table-container">
+        <table class="table table-striped mt-4">
                 <thead>
-                    <tr>
+                    <tr class="table-header">
                         <th>Formando</th>
                         <th>Turma</th>
                         <th>Média Testes Técnico</th>
@@ -123,11 +122,10 @@
                             @endphp
 
                             @if($tecAverage > $minAverageTec && $psiAverage > $minAveragePsi && $tecAverage < $maxAverageTec && $psiAverage < $maxAveragePsi)
-                            <tr>
+                            <tr class="table-row">
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->classroom->course->abbreviation }} {{ $student->classroom->edition }}</td>
                                 <td>
-                                        Média Técnico:
                                     @php
                                         echo ($tecAverage < 10) ?
                                         '<span class="text-danger font-weight-bold">' . number_format($tecAverage, 2) . '</span><br>'
@@ -136,7 +134,6 @@
                                     @endphp
                                 </td>
                                 <td>
-                                        Média Psiquico:
                                     @php
                                         echo ($psiAverage < 10) ?
                                         '<span class="text-danger font-weight-bold">' . number_format($psiAverage, 2) . '</span><br>'
