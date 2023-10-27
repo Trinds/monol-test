@@ -104,8 +104,12 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        $techAvg = [];
-        $psychAvg = [];
+        $techAvg = [
+            'Todos' => [], 'Inicial' => [], 'Intermédio' => [], 'Final' => []
+        ];
+        $psychAvg = [
+            'Todos' => [], 'Inicial' => [], 'Intermédio' => [], 'Final' => []
+        ];
         $classTechEval = [];
         $classPsychoEval = [];
         foreach ($classroom->students as $student) {
@@ -113,15 +117,27 @@ class ClassroomController extends Controller
             $classTechEval[] = $techStudent;
             $classPsychoEval[] = $psychStudent;
             foreach (['Todos', 'Inicial', 'Intermédio', 'Final'] as $moment) {
-                $techAvg[$moment][] = $techStudent[$moment];
-                $psychAvg[$moment][] = $psychStudent[$moment];
+                if (isset($techStudent[$moment])) {
+                    $techAvg[$moment][] = $techStudent[$moment];
+                }
+                if (isset($psychStudent[$moment])) {
+                    $psychAvg[$moment][] = $psychStudent[$moment];
+                }
             }
         }
         foreach (['Todos', 'Inicial', 'Intermédio', 'Final'] as $moment) {
-            $techAvg[$moment] = floatval(array_sum($techAvg[$moment]) / count($techAvg[$moment]));
-            $psychAvg[$moment] = floatval(array_sum($psychAvg[$moment]) / count($psychAvg[$moment]));
+            if (count($techAvg[$moment]) > 0) {
+                $techAvg[$moment] = floatval(array_sum($techAvg[$moment]) / count($techAvg[$moment]));
+            } else {
+                $techAvg[$moment] = 0;
+            }
+            if (count($psychAvg[$moment]) > 0) {
+                $psychAvg[$moment] = floatval(array_sum($psychAvg[$moment]) / count($psychAvg[$moment]));
+            } else {
+                $psychAvg[$moment] = 0; 
+            }
         }
-
+        
         $failures = null;
         return view('classrooms.show', [
             'classroom' => $classroom,
