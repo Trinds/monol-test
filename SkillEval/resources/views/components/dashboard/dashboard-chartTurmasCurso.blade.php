@@ -4,13 +4,17 @@
 </div>
 
 <?php
-$abbreviationArray = [];
+    if (!empty($Turmas) && $Turmas !== []){
+        $abbreviationArray = [];
 
-foreach ($Turmas as $turma) {
-    $abbreviationArray[] = $turma->course->abbreviation;
-}
+        foreach ($Turmas as $turma) {
+            if ($turma->course)
+            $abbreviationArray[] = $turma->course->abbreviation;
+        }
 
-$abbreviationCounts = array_count_values($abbreviationArray);
+        $abbreviationCounts = array_count_values($abbreviationArray);
+    }
+
 ?>
 
 <script>

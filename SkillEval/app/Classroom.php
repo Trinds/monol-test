@@ -21,4 +21,17 @@ class Classroom extends Model
     {
         return $this->hasMany('App\Student');
     }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        self::deleting(function (Classroom $event) {
+
+            foreach ($event->students as $student)
+            {
+                $student->delete();
+            }
+        });
+    }
 }

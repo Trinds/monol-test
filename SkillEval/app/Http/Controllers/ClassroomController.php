@@ -14,7 +14,7 @@ class ClassroomController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -57,7 +57,7 @@ class ClassroomController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function create()
     {
@@ -73,7 +73,7 @@ class ClassroomController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -137,7 +137,7 @@ class ClassroomController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Classroom $classroom
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit(Classroom $classroom)
     {
@@ -150,7 +150,7 @@ class ClassroomController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Classroom $classroom
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Classroom $classroom)
     {
@@ -177,7 +177,7 @@ class ClassroomController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Classroom $classroom
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Classroom $classroom)
     {

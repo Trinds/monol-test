@@ -1,6 +1,6 @@
 <aside class="side-menu">
 
-    <div class="app-title">
+    <div class="app-title" onclick="goToHome()">
         <svg width="6" height="39" viewBox="0 0 6 39" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 0L3 39" stroke="#F8D442" stroke-width="6"></path>
         </svg>
@@ -42,7 +42,7 @@
             @endif
         @endauth
 
-        
+
     </ul>
 
     <ul id="sair">

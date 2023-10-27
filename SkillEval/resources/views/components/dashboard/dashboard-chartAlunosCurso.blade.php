@@ -4,10 +4,10 @@
 </div>
 
 <?php
+
 $contagemAlunos = array();
 $contagemTurmas = $cursosArray = array();
 $alunosPorCurso = array();
-
 foreach ($Turmas as $turma) {
     $Curso = $turma->course->abbreviation;
 
@@ -27,6 +27,7 @@ foreach ($Turmas as $turma) {
 
     $alunosPorCurso[] = $turma->students->count();
 }
+
 ?>
 
 <script>
