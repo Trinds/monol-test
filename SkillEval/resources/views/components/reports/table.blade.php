@@ -1,5 +1,5 @@
 @if(!$students->isEmpty() && request('classroom_edition') != "")
-    <div class="table-container shadow">
+    <div class="table-container">
         <table class="large-table">
             <thead>
             <tr class="table-header">
