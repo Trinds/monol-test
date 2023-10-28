@@ -80,10 +80,21 @@ class EvaluationController extends Controller
         if (count($filteredGrades) === 0) {
             return redirect()->route('evaluations.index')->with('error', 'Não foram introduzidas notas.');
         }   
+        $errorStudents = [];
+
 
         try {
             foreach ($filteredGrades as $studentId => $grade) {
 
+                $existingEvaluation = Evaluation::where('student_id', $studentId)
+                    ->where('test_id', $test->id)
+                    ->first();
+
+                if ($existingEvaluation) {
+                    $student = Student::find($studentId);
+                    $errorStudents[] = $student->name;
+                    continue;
+                } else {
                 $evaluation = new Evaluation([
                     'test_id' => $test->id,
                     'score' => $grade,
@@ -91,8 +102,13 @@ class EvaluationController extends Controller
                     'date' => $date
                 ]);
                 $evaluation->save();
+                }
             }
-
+            $successMessage = 'Avaliações criadas com sucesso!';
+            if (!empty($errorStudents)) {
+                $error = 'As seguintes avaliações não foram criadas devido a avaliações já existentes para os alunos: ' . implode(', ', $errorStudents);
+                return redirect()->route('evaluations.index')->with('error', $error)->with('success', $successMessage);
+            }
             return redirect()->route('evaluations.index')->with('success', 'Avaliações criadas com sucesso!');
         } catch (Exception $e) {
             return redirect()->route('evaluations.index')->with('error', 'Ocorreu um erro ao criar as avaliações: ' . $e->getMessage());

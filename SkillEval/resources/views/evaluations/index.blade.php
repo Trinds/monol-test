@@ -9,20 +9,26 @@
 
 @section('content')
     <h1 class="title">Registar Avaliação</h1>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="errors-list">
-                @foreach ($errors->all() as $error)
-                    <li class="error">{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
+
+    @if ($errors->any() || session('error'))
+    <div class="alert alert-danger">
+        <ul>
+            @if (session('error'))
+                <li> {{ session('error') }}</li>
+            @endif
+            <br>
+            @foreach ($errors->all() as $error)
+                <li>- {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <div class="input-container">
         <form method="get" action="/evaluations">
