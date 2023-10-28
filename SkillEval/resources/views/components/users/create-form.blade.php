@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Criar Utilizador</h1>
+    <h1 class="title">Criar Utilizador</h1>
     <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data" class="create-form">
         @csrf
 

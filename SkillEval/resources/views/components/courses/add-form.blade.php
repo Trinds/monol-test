@@ -1,8 +1,5 @@
 <div class="container">
-
-    <h1>Adicionar Curso</h1>
-
-
+    <h1 class="title">Adicionar Curso</h1>
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>

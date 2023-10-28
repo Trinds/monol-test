@@ -1,7 +1,5 @@
 <div class="container">
-    <div class="one">
-        <h1>Adicionar Formando</h1>
-    </div>
+    <h1 class="title">Adicionar Formando</h1>
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>

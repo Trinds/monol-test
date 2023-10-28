@@ -40,14 +40,6 @@
     }
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 2rem;
-}
-
 .background-gradient-dark-blue {
     background: var(--blue-gradient-dark);
     color: white;
@@ -121,6 +113,7 @@ button {
 button:hover {
     background-color: rgb(200 110 20);
 }
+
 
 a {
     text-decoration-line: underline;
@@ -320,6 +313,8 @@ input[type="file"]::before {
     color: var(--carrot-orange);
 }
 
+button:focus-visible,
+button:focus,
 .page-link:focus,
 .page-link:focus-visible,
 .form-control:focus,

@@ -14,7 +14,8 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding-top: 10px;
+    padding-top: .5rem;
+    margin: 0;
 }
 
 .create-form {
@@ -160,6 +161,28 @@ label.light {
     justify-content: space-around;
     align-items: center;
     gap: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.container > .title {
+    padding: 0;
+    margin: -1.5rem 0 0 0;
+}
+
+.password-input {
+    display: flex;
+}
+
+#showPassBtn:focus,
+#showPassBtn:focus-visible {
+    box-shadow: 0 0 0 0.2rem rgba(242, 147, 31, 0.4)
 }
 
 @media screen and (min-width: 480px) {

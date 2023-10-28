@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Editar Utilizador</h1>
+    <h1 class="title">Editar Utilizador</h1>
     <form action="{{ url('users/' . $user->id) }}" method="POST" enctype="multipart/form-data" class="create-form">
         @csrf
         @method('PUT')
@@ -46,12 +46,12 @@
 
             @if ($user->id === auth()->user()->id)
                 <label for="password" class="form-label">Password</label>
-                <div class="input-group">
+                <div class="input-group password-input">
                     <input type="password" id="password" name="password" class="form-input"
                            placeholder="Password do utilizador" @error('password') is-invalid @enderror value=""
-                           aria-describedat="passwordHelp">
+                           aria-describedat="passwordHelp" style="width: 94.5%">
                     <span class="input-group-btn">
-                    <button class="btn btn-default reveal-password" type="button">
+                    <button class="btn btn-default reveal-password" type="button" id="showPassBtn">
                         <i class="fas fa-eye"></i>
                     </button>
                 </span>
