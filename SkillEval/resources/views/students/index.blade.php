@@ -4,7 +4,7 @@
     <script src="{{asset('js/confirmationBox.js')}}"></script>
 @endsection
 
-    @section('styles')
+@section('styles')
     <link rel="stylesheet" href="{{asset('css/students.css')}}">
     <link rel="stylesheet" href="{{asset('css/topbar.css')}}">
 @endsection

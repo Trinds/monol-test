@@ -30,13 +30,13 @@
 </head>
 <body>
 
-   @component('master.header')
-   @endcomponent
+@component('master.aside')
+@endcomponent
 
-        <main id="content">
+<main id="content">
 
-            @yield('content')
+    @yield('content')
 
-        </main>
+</main>
 </body>
 </html>

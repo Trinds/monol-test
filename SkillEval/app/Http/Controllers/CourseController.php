@@ -12,7 +12,7 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -47,7 +47,7 @@ class CourseController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -69,7 +69,7 @@ class CourseController extends Controller
      * Display the specified resource.
      *
      * @param \App\Course $course
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show(Course $course)
     {
@@ -81,7 +81,7 @@ class CourseController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Course $course
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit(Course $course)
     {
@@ -93,7 +93,7 @@ class CourseController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Course $course
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Course $course)
     {
@@ -113,7 +113,7 @@ class CourseController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Course $course
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Course $course)
     {

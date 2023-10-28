@@ -11,7 +11,8 @@
             <li>
                 @if(Auth::user()->image !== null)
                     <div onclick="goToUserProfile()">
-                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ implode(' ',[ explode(' ', Auth::user()->name)[0] , explode(' ', Auth::user()->name)[str_word_count(Auth::user()->name)-1] ]) }}">
+                        <img src="{{ asset('storage/' . Auth::user()->image) }}"
+                             alt="{{ implode(' ',[ explode(' ', Auth::user()->name)[0] , explode(' ', Auth::user()->name)[str_word_count(Auth::user()->name)-1] ]) }}">
                     </div>
                 @endif
             </li>
@@ -26,18 +27,37 @@
         @endif
     </ul>
     <ul id="menu">
-        <li onclick="goToHome()" id="toHome"><div class="icon"><i class="fa fa-home"></i></div>Início</li>
-        <li onclick="goToCourses()" id="toCourses"><div class="icon"><i class="fa-regular fa-bookmark"></i></div>Cursos</li>
-        <li onclick="goToClassrooms()" id="toClassrooms"><div class="icon"><i class="fa-solid fa-users"></i></div>Turmas</li>
-        <li onclick="goToStudents()" id="toStudents"><div class="icon"><i class="fa-solid fa-user-graduate"></i></div>Formandos</li>
-        <li onclick="goToReports()" id="toReports"><div class="icon"><i class="fa fa-flag"></i></div>Relatórios</li>
-        <li onclick="goToEvaluation()" id="toEvaluation"><div class="icon"><i class="fa-solid fa-check"></i></div>Avaliações</li>
+        <li onclick="goToHome()" id="toHome">
+            <div class="icon"><i class="fa fa-home"></i></div>
+            Início
+        </li>
+        <li onclick="goToCourses()" id="toCourses">
+            <div class="icon"><i class="fa-regular fa-bookmark"></i></div>
+            Cursos
+        </li>
+        <li onclick="goToClassrooms()" id="toClassrooms">
+            <div class="icon"><i class="fa-solid fa-users"></i></div>
+            Turmas
+        </li>
+        <li onclick="goToStudents()" id="toStudents">
+            <div class="icon"><i class="fa-solid fa-user-graduate"></i></div>
+            Formandos
+        </li>
+        <li onclick="goToReports()" id="toReports">
+            <div class="icon"><i class="fa fa-flag"></i></div>
+            Relatórios
+        </li>
+        <li onclick="goToEvaluation()" id="toEvaluation">
+            <div class="icon"><i class="fa-solid fa-check"></i></div>
+            Avaliações
+        </li>
         @Auth
             @if (Auth::user()->roles->contains('name', 'admin'))
                 <li onclick="goToUsers()" id="toUsers">
                     <div class="icon">
                         <i class="fa-solid fa-id-card"></i>
-                    </div>Utlizadores
+                    </div>
+                    Utlizadores
                 </li>
             @endif
         @endauth
@@ -51,7 +71,7 @@
         document.getElementById('logout-form').submit();">
             SAIR
             <div class="icon">
-                <i class="fa-solid fa-arrow-right-from-bracket" ></i>
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </div>
         </li>
     </ul>
@@ -66,37 +86,40 @@
 
 <script type="text/javascript">
 
-function goToUserProfile() {
-    @auth
-        location.href = "{{ route('users.show', Auth::user()->id) }}";
-    @else
-        location.href = "{{ route('login') }}";
-    @endauth
-}
+    function goToUserProfile() {
+        @auth
+            location.href = "{{ route('users.show', Auth::user()->id) }}";
+        @else
+            location.href = "{{ route('login') }}";
+        @endauth
+    }
 
 
-    function goToHome(){
+    function goToHome() {
         location.href = "{{route('home')}}"
     }
-    function goToCourses(){
+
+    function goToCourses() {
         location.href = "{{route('courses.index')}}"
     }
-    function goToStudents(){
+
+    function goToStudents() {
         location.href = "{{route('students.index')}}"
     }
-    function goToClassrooms(){
+
+    function goToClassrooms() {
         location.href = "{{route('classrooms.index')}}"
     }
 
-    function goToUsers(){
+    function goToUsers() {
         location.href = "{{route('users.index')}}"
     }
 
-    function goToReports(){
+    function goToReports() {
         location.href = "{{route('reports.index')}}"
     }
 
-    function goToEvaluation(){
+    function goToEvaluation() {
         location.href = "{{route('evaluations.index')}}"
     }
 </script>

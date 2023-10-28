@@ -1,16 +1,13 @@
-<link rel="stylesheet" href="{{asset('css/courses.css')}}">
+<link rel="stylesheet" href="{{asset('css/forms.css')}}">
 @extends('master.main')
 
-@section('content')
-
 @section('styles')
-    <link rel="stylesheet" href="{{asset('css/courses.css')}}">
+    <link rel="stylesheet" href="{{asset('css/forms.css')}}">
 @endsection
 
-@component('components.courses.edit-form', ['course' => $course])
-    
-@endcomponent
+@section('content')
+    @component('components.courses.edit-form', ['course' => $course])
 
-
+    @endcomponent
 
 @endsection

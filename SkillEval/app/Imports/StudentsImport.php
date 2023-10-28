@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Imports;
+
 use App\Student;
 use App\Classroom;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -12,14 +13,15 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 class StudentsImport implements ToModel, WithHeadingRow, WithValidation
 {
     protected $classroom;
-    
+
     public function __construct(Classroom $classroom = null)
     {
         $this->classroom = $classroom;
     }
+
     public function model(array $row)
     {
-        if($this->classroom == null){
+        if ($this->classroom == null) {
             $this->classroom = Classroom::latest()->first();
         }
         return new Student([

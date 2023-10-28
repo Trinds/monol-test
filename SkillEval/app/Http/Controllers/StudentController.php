@@ -14,7 +14,7 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -149,7 +149,6 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-
         $courses = \App\Course::all();
         $classrooms = \App\Classroom::all();
         return view('students.edit', ['student' => $student, 'courses' => $courses, 'classrooms' => $classrooms]);
@@ -192,7 +191,7 @@ class StudentController extends Controller
                 'name' => 'required|string|max:255',
                 'birth_date' => 'required|date|before:today',
                 'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
-            ],
+                ]
         );
         $classrooms = \App\Classroom::all();
         $courses = \App\Course::all();
@@ -223,13 +222,15 @@ class StudentController extends Controller
                     ->with('classrooms', $classrooms)
                     ->with('courses', $courses)
                     ->withErrors($e->getMessage());
-            } elseif ($request->is('students/*/edit')) {
+            }
+            if ($request->is('students/*/edit')) {
                 return redirect()
                     ->route('students.create')
                     ->with('classrooms', $classrooms)
                     ->with('courses', $courses)
                     ->withErrors($e->getMessage());
             }
+            return redirect()->back()->with('error', 'Algo correu mal. Por favor tente novamente.');
         }
     }
 

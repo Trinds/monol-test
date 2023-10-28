@@ -2,19 +2,20 @@
     <div class="one">
         <h1>Adicionar Formando</h1>
     </div>
-@if ($errors->any())
-<div class="alert alert-danger">
-    <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>- {{ $error }}</li>
-        @endforeach
-</div>
-@endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Ups!</strong> Ocorreram alguns problemas com os campos preenchidos.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>- {{ $error }}</li>
+            @endforeach
+        </div>
+    @endif
     <form action="{{ url('students') }}" method="POST" enctype="multipart/form-data" class="create-form">
         @csrf
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">1</span> Informação do curso <i class="fa-solid fa-bookmark" id="fa-course-legend"></i></legend>
+            <legend class="legend"><span class="number">1</span> Informação do curso <i
+                    class="fa-solid fa-bookmark form-icon"></i></legend>
             <label for="course_id" class="form-label">Curso:</label>
             <select name="course_id" id="course_id" class="form-control-select">
                 <option value="">Selecione...</option>
@@ -24,18 +25,21 @@
             </select>
         </fieldset>
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">2</span> Informação da turma <i class="fa-solid fa-users" id="fa-users-legend"></i></legend>
+            <legend class="legend"><span class="number">2</span> Informação da turma <i
+                    class="fa-solid fa-users form-icon"></i></legend>
             <label for="classroom_id" class="form-label">Turma:</label>
             <select name="classroom_id" id="classroom_id" class="form-control-select">
                 <option value="">Selecione...</option>
                 @foreach ($classrooms as $classroom)
-                    <option value="{{$classroom->id}}" data-course="{{$classroom->course_id}}">{{$classroom->edition}}</option>
+                    <option value="{{$classroom->id}}"
+                            data-course="{{$classroom->course_id}}">{{$classroom->edition}}</option>
                 @endforeach
             </select>
         </fieldset>
 
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">3</span> Informação do formando <i class="fa-solid fa-user-graduate" id="fa-user-graduate"></i></legend>
+            <legend class="legend"><span class="number">3</span> Informação do formando <i
+                    class="fa-solid fa-user-graduate form-icon"></i></legend>
 
             <label for="student_number" class="form-label">Número de formando:</label>
             <input type="text" id="student_number" name="student_number" class="form-input"

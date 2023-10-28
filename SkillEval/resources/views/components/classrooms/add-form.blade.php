@@ -29,7 +29,7 @@
         @endif
         @if(session('error'))
             <div class="alert alert-danger">
-            <h4>Ocorreu um erro ao importar o Excel.</h4>
+                <h4>Ocorreu um erro ao importar o Excel.</h4>
                 {{ session('error') }}
             </div>
         @endif
@@ -53,8 +53,8 @@
         @csrf
 
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">1</span> Informação do curso <i class="fa-solid fa-bookmark"
-                                                                                        id="fa-course-legend"></i>
+            <legend class="legend"><span class="number">1</span> Informação do curso <i
+                    class="fa-solid fa-bookmark form-icon"></i>
             </legend>
             <label for="course_id" class="form-label">Curso:</label>
             <select name="course_id" id="course_id" class="form-control-select">
@@ -65,8 +65,8 @@
         </fieldset>
 
         <fieldset class="fieldset">
-            <legend class="legend"><span class="number">2</span> Informação da turma <i class="fa-solid fa-users"
-                                                                                        id="fa-users-legend"></i>
+            <legend class="legend"><span class="number">2</span> Informação da turma <i
+                    class="fa-solid fa-users form-icon"></i>
             </legend>
 
             <label for="edition" class="form-label">Edição:</label>

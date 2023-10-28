@@ -6,8 +6,8 @@
     margin-right: 5rem;
     align-content: center;
     justify-content: center;
-    background: rgb(244,247,248);
-    background: linear-gradient(90deg, rgba(244,247,248,1) 0%, rgba(242,147,31,0.13209033613445376) 100%);
+    background: rgb(244, 247, 248);
+    background: linear-gradient(90deg, rgba(244, 247, 248, 1) 0%, rgba(242, 147, 31, 0.13209033613445376) 100%);
     border-radius: 1rem;
 
     & h1 {
@@ -25,7 +25,7 @@
         width: 20rem;
     }
 
-    & select{
+    & select {
         padding: .5rem;
         border-radius: 0.5rem;
         background-color: var(--platinum);
@@ -47,16 +47,14 @@
 
 }
 
-#buttonEdit
-{
+#buttonEdit {
     width: 60%;
     margin-top: 1rem;
     display: block;
     align-self: center;
 }
 
-#buttonSave
-{
+#buttonSave {
     align-self: center;
     width: 60%;
     margin-top: 1rem;
@@ -64,15 +62,13 @@
     display: block;
 }
 
-fieldset{
+fieldset {
     display: flex;
     flex-direction: column;
 }
 
 
-
-#buttonCancel
-{
+#buttonCancel {
     align-self: center;
     width: 60%;
     background-color: #f44336;
@@ -137,44 +133,23 @@ td i:hover {
     background-color: #DFE3E6;
 }
 
-input[read-only]{
+input[read-only] {
     background-color: #f1f1f1;
     opacity: 1;
     pointer-events: none;
 }
+
 input[readonly]:focus {
     outline: none;
 }
 
-#confirmationBox {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    max-width: 80%;
-    margin: 0 auto;
-    text-align: center;
-    padding: 20px;
-    z-index: 1000;
-}
-
-.add-evaluation
-{
+.add-evaluation {
     margin: 1rem;
 }
 
-.user-img
-{
+.user-img {
     height: 60px;
-    width:60px;
+    width: 60px;
     border-radius: 50%;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }

@@ -49,7 +49,7 @@
                     <td>{{ $student->classroom->course->abbreviation . $student->classroom->edition }}</td>
                     <td>
                         <a href="{{ route('students.show', $student->id) }}"><i
-                                    class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
+                                class="fa-solid fa-magnifying-glass detailsBtn"></i></a>
                         <a href="{{ route('students.edit', $student->id) }}"><i class="fa-solid fa-pencil editBtn"></i></a>
                         <a class="deleteBtn" data-id="{{ $student->id }}" data-name="{{ $student->name }}"
                            data-entity="students">

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Imports;
+
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use App\Course;
@@ -11,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Facades\Validator;
 
-class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, WithHeadingRow
+class ClassroomImport implements WithMultipleSheets, ToModel, WithValidation, WithHeadingRow
 {
     public function model(array $row)
     {
@@ -22,7 +23,6 @@ class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, Wit
             return null;
         }
 
-        // Validação para verificar se já existe uma turma com a mesma edição e curso
         $edition = $row['edicao'];
         $existingClassroom = Classroom::where('edition', $edition)
             ->where('course_id', $course->id)
@@ -44,7 +44,7 @@ class ClassroomImport implements WithMultipleSheets,ToModel, WithValidation, Wit
     {
         return [
             'abreviacao_do_curso' => 'required|exists:courses,abbreviation',
-            'edicao' => ['required','max:255','regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/'],
+            'edicao' => ['required', 'max:255', 'regex:/^(0[1-9]|1[0-2])\.(0[1-9]|[1-9][0-9])$/'],
             'data_de_inicio_ddmmaaaa' => 'required',
             'data_de_termino_ddmmaaaa' => 'required',
         ];

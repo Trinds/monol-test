@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return `Tem a certeza que pretende apagar o item com o nome "${name}"?`;
         }
     }
+
     function getRoute(entity) {
         switch (entity) {
             case "students":

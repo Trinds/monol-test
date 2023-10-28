@@ -3,10 +3,10 @@
     margin-right: 10px;
 }
 
-.report-form-container{
+.report-form-container {
     padding: 0 3rem;
 
-    & button{
+    & button {
         margin: 1.5rem auto;
         display: block;
     }

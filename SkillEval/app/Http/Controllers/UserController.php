@@ -27,9 +27,9 @@ class UserController extends Controller
         }
         isset($request->searchParam) ?
             $users = User::query()
-            ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-            ->orWhere(strtoupper('email'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-            ->paginate(8)->withQueryString()
+                ->where(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                ->orWhere(strtoupper('email'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                ->paginate(8)->withQueryString()
             :
             $users = User::with('roles')->paginate(8)->withQueryString();
         return view('users.index', ['users' => $users]);
@@ -49,7 +49,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
 
     public function create()
@@ -57,6 +57,7 @@ class UserController extends Controller
         $roles = Role::all();
         return view('users.create', compact('roles'));
     }
+
     public function store(Request $request)
     {
         $imagePath = null;
@@ -97,7 +98,6 @@ class UserController extends Controller
     }
 
 
-
     public function update(Request $request, User $user)
     {
         $imagePath = null;
@@ -108,15 +108,13 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id . '|max:255',
             'password' => 'sometimes|confirmed|min:6|max:255',
             'roles' => 'required',
-        ],);
+        ]);
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/images');
             $imagePath = str_replace('public/', '', $imagePath);
-        } elseif ($user->image) {
-            $imagePath = $user->image;
         } else {
-            $imagePath = null;
+            $imagePath = $user->image;
         }
 
         if ($validator->fails()) {
@@ -145,10 +143,9 @@ class UserController extends Controller
             $user->roles()->sync($request->input('roles'));
             $user->save();
 
-            if(auth()->user()->isAdmin()){
+            if (auth()->user()->isAdmin()) {
                 return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso.');
-            }
-            else{
+            } else {
                 return redirect()->route('users.show', $user)->with('success', 'Dados atualizados com sucesso.');
             }
         } catch (Exception $e) {
@@ -161,20 +158,20 @@ class UserController extends Controller
         $countAdmins = User::whereHas('roles', function ($query) {
             $query->where('name', 'admin');
         })->count();
-        if ($countAdmins == 1 && $user->hasRole('admin')) { // se o utilizador a eliminar for o único administrador existente
+        if ($countAdmins == 1 && $user->hasRole('admin')) {
             return redirect()->back()->with('error', 'Não é possível eliminar o único administrador existente.');
         }
-        if ($user->id == Auth::user()->id) { // se o utilizador a eliminar for o utilizador autenticado
-            try{
+        if ($user->id == Auth::user()->id) {
+            try {
                 Auth::logout();
                 $user->delete();
                 Session::flush();
-                return redirect()->route('login')-> with('status', 'Conta eliminada com sucesso!');
+                return redirect()->route('login')->with('status', 'Conta eliminada com sucesso!');
             } catch (Exception $e) {
                 return redirect()->back()->with('error', 'Ocorreu um erro ao eliminar o utilizador.');
             }
         }
-        try{ // se o utilizador a eliminar for um utilizador normal
+        try {
             $user->delete();
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Ocorreu um erro ao eliminar o utilizador.');

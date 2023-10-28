@@ -33,7 +33,6 @@ class ReportsController extends Controller
 
             $classrooms = $classroomQuery->get();
         }
-
         return view('reports.index', compact('courses', 'classrooms'));
     }
 }

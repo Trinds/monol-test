@@ -1,38 +1,37 @@
-.input-container{
+.input-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0 4rem;
 
-    & .col{
+    & .col {
         width: 30rem;
         margin: 1rem;
     }
 
-    & .larger-input{
+    & .larger-input {
         min-width: 16rem;
         max-width: 20rem;
     }
 
-    & .smaller-input{
+    & .smaller-input {
         min-width: 6rem;
         max-width: 12.7rem;
     }
 }
 
-#insert_button{
+#insert_button {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem;
 }
 
-.table-container{
+.table-container {
     & input {
-        /*remover setas*/
-        -webkit-appearance: none; /*chrome, edge, opera, etc*/
-        -moz-appearance: textfield; /*firefox*/
+        -webkit-appearance: none;
+        -moz-appearance: textfield;
 
         border: 1px solid var(--davys-gray);
         border-radius: .3rem;
@@ -41,7 +40,7 @@
         font-size: 0.8rem;
     }
 
-    & input:focus{
+    & input:focus {
         outline: none;
     }
 }

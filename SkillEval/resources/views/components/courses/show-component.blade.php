@@ -1,6 +1,6 @@
 <div class="container">
-        <h1 class="title">{{$course->abbreviation}}</h1>
-        <h5 class="subtitle">{{$course->name}}</h5>
+    <h1 class="title">{{$course->abbreviation}}</h1>
+    <h5 class="subtitle">{{$course->name}}</h5>
     <div class="row">
 
         @if($course->classrooms->count() == 0)

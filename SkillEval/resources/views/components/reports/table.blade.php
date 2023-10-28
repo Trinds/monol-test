@@ -1,5 +1,5 @@
 @if(request('course_id'))
-    <div class="table-container shadow">
+    <div class="table-container">
         <table class="large-table">
             <thead>
             <tr class="table-header">

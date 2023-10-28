@@ -1,49 +1,28 @@
-.student-cards-container{
+.student-cards-container {
     display: flex;
     flex-wrap: wrap;
     padding: 0 1.5rem;
 }
 
-.classroom-chart{
+.classroom-chart {
     width: 100% !important;
     min-width: 40rem !important;
     height: 35rem !important;
 }
 
-#confirmationBox {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    max-width: 80%;
-    margin: 0 auto;
-    text-align: center;
-    z-index: 1000;
-}
-
-.excel-container
-{
+.excel-container {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     margin-bottom: 1rem;
 }
 
-.excel-container a
-{
+.excel-container a {
     color: #f2931f;
     font-weight: 500;
 }
 
-.excel-form
-{
+.excel-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -52,32 +31,29 @@
     border-radius: 5px;
 }
 
-.excel-form input
-{
+.excel-form input {
     padding: 0 0.5rem;
 }
 
-.excel-form label
-{
+.excel-form label {
     color: black;
     font-weight: 500;
     margin: .5rem 0;
 }
 
-.excel-form button
-{
+.excel-form button {
     width: 20%;
     height: 2rem;
     font-size: 0.9rem;
 }
 
-.form-group-excel-form
-{
+.form-group-excel-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0.2rem 0;
+
     > * {
         margin: 0.2rem 0;
     }

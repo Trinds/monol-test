@@ -5,7 +5,7 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{asset('css/courses.css')}}">
+    <link rel="stylesheet" href="{{asset('css/forms.css')}}">
     <link rel="stylesheet" href="{{asset('css/topbar.css')}}">
 @endsection
 
@@ -20,7 +20,5 @@
     @component('components.courses.table', ['courses' => $courses] )
 
     @endcomponent
-
-
 
 @endsection

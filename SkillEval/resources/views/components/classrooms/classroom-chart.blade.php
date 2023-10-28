@@ -16,12 +16,12 @@
     function typeScores(type) {
         const isVisible = gradeChart.isDatasetVisible(type.value)
 
-        if (isVisible === false){
+        if (isVisible === false) {
             gradeChart.show(type.value)
             gradeChart.config.options.plugins.annotation.annotations[type.value].display = true
         }
 
-        if (isVisible === true){
+        if (isVisible === true) {
             gradeChart.hide(type.value)
             gradeChart.config.options.plugins.annotation.annotations[type.value].display = false
         }

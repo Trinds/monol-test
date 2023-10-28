@@ -10,11 +10,9 @@
 @endsection
 
 @section('content')
-
     <div class="title">
         <h1>Detalhes do Formando</h1>
     </div>
-
     <div class="grid-container">
         <div class="chart-area">
             @component('components.students.evaluations-chart' , ['techScores' => $techScores, 'psychScores' => $psychScores])
@@ -37,56 +35,61 @@
                     Não foram encontrados resultados.
                 </div>
             @else
-            <div class="table-container">
-                <table class="large-table">
-                    <thead>
-                    <tr class="table-header">
-                        <th scope="col">Momento</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Nota</th>
-                        <th scope="col">Data</th>
-                        <th>Ações</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($student->evaluations as $evaluation)
-                        <tr class="table-row">
-                            <td>{{$evaluation->test->moment}}</td>
-                            <td>{{$evaluation->test->type->type}}</td>
-                            <td>{{$evaluation->score}}</td>
-                            <td>
-                                @if($evaluation->date)
-                                    {{date('d/m/Y', strtotime($evaluation->date))}}
-                                @else
-                                    Não realizado
-                                @endif
-                            </td>
-                            <td>
-                                <a><i data-student-id="{{ $evaluation->student_id }}" data-test-id="{{ $evaluation->test_id }}" class="fa-regular fa-trash-can removeBtn delete-button"></i></a>
-                            </td>
+                <div class="table-container">
+                    <table class="large-table">
+                        <thead>
+                        <tr class="table-header">
+                            <th scope="col">Momento</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Nota</th>
+                            <th scope="col">Data</th>
+                            <th>Ações</th>
                         </tr>
-                        <form method="POST" class="hidden-form" id="evaluationRmvForm_{{ $evaluation->student_id }}_{{ $evaluation->test_id }}" action="{{ route('evaluations.destroy', ['studentId' => $evaluation->student_id, 'testId' => $evaluation->test_id]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    @endforeach
-                    </tbody>
-                </table>
-                @endif
-            </div>
+                        </thead>
+                        <tbody>
+                        @foreach($student->evaluations as $evaluation)
+                            <tr class="table-row">
+                                <td>{{$evaluation->test->moment}}</td>
+                                <td>{{$evaluation->test->type->type}}</td>
+                                <td>{{$evaluation->score}}</td>
+                                <td>
+                                    @if($evaluation->date)
+                                        {{date('d/m/Y', strtotime($evaluation->date))}}
+                                    @else
+                                        Não realizado
+                                    @endif
+                                </td>
+                                <td>
+                                    <a><i data-student-id="{{ $evaluation->student_id }}"
+                                          data-test-id="{{ $evaluation->test_id }}"
+                                          class="fa-regular fa-trash-can removeBtn delete-button"></i></a>
+                                </td>
+                            </tr>
+                            <form method="POST" class="hidden-form"
+                                  id="evaluationRmvForm_{{ $evaluation->student_id }}_{{ $evaluation->test_id }}"
+                                  action="{{ route('evaluations.destroy', ['studentId' => $evaluation->student_id, 'testId' => $evaluation->test_id]) }}"
+                                  method="POST">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    @endif
+                </div>
         </div>
     </div>
 
 
     <script>
-        document.addEventListener("click", function(event) {
+        document.addEventListener("click", function (event) {
             if (event.target.classList.contains("delete-button")) {
                 event.preventDefault();
                 const studentId = event.target.getAttribute("data-student-id");
                 const testId = event.target.getAttribute("data-test-id");
                 const form = document.getElementById(`evaluationRmvForm_${studentId}_${testId}`);
                 if (form) {
-                        form.submit();
+                    form.submit();
                 }
             }
         });

@@ -22,13 +22,13 @@
                                 onchange="this.form.submit()">
                             <option value="" selected>Selecionar Turma</option>
                             @foreach($classrooms as $classroom)
-                                    <option
-                                        value="{{ $classroom->edition }}"
-                                        data-course="{{$classroom->course->abbreviation}}"
-                                        {{ (old('classroom_edition', request('classroom_edition')) == $classroom->edition) ? 'selected' : '' }} >
-                                        {{ $classroom->edition }}
-                                    </option>
-                                @endforeach
+                                <option
+                                    value="{{ $classroom->edition }}"
+                                    data-course="{{$classroom->course->abbreviation}}"
+                                    {{ (old('classroom_edition', request('classroom_edition')) == $classroom->edition) ? 'selected' : '' }} >
+                                    {{ $classroom->edition }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

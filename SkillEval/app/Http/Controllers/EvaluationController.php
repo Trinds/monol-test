@@ -23,20 +23,20 @@ class EvaluationController extends Controller
      */
     public function index(Request $request)
     {
+        $classrooms = Classroom::query();
+        $students = Student::query();
+
+        if ($request->has('course_filter') && $request->has('classroom_filter')) {
+            $classrooms = Classroom::where('course_id', $request->input('course_filter'))->get();
+            $students = Student::where('classroom_id', $request->input('classroom_filter'))->get();
+        }
+        else
+            $students = [];
+
+        $classrooms = Classroom::all();
         $test_types = Type::all();
         $tests = Test::all();
         $courses = Course::all();
-        $students = Student::all();
-        $classrooms = Classroom::all();
-
-        if ($request->has('course_filter')) {
-            $classrooms = Classroom::where('course_id', $request->input('course_filter'))->get();
-        }
-
-        if ($request->has('classroom_filter')) {
-            $students = Student::where('classroom_id', $request->input('classroom_filter'))->get();
-        } else
-            $students = [];
 
         return view('evaluations.index',
             [
@@ -96,13 +96,8 @@ class EvaluationController extends Controller
     }
 
 
-
-
-
-
     public function createForStudent(Student $student)
     {
-
         $tests = Test::all();
         $types = Type::all();
 
@@ -120,54 +115,53 @@ class EvaluationController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
 
-     public function storeForStudent(Request $request, Student $student)
-     {
-         try {
+    public function storeForStudent(Request $request, Student $student)
+    {
+        try {
 
-             $rules = [
-                 'moment' => 'required',
-                 'type' => 'required',
-                 'score' => 'required|numeric|min:0|max:20',
-                 'date' => 'required|date',
-             ];
+            $rules = [
+                'moment' => 'required',
+                'type' => 'required',
+                'score' => 'required|numeric|min:0|max:20',
+                'date' => 'required|date',
+            ];
 
-             $request->validate($rules);
+            $request->validate($rules);
 
 
-             $testMoment = $request->input('moment');
-             $testTypeId = $request->input('type');
+            $testMoment = $request->input('moment');
+            $testTypeId = $request->input('type');
 
-             $test = Test::where('moment', $testMoment)
-                 ->where('type_id', $testTypeId)
-                 ->first();
+            $test = Test::where('moment', $testMoment)
+                ->where('type_id', $testTypeId)
+                ->first();
 
-             if (!$test) {
-                 return redirect()->route('evaluations.create-for-student', ['student' => $student->id])
-                     ->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
-             }
+            if (!$test) {
+                return redirect()->route('evaluations.create-for-student', ['student' => $student->id])
+                    ->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
+            }
 
-             $testId = $test->id;
+            $testId = $test->id;
 
-             $evaluation = new Evaluation([
-                 'student_id' => $request->input('student_id'),
-                 'test_id' => $testId,
-                 'score' => $request->input('score'),
-                 'date' => $request->input('date'),
-             ]);
+            $evaluation = new Evaluation([
+                'student_id' => $request->input('student_id'),
+                'test_id' => $testId,
+                'score' => $request->input('score'),
+                'date' => $request->input('date'),
+            ]);
 
-             $evaluation->save();
+            $evaluation->save();
 
-             $student = Student::findOrFail($request->input('student_id'));
+            $student = Student::findOrFail($request->input('student_id'));
 
-             return redirect()->route('students.show', ['student' => $student->id]);
-         } catch (\Exception $e) {
-         if (Str::contains($e->getMessage(), 'Integrity constraint violation')) {
-            return redirect()->back()->with('error', 'O formando já tem uma avalição para esse teste.');
+            return redirect()->route('students.show', ['student' => $student->id]);
+        } catch (\Exception $e) {
+            if (Str::contains($e->getMessage(), 'Integrity constraint violation')) {
+                return redirect()->back()->with('error', 'O formando já tem uma avalição para esse teste.');
+            }
+            return redirect()->back()->with('error', 'Algo correu mal. Por favor tente novamente.');
         }
     }
-}
-
-
 
     /**
      * Display the specified resource.
@@ -214,6 +208,6 @@ class EvaluationController extends Controller
         DB::delete('DELETE FROM evaluations WHERE student_id = ? AND test_id = ?', [$studentId, $testId]);
 
         return redirect()->route('students.show', ['student' => $studentId])
-        ->with('success', 'Avaliação apagada com sucesso.');
+            ->with('success', 'Avaliação apagada com sucesso.');
     }
 }

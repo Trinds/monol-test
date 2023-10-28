@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,20 +26,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    
+
     Route::resource('courses', 'CourseController');
     Route::resource('reports', 'ReportsController');
     Route::resource('students', 'StudentController');
     Route::resource('classrooms', 'ClassroomController');
-    // Route::resource('evaluations', 'EvaluationController');
+
     Route::post('classrooms/import', 'ClassroomController@import')->name('classrooms.import');
     Route::post('students/import/{classroom}', 'StudentController@import')->name('students.import');
     Route::delete('/students/{student}', 'StudentController@destroy')->name('students.destroy');
     Route::get('/students/{student}/edit', 'StudentController@edit')->name('students.edit');
     Route::put('/students/{student}', 'StudentController@update')->name('students.update');
 
-
-    //NAO TOCAR NESTAS ROTAS POR FAVOR O ROUTE RESOURCE NAO FUNCIONA NO NOSSO CASO
     Route::get('evaluations/create/{student}', 'EvaluationController@createForStudent')->name('evaluations.create.student');
     Route::post('evaluations/store/student', 'EvaluationController@storeForStudent')->name('evaluations.store.student');
 
@@ -50,30 +47,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('evaluations', 'EvaluationController@index')->name('evaluations.index');
     Route::delete('evaluations/{studentId}/{testId}', 'EvaluationController@destroy')->name('evaluations.destroy');
 
-
     Route::get('evaluations/create', 'EvaluationController@create')->name('evaluations.create');
     Route::post('evaluations/store', 'EvaluationController@store')->name('evaluations.store');
 });
-
-
-
-
-
-// Route::post('/login', 'Auth\LoginController@login')->name('login');
-
-// Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-
-
-
-// Route::get('/users', 'UserController@index')->name('users.index');
-// Route::get('/users/{user}', 'UserController@show')->name('users.show');
-
-// Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit');
-
-// Route::put('/users/{user}', 'UserController@update')->name('users.update');
-
-
-// Route::delete('/users/{user}', 'UserController@destroy')->name('users.destroy');
-
-// Route::get('/users/create', 'UserController@create')->name('users.create');
-

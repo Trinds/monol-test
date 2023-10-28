@@ -8,7 +8,7 @@
     justify-content: center;
 }
 
-.flex-column{
+.flex-column {
     flex-direction: column;
 }
 
@@ -26,8 +26,4 @@
 .message {
     font-size: 18px;
     text-align: center;
-}
-
-.go-back{
-
 }

@@ -1,4 +1,4 @@
-.login-background{
+.login-background {
     background: linear-gradient(71deg, #0047FE 19.35%, #42D7F8 90.12%);
     display: flex;
     justify-content: center;
@@ -7,27 +7,27 @@
     height: 100vh;
 }
 
-.login-card{
+.login-card {
     background-color: white;
     margin: auto;
     padding: 3rem;
     border-radius: 0.75rem;
 }
 
-.login-form{
+.login-form {
     display: flex;
     flex-direction: column;
     row-gap: 1.25rem;
 
 }
 
-.login-form label{
+.login-form label {
     display: flex;
     flex-direction: column;
     row-gap: .5rem;
 }
 
-.login-form-input-name{
+.login-form-input-name {
     display: block;
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -37,7 +37,7 @@
 
 }
 
-.login-form-input-field{
+.login-form-input-field {
     display: block;
     margin-top: 0.25rem;
     width: 100%;
@@ -47,18 +47,18 @@
     border-radius: 0.375rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    box-shadow: 0 0 3px 0 rgba(190,190,190,1);
+    box-shadow: 0 0 3px 0 rgba(190, 190, 190, 1);
 }
 
-.login-form-input-field::placeholder{
+.login-form-input-field::placeholder {
     color: var(--davys-gray);
 }
 
-.login-form button{
+.login-form button {
     width: 100%;
 }
 
-.link-span{
+.link-span {
     font-size: 0.75rem;
     line-height: 1rem;
     text-align: center;

@@ -1,9 +1,9 @@
-.dashboard-container{
+.dashboard-container {
     display: flex;
     flex-direction: column;
 }
 
-.cards-container{
+.cards-container {
     display: flex;
     flex-wrap: wrap;
     padding: 3rem 2rem 2rem 2rem;
@@ -11,7 +11,7 @@
     grid-area: cards;
 }
 
-.dashboard-card{
+.dashboard-card {
     display: flex;
     border-radius: 0.5rem;
     padding: 1rem 2rem;
@@ -19,16 +19,16 @@
     min-height: 8rem;
     min-width: 17rem;
     justify-content: space-between;
-    box-shadow: 0 0 10px 0 rgba(153,153,153,1);
+    box-shadow: 0 0 10px 0 rgba(153, 153, 153, 1);
 
-    .left{
+    .left {
         display: flex;
         flex-direction: column;
         justify-content: center;
         gap: 0.3rem;
     }
 
-    .right{
+    .right {
         display: flex;
         align-items: center;
     }
@@ -45,22 +45,22 @@
         margin: 0;
     }
 
-    & p{
+    & p {
         margin: 0;
     }
 }
 
-.dashboard-card:hover{
+.dashboard-card:hover {
     cursor: pointer;
 }
 
-.dashboard-chart-container{
+.dashboard-chart-container {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.dashboard-chart{
+.dashboard-chart {
     width: 100% !important;
     min-width: 10rem !important;
     max-width: 20rem;
@@ -69,8 +69,7 @@
     flex-direction: column;
 }
 
-.subtitle
-{
+.subtitle {
 
     text-align: start;
 
@@ -78,4 +77,13 @@
 
 .charts {
     box-sizing: border-box;
+}
+
+.no-data-chart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    font-size: large;
 }

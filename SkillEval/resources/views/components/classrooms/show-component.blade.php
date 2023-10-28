@@ -16,11 +16,13 @@
         </div>
     @endif
 
-        <h1 class="title">{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
-        <h5 class="subtitle">{{$classroom->course->name}}</h5>
-        <h6 class="text-center"> <strong>Início:</strong> {{ date('d-m-Y', strtotime($classroom->start_date))}} <strong>Fim:</strong> {{ date('d-m-Y', strtotime($classroom->end_date))}}</h6>
+    <h1 class="title">{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
+    <h5 class="subtitle">{{$classroom->course->name}}</h5>
+    <h6 class="text-center"><strong>Início:</strong> {{ date('d-m-Y', strtotime($classroom->start_date))}}
+        <strong>Fim:</strong> {{ date('d-m-Y', strtotime($classroom->end_date))}}</h6>
     <div class="d-flex justify-content-start excel-container">
-        <form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data" class="excel-form">
+        <form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data"
+              class="excel-form">
             @csrf
             <label for="file">Adicionar Formandos à Turma</label>
             <div class="form-group">
@@ -33,14 +35,14 @@
         </form>
     </div>
 
-        @component('components.classrooms.classroom-chart', [
-    'classroom' => $classroom,
-    'classTechEval' => $classTechEval,
-    'classPsychoEval' => $classPsychoEval,
-    'techAvg' => $techAvg,
-    'psychAvg' => $psychAvg
-    ])
-        @endcomponent
+    @component('components.classrooms.classroom-chart', [
+'classroom' => $classroom,
+'classTechEval' => $classTechEval,
+'classPsychoEval' => $classPsychoEval,
+'techAvg' => $techAvg,
+'psychAvg' => $psychAvg
+])
+    @endcomponent
 
     <div class="student-cards-container">
         @if ($classroom->students->count() == 0)

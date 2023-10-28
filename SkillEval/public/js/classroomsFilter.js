@@ -10,12 +10,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 ? (option.style.display = "block")
                 :
                 ((option.style.display = "none"));
-            }
         }
+    }
 
-        course_id.addEventListener("change", function () {
-            updateClassrooms();
-                classroomSelect.value = "";
-        });
+    course_id.addEventListener("change", function () {
         updateClassrooms();
+        classroomSelect.value = "";
     });
+    updateClassrooms();
+});
