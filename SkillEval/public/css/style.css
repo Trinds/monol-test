@@ -399,11 +399,15 @@ button:focus,
 }
 
 .chart-options {
-    width: 25rem;
+    width: 38rem;
     display: flex;
     align-items: center;
     gap: .5rem;
     padding: 1rem 2rem;
+
+    & .custom-select{
+        max-width: 8rem;
+    }
 }
 
 #confirmationBox {

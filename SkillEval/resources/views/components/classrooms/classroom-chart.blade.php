@@ -2,29 +2,61 @@
     <canvas class="classroom_chart" id="classroomChart"></canvas>
 </div>
 <div class="chart-options input-group-prepend">
-    <select class="custom-select" onchange="momentScores(this)">
+    <select id="momentSelect" class="custom-select" onchange="momentScores(this)">
         <option value="Inicial">Inicial</option>
         <option value="Intermédio">Intermédio</option>
         <option value="Final">Final</option>
-        <option value="Todos">Todos</option>
+        <option selected value="Todos">Todos</option>
     </select>
-    <input type="checkbox" checked value="0" onclick="typeScores(this)"> Técnico
-    <input type="checkbox" checked value="1" onclick="typeScores(this)"> Psicotécnico
+    <input id="techCheck" type="checkbox" checked value="0" onclick="typeScores(this)"> Técnico
+    <input id="psychCheck" type="checkbox" checked value="1" onclick="typeScores(this)"> Psicotécnico
+    <input id="compareCheck" type="checkbox" value="1" onclick="comparativeMode(this)"> Modo Comparação
 
 </div>
 <script>
+
+    const psychCheckEl = document.getElementById('psychCheck')
+    const techCheckEl = document.getElementById('techCheck')
+    const compareCheckEl = document.getElementById('compareCheck')
+    const momentSelectEl = document.getElementById('momentSelect')
+
     function typeScores(type) {
-        const isVisible = gradeChart.isDatasetVisible(type.value)
+        if (compareCheckEl.checked) {
+            if (type.id === 'psychCheck') {
+                techCheckEl.checked = false
+                psychCheckEl.checked = true
+                for (let i = 2; i <= 4; i++) {
+                    gradeChart.hide(i)
+                }
+                for (let i = 5; i <= 7; i++) {
+                    gradeChart.show(i)
+                }
+            } else {
+                psychCheckEl.checked = false
+                techCheckEl.checked = true
+                for (let i = 2; i <= 4; i++) {
+                    gradeChart.show(i)
+                }
+                for (let i = 5; i <= 7; i++) {
+                    gradeChart.hide(i)
+                }
+                gradeChart.config.options.plugins.annotation.annotations[0].value = 0
+                gradeChart.config.options.plugins.annotation.annotations[1].value = 0
+            }
+        } else {
+            const isVisible = gradeChart.isDatasetVisible(type.value)
 
-        if (isVisible === false) {
-            gradeChart.show(type.value)
-            gradeChart.config.options.plugins.annotation.annotations[type.value].display = true
-        }
+            if (isVisible === false) {
+                gradeChart.show(type.value)
+                gradeChart.config.options.plugins.annotation.annotations[type.value].display = true
+            }
 
-        if (isVisible === true) {
-            gradeChart.hide(type.value)
-            gradeChart.config.options.plugins.annotation.annotations[type.value].display = false
+            if (isVisible === true) {
+                gradeChart.hide(type.value)
+                gradeChart.config.options.plugins.annotation.annotations[type.value].display = false
+            }
         }
+        gradeChart.update()
     }
 
     function momentScores(moment) {
@@ -34,6 +66,55 @@
         gradeChart.config.options.plugins.annotation.annotations[1].value = {!! json_encode($psychAvg) !!}[moment.value]
         gradeChart.config.options.plugins.annotation.annotations[1].label.content = ['Média: ' + {!! json_encode($psychAvg) !!}[moment.value].toFixed(2)]
         gradeChart.update()
+    }
+
+    function comparativeMode(toggle) {
+        if (toggle.checked) {
+            gradeChart.hide(0)
+            gradeChart.hide(1)
+            for (let i = 2; i <= 4; i++) {
+                gradeChart.show(i)
+            }
+            gradeChart.config.options.parsing.yAxisKey = 'Moment'
+            psychCheckEl.checked = false
+            techCheckEl.checked = true
+            momentSelectEl.disabled = true
+
+            gradeChart.update()
+        } else {
+            for (let i = 2; i <= 7; i++) {
+                gradeChart.isDatasetVisible(i) &&
+                gradeChart.hide(i)
+            }
+            gradeChart.show(0)
+            gradeChart.show(1)
+            gradeChart.config.options.parsing.yAxisKey = 'Todos'
+            psychCheckEl.checked = true
+            techCheckEl.checked = true
+            momentSelectEl.disabled = false
+            momentSelectEl.value = 'Todos'
+
+            gradeChart.update()
+        }
+    }
+
+    let techInitial = []
+    let techMed = []
+    let techEnd = []
+    let psychInitial = []
+    let psychMed = []
+    let psychEnd = []
+
+    for (const item of {!! json_encode($classTechEval) !!}) {
+        techInitial.push({'x': item['x'], 'Moment': item['Inicial']})
+        techMed.push({'x': item['x'], 'Moment': item['Intermédio']})
+        techEnd.push({'x': item['x'], 'Moment': item['Final']})
+    }
+
+    for (const item of {!! json_encode($classPsychoEval) !!}) {
+        psychInitial.push({'x': item['x'], 'Moment': item['Inicial']})
+        psychMed.push({'x': item['x'], 'Moment': item['Intermédio']})
+        psychEnd.push({'x': item['x'], 'Moment': item['Final']})
     }
 
     {{--        SETUP BLOCK         --}}
@@ -55,6 +136,60 @@
                 borderWidth: 2,
                 borderRadius: 3
             },
+            {
+                label: 'Técnico Inicial',
+                data: techInitial,
+                backgroundColor: 'rgba(56, 118, 191, .7)',
+                borderColor: 'rgba(56, 118, 191, 1)',
+                borderWidth: 2,
+                borderRadius: 3,
+                display: false
+            },
+            {
+                label: 'Técnico Intermédio',
+                data: techMed,
+                backgroundColor: 'rgba(56, 118, 191, .7)',
+                borderColor: 'rgba(56, 118, 191, 1)',
+                borderWidth: 2,
+                borderRadius: 3,
+                display: false
+            },
+            {
+                label: 'Técnico Final',
+                data: techEnd,
+                backgroundColor: 'rgba(56, 118, 191, .7)',
+                borderColor: 'rgba(56, 118, 191, 1)',
+                borderWidth: 2,
+                borderRadius: 3,
+                display: false
+            },
+            {
+                label: 'Psicotécnico Inicial',
+                data: psychInitial,
+                backgroundColor: 'rgba(249, 148, 23, .7)',
+                borderColor: 'rgba(249, 148, 23, 1)',
+                borderWidth: 2,
+                borderRadius: 3,
+                display: false
+            },
+            {
+                label: 'Psicotécnico Intermédio',
+                data: psychMed,
+                backgroundColor: 'rgba(249, 148, 23, .7)',
+                borderColor: 'rgba(249, 148, 23, 1)',
+                borderWidth: 2,
+                borderRadius: 3,
+                display: false
+            },
+            {
+                label: 'Psicotécnico Final',
+                data: psychEnd,
+                backgroundColor: 'rgba(249, 148, 23, .7)',
+                borderColor: 'rgba(249, 148, 23, 1)',
+                borderWidth: 2,
+                borderRadius: 3,
+                display: false
+            },
         ]
     }
 
@@ -67,7 +202,10 @@
             responsive: true,
             plugins: {
                 legend: {
-                    onClick: null
+                    onClick: null,
+                    labels: {
+                        filter: item => item.text === 'Técnico' || item.text === 'Psicotécnico'
+                    }
                 },
                 annotation: {
                     annotations:
@@ -80,7 +218,7 @@
                                     display: (ctx) => ctx.hovered,
                                     backgroundColor: 'rgba(56, 118, 191, .7)',
                                     drawTime: 'afterDatasetsDraw',
-                                    content: ['Média: ' + {!! json_encode($techAvg) !!}['Inicial'].toFixed(2)],
+                                    content: ['Média: ' + {!! json_encode($techAvg) !!}['Todos'].toFixed(2)],
                                     position: (ctx) => ctx.hoverPosition
                                 },
                                 enter(ctx, event) {
@@ -92,7 +230,7 @@
                                     ctx.hovered = false;
                                     ctx.chart.update();
                                 },
-                                value: {!! json_encode($techAvg) !!}['Inicial'],
+                                value: {!! json_encode($techAvg) !!}['Todos'],
                                 borderColor: 'rgba(56, 118, 191, .4)',
                                 borderWidth: 4,
                                 drawTime: 'beforeDatasetsDraw',
@@ -108,7 +246,7 @@
                                     display: (ctx) => ctx.hovered,
                                     backgroundColor: 'rgba(249, 148, 23, .7)',
                                     drawTime: 'afterDatasetsDraw',
-                                    content: ['Média: ' + {!! json_encode($psychAvg) !!}['Inicial'].toFixed(2)],
+                                    content: ['Média: ' + {!! json_encode($psychAvg) !!}['Todos'].toFixed(2)],
                                     position: (ctx) => ctx.hoverPosition
                                 },
                                 enter(ctx, event) {
@@ -120,7 +258,7 @@
                                     ctx.hovered = false;
                                     ctx.chart.update();
                                 },
-                                value: {!! json_encode($psychAvg) !!}['Inicial'],
+                                value: {!! json_encode($psychAvg) !!}['Todos'],
                                 borderColor: 'rgba(249, 148, 23, .4)',
                                 borderWidth: 4,
                                 drawTime: 'beforeDatasetsDraw',
@@ -134,7 +272,7 @@
             },
             parsing: {
                 xAxisKey: 'x',
-                yAxisKey: 'Inicial'
+                yAxisKey: 'Todos'
             },
             scales:
                 {
@@ -164,5 +302,8 @@
         document.getElementById('classroomChart').getContext('2d'),
         configs
     )
+    for (let i = 2; i <= 7; i++) {
+        gradeChart.hide(i)
+    }
 
 </script>
