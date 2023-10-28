@@ -40,8 +40,6 @@
                 for (let i = 5; i <= 7; i++) {
                     gradeChart.hide(i)
                 }
-                gradeChart.config.options.plugins.annotation.annotations[0].value = 0
-                gradeChart.config.options.plugins.annotation.annotations[1].value = 0
             }
         } else {
             const isVisible = gradeChart.isDatasetVisible(type.value)
@@ -79,8 +77,8 @@
             psychCheckEl.checked = false
             techCheckEl.checked = true
             momentSelectEl.disabled = true
-
-            gradeChart.update()
+            gradeChart.config.options.plugins.annotation.annotations[0].display = false
+            gradeChart.config.options.plugins.annotation.annotations[1].display = false
         } else {
             for (let i = 2; i <= 7; i++) {
                 gradeChart.isDatasetVisible(i) &&
@@ -93,9 +91,11 @@
             techCheckEl.checked = true
             momentSelectEl.disabled = false
             momentSelectEl.value = 'Todos'
+            gradeChart.config.options.plugins.annotation.annotations[0].display = true
+            gradeChart.config.options.plugins.annotation.annotations[1].display = true
 
-            gradeChart.update()
         }
+        gradeChart.update()
     }
 
     let techInitial = []
