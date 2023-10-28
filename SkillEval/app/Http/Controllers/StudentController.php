@@ -131,13 +131,18 @@ class StudentController extends Controller
         $courses = \App\Course::all();
         $classrooms = \App\Classroom::all();
         list($techStudent, $psychStudent) = $student->getStudentScores($student);
+        list(, , $techAvg, $psychAvg) = $student->classroom->getStudentsEvaluations($student->classroom);
+        list($techAvg, $psychAvg) = $student->classroom->calculateClassAvgs($techAvg, $psychAvg);
+
 
         return view('students.show', [
             'student' => $student,
             'classrooms' => $classrooms,
             'courses' => $courses,
             'techScores' => $techStudent,
-            'psychScores' => $psychStudent
+            'psychScores' => $psychStudent,
+            'classTechAvg' => $techAvg,
+            'classPsychAvg' => $psychAvg
         ]);
     }
 

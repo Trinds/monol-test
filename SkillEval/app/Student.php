@@ -29,7 +29,7 @@ class Student extends Model
         return $this->hasMany('App\Evaluation');
     }
 
-    public function getStudentScores(Student $student)
+    public function getStudentScores(Student $student): array
     {
         $techStudent = ['x' => $student->name];
         $psychStudent = ['x' => $student->name];

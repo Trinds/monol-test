@@ -106,15 +106,14 @@ td i {
     align-items: center;
 }
 
-.evaluations-container {
-    grid-area: evaluations;
+.student-chart {
+    width: 100% !important;
+    max-width: 40rem !important;
+    height: 20rem !important;
 }
 
-.student-eval-chart {
-    min-width: 30rem;
-    max-width: 35rem;
-    min-height: 20rem;
-    max-height: 30rem;
+.evaluations-container {
+    grid-area: evaluations;
 }
 
 td i:hover {
