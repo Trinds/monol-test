@@ -18,8 +18,8 @@
 
         <h1 class="title">{{$classroom->course->abbreviation}} {{$classroom->edition}}</h1>
         <h5 class="subtitle">{{$classroom->course->name}}</h5>
-        <h6 class="text-center">Início: {{ date('d-m-Y', strtotime($classroom->start_date))}} Fim: {{ date('d-m-Y', strtotime($classroom->end_date))}}</h6>
-    <div class="d-flex justify-content-center excel-container">
+        <h6 class="text-center"> <strong>Início:</strong> {{ date('d-m-Y', strtotime($classroom->start_date))}} <strong>Fim:</strong> {{ date('d-m-Y', strtotime($classroom->end_date))}}</h6>
+    <div class="d-flex justify-content-end excel-container">
         <form action="{{ route('students.import', $classroom) }}" method="POST" enctype="multipart/form-data" class="excel-form">
             @csrf
             <label for="file">Adicionar Formandos à Turma</label>

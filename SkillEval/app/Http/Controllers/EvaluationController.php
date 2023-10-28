@@ -28,11 +28,11 @@ class EvaluationController extends Controller
         $courses = Course::all();
         $students = Student::all();
         $classrooms = Classroom::all();
-        // If a course is selected, filter classrooms based on the selected course
+
         if ($request->has('course_filter')) {
             $classrooms = Classroom::where('course_id', $request->input('course_filter'))->get();
         }
-        // If a classrom is selected, filter students based on the selected classroom
+
         if ($request->has('classroom_filter')) {
             $students = Student::where('classroom_id', $request->input('classroom_filter'))->get();
         } else
@@ -66,20 +66,20 @@ class EvaluationController extends Controller
         $test = Test::where('moment', $selectedMoment)
             ->where('type_id', $selectedTestTypeId)
             ->first();
-    
+
         if (!$test) {
             return redirect()->route('evaluations.index')->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
         }
-    
+
         $date = $request->input('date');
 
         $filteredGrades = array_filter($grades, function ($grade) {
             return $grade !== null && $grade !== '';
         });
-    
+
         try {
             foreach ($filteredGrades as $studentId => $grade) {
- 
+
                 $evaluation = new Evaluation([
                     'test_id' => $test->id,
                     'score' => $grade,
@@ -88,23 +88,23 @@ class EvaluationController extends Controller
                 ]);
                 $evaluation->save();
             }
-    
+
             return redirect()->route('evaluations.index')->with('success', 'Avaliações criadas com sucesso!');
         } catch (Exception $e) {
             return redirect()->route('evaluations.index')->with('error', 'Ocorreu um erro ao criar as avaliações: ' . $e->getMessage());
         }
     }
-    
-    
 
-    
-    
+
+
+
+
 
     public function createForStudent(Student $student)
     {
 
         $tests = Test::all();
-        $types = Type::all();   
+        $types = Type::all();
 
         return view(
             'evaluations.create-for-student',
@@ -117,48 +117,48 @@ class EvaluationController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
 
      public function storeForStudent(Request $request, Student $student)
      {
          try {
-        
+
              $rules = [
                  'moment' => 'required',
                  'type' => 'required',
                  'score' => 'required|numeric|min:0|max:20',
                  'date' => 'required|date',
              ];
-     
+
              $request->validate($rules);
-     
-        
+
+
              $testMoment = $request->input('moment');
              $testTypeId = $request->input('type');
-     
+
              $test = Test::where('moment', $testMoment)
                  ->where('type_id', $testTypeId)
                  ->first();
-     
+
              if (!$test) {
                  return redirect()->route('evaluations.create-for-student', ['student' => $student->id])
                      ->with('error', 'Não existe avaliação para o momento e tipo selecionados.');
              }
-     
+
              $testId = $test->id;
-     
+
              $evaluation = new Evaluation([
                  'student_id' => $request->input('student_id'),
                  'test_id' => $testId,
                  'score' => $request->input('score'),
                  'date' => $request->input('date'),
              ]);
-     
+
              $evaluation->save();
-          
+
              $student = Student::findOrFail($request->input('student_id'));
-     
+
              return redirect()->route('students.show', ['student' => $student->id]);
          } catch (\Exception $e) {
          if (Str::contains($e->getMessage(), 'Integrity constraint violation')) {
@@ -166,7 +166,7 @@ class EvaluationController extends Controller
         }
     }
 }
-        
+
 
 
     /**
@@ -207,15 +207,13 @@ class EvaluationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Evaluation $evaluation
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($studentId, $testId)
     {
         DB::delete('DELETE FROM evaluations WHERE student_id = ? AND test_id = ?', [$studentId, $testId]);
-    
 
         return redirect()->route('students.show', ['student' => $studentId])
         ->with('success', 'Avaliação apagada com sucesso.');
-
     }
 }
