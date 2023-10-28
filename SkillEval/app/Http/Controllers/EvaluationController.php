@@ -77,6 +77,10 @@ class EvaluationController extends Controller
             return $grade !== null && $grade !== '';
         });
 
+        if (count($filteredGrades) === 0) {
+            return redirect()->route('evaluations.index')->with('error', 'Não foram introduzidas notas.');
+        }   
+
         try {
             foreach ($filteredGrades as $studentId => $grade) {
 
