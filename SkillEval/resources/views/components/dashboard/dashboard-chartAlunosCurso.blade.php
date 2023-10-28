@@ -1,4 +1,4 @@
-<div style="position: relative;">
+<div style="position: relative; ">
     <canvas id="donutChart"></canvas>
     <p id="noDataMessage" class="no-data-chart">Sem Dados</p>
 </div>
@@ -34,8 +34,8 @@ foreach ($Turmas as $turma) {
     var tiposDeCurso = {!! json_encode($cursosArray, JSON_HEX_TAG) !!};
     var numeroDeAlunosPorTipo = {!! json_encode($alunosPorCurso, JSON_HEX_TAG) !!};
     var ctx = document.getElementById('donutChart').getContext('2d');
-
-    if (tiposDeCurso.length === 0) {
+    var totalDeAlunos = numeroDeAlunosPorTipo.reduce((total, valor) => total + valor, 0);
+    if (totalDeAlunos === 0) {
         document.getElementById('noDataMessage').style.display = 'block';
         document.getElementById('AlunosPCurso').classList.add('text-center');
         tiposDeCurso = ['Nenhum Dado'];
