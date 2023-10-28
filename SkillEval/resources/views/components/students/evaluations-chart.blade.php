@@ -17,15 +17,23 @@
     function typeScores(type) {
         const isVisible = studentChart.isDatasetVisible(type.value)
 
-        if (isVisible === false)
+        if (isVisible === false) {
             studentChart.show(type.value)
+            studentChart.config.options.plugins.annotation.annotations[type.value].display = true
+        }
 
-        if (isVisible === true)
+        if (isVisible === true) {
             studentChart.hide(type.value)
+            studentChart.config.options.plugins.annotation.annotations[type.value].display = false
+        }
     }
 
     function momentScores(moment) {
         studentChart.config.options.parsing.yAxisKey = moment.value
+        studentChart.config.options.plugins.annotation.annotations[0].value = {!! json_encode($classTechAvg) !!}[moment.value]
+        studentChart.config.options.plugins.annotation.annotations[0].label.content = ['Média da turma: ' + {!! json_encode($classTechAvg) !!}[moment.value].toFixed(2)]
+        studentChart.config.options.plugins.annotation.annotations[1].value = {!! json_encode($classPsychAvg) !!}[moment.value]
+        studentChart.config.options.plugins.annotation.annotations[1].label.content = ['Média da turma: ' + {!! json_encode($classPsychAvg) !!}[moment.value].toFixed(2)]
         studentChart.update()
     }
 
@@ -68,6 +76,68 @@
                 legend: {
                     onClick: null
                 },
+                annotation: {
+                    annotations:
+                        {
+                            0: {
+                                display: true,
+                                type: 'line',
+                                scaleID: 'y',
+                                label: {
+                                    display: (ctx) => ctx.hovered,
+                                    backgroundColor: 'rgba(56, 118, 191, .7)',
+                                    drawTime: 'afterDatasetsDraw',
+                                    content: ['Média da turma: ' + {!! json_encode($classTechAvg) !!}['Inicial'].toFixed(2)],
+                                    position: (ctx) => ctx.hoverPosition
+                                },
+                                enter(ctx, event) {
+                                    ctx.hovered = true;
+                                    ctx.hoverPosition = (event.x / ctx.chart.chartArea.width * 100) + '%';
+                                    ctx.chart.update();
+                                },
+                                leave(ctx, event) {
+                                    ctx.hovered = false;
+                                    ctx.chart.update();
+                                },
+                                value: {!! json_encode($classTechAvg) !!}['Inicial'],
+                                borderColor: 'rgba(56, 118, 191, .4)',
+                                borderWidth: 4,
+                                drawTime: 'beforeDatasetsDraw',
+                                options: {
+                                    z: 10
+                                }
+                            },
+                            1: {
+                                display: true,
+                                type: 'line',
+                                scaleID: 'y',
+                                label: {
+                                    display: (ctx) => ctx.hovered,
+                                    backgroundColor: 'rgba(249, 148, 23, .7)',
+                                    drawTime: 'afterDatasetsDraw',
+                                    content: ['Média da turma: ' + {!! json_encode($classPsychAvg) !!}['Inicial'].toFixed(2)],
+                                    position: (ctx) => ctx.hoverPosition
+                                },
+                                enter(ctx, event) {
+                                    ctx.hovered = true;
+                                    ctx.hoverPosition = (event.x / ctx.chart.chartArea.width * 100) + '%';
+                                    ctx.chart.update();
+                                },
+                                leave(ctx, event) {
+                                    ctx.hovered = false;
+                                    ctx.chart.update();
+                                },
+                                value: {!! json_encode($classPsychAvg) !!}['Inicial'],
+                                borderColor: 'rgba(249, 148, 23, .4)',
+                                borderWidth: 4,
+                                drawTime: 'beforeDatasetsDraw',
+                                options: {
+                                    z: 10
+                                }
+                            }
+                        }
+
+                }
             },
             parsing: {
                 xAxisKey: 'x',

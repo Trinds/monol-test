@@ -2,6 +2,8 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
     <script type="module" src="{{asset('js/editStudentCard.js')}}"></script>
     <script type="module" src="{{asset('js/classroomsFilter.js')}}"></script>
 @endsection
@@ -15,7 +17,7 @@
     </div>
     <div class="grid-container">
         <div class="chart-area">
-            @component('components.students.evaluations-chart' , ['techScores' => $techScores, 'psychScores' => $psychScores])
+            @component('components.students.evaluations-chart' , ['techScores' => $techScores, 'psychScores' => $psychScores, 'classTechAvg' => $classTechAvg, 'classPsychAvg' => $classPsychAvg])
             @endcomponent
         </div>
 
