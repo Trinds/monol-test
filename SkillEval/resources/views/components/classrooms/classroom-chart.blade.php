@@ -204,7 +204,16 @@
                 legend: {
                     onClick: null,
                     labels: {
-                        filter: item => item.text === 'Técnico' || item.text === 'Psicotécnico'
+                        filter: item => item.text === 'Técnico' || item.text === 'Psicotécnico',
+                        generateLabels: (gradeChart) => {
+                            return gradeChart.data.datasets.map((dataset, index) => ({
+                                text: dataset.label,
+                                fillStyle: dataset.backgroundColor,
+                                strokeStyle: dataset.borderColor,
+                                fontColor: dataset.borderColor
+                            })
+                            )
+                        }
                     }
                 },
                 annotation: {
