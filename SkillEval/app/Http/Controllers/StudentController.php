@@ -40,12 +40,9 @@ class StudentController extends Controller
                 ->paginate(8)->withQueryString();
         }
 
-        $hasResults = $students->isNotEmpty();
-
         return view('students.index', [
             'students' => $students,
-            'classrooms' => Classroom::all()->sortBy('course_id'),
-            'hasResults' => $hasResults,
+            'classrooms' => Classroom::all()->sortBy('course_id')
         ]);
     }
 
@@ -76,7 +73,7 @@ class StudentController extends Controller
     {
         $request->validate([
             'student_number' => [
-                'required', 'string', 'max:255', 
+                'required', 'string', 'max:255',
                 function ($attribute, $value, $fail) {
                     $existingStudent = Student::where('student_number', $value)
                         ->whereNull('deleted_at')
@@ -133,7 +130,7 @@ class StudentController extends Controller
     {
         $courses = \App\Course::all();
         $classrooms = \App\Classroom::all();
-        list($techStudent,$psychStudent) = $student->getStudentScores($student);
+        list($techStudent, $psychStudent) = $student->getStudentScores($student);
 
         return view('students.show', [
             'student' => $student,
@@ -169,7 +166,7 @@ class StudentController extends Controller
     {
         $request->validate(
             [
-                'student_number' => ['required','string','max:255',
+                'student_number' => ['required', 'string', 'max:255',
                     function ($attribute, $value, $fail) use ($request, $student) {
                         $existingStudent = Student::where('student_number', $value)
                             ->where('id', '<>', $student->id)

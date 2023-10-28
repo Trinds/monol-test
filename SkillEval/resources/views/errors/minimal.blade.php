@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="flex-center go-back p-3">
-            <a href="{{ url()->previous() }}">
-                <button>Voltar</button>
+            <a href="{{ url('home') }}">
+                <button>Início</button>
             </a>
         </div>
     </div>

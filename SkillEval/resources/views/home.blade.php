@@ -9,6 +9,11 @@
 @endsection
 @section('content')
 <div class="dashboard-container">
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="cards-container">
 
         @component('components.dashboard.dashboard-card', [
@@ -51,12 +56,6 @@
         @endif
         @endauth
     </div>
-
-    @if(session('error'))
-    <div class="alert alert-danger container">
-        {{ session('error') }}
-    </div>
-    @endif
 
     <div class="dashboard-chart-container">
         <div class="dashboard-chart">

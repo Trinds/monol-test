@@ -24,7 +24,7 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('home')->with('error', 'Voce não tem permissões de administrador, para aceder a essa página.');
+        return redirect('home')->with('error', 'Voce não tem permissões para aceder a essa página.');
     }
 
 }

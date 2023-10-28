@@ -24,13 +24,13 @@ class CourseController extends Controller
         }
         isset($request->searchParam) ?
             $courses = Course::query()
-            ->where(strtoupper('abbreviation'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-            ->orWhere(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
-            ->paginate(14)->withQueryString()
+                ->where(strtoupper('abbreviation'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                ->orWhere(strtoupper('name'), 'LIKE', '%' . strtoupper($request->searchParam) . '%')
+                ->paginate(14)->withQueryString()
             :
             $courses = Course::paginate(14)->withQueryString();
-        $hasResults = $courses->isNotEmpty();
-        return view('courses.index', ['courses' => $courses, 'hasResults' => $hasResults]);
+
+        return view('courses.index', ['courses' => $courses]);
     }
 
     /**
@@ -46,7 +46,7 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -68,7 +68,7 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param \App\Course $course
      * @return \Illuminate\Http\Response
      */
     public function show(Course $course)
@@ -80,7 +80,7 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param \App\Course $course
      * @return \Illuminate\Http\Response
      */
     public function edit(Course $course)
@@ -91,8 +91,8 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Course  $course
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Course $course
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Course $course)
@@ -112,15 +112,14 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Course  $course
+     * @param \App\Course $course
      * @return \Illuminate\Http\Response
      */
     public function destroy(Course $course)
     {
-        try{
+        try {
             $course->delete();
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return redirect()->route('courses.index')->with('error', 'Não foi possível excluir a turma! Tente novamente mais tarde.');
         }
         return redirect()->route('courses.index')->with('success', 'Curso apagado com sucesso!');

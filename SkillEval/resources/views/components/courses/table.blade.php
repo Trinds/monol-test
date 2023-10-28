@@ -5,7 +5,7 @@
 @endif
 @if($errors->any())
     <div class="alert alert-danger">
-        <ul style="margin-bottom: 0px;">
+        <ul style="margin-bottom: 0;">
             @foreach ($errors->all() as $error)
                 <li style="list-style: none;">{{ $error }}</li>
             @endforeach
@@ -22,7 +22,7 @@
     <h1>Lista de Cursos</h1>
 </div>
 <div class="table-container">
-    @if(!$hasResults)
+    @if(count($courses) < 1)
         <div class="alert alert-info m-5">
             Não foram encontrados resultados.
         </div>

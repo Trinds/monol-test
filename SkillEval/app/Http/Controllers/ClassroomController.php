@@ -46,11 +46,10 @@ class ClassroomController extends Controller
                         ->orWhere('courses.abbreviation', 'LIKE', '%' . strtolower($request->searchParam) . '%');
                 })->paginate(14)->withQueryString();
         }
-        $hasResults = $classrooms->isNotEmpty();
+
         return view('classrooms.index', [
             'classrooms' => $classrooms,
-            'courses' => Course::all()->sortBy('name'),
-            'hasResults' => $hasResults,
+            'courses' => Course::all()->sortBy('name')
         ]);
     }
 

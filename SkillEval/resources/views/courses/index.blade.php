@@ -17,7 +17,7 @@
     ])
     @endcomponent
 
-    @component('components.courses.table', ['courses' => $courses, 'hasResults' => $hasResults] )
+    @component('components.courses.table', ['courses' => $courses] )
 
     @endcomponent
 
