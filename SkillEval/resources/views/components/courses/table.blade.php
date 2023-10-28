@@ -31,7 +31,7 @@
             <tr class="table-header">
                 <th scope="col">Sigla</th>
                 <th scope="col">Nome</th>
-                <th scope="col"></th>
+                <th scope="col">Ações</th>
             </tr>
             @foreach ($courses as $course)
                 <tr class="table-row">

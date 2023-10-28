@@ -29,7 +29,7 @@
             <th scope="col">Nome</th>
             <th scope="col">Email</th>
             <th scope="col">Função</th>
-            <th scope="col"></th>
+            <th scope="col">Ações</th>
         </tr>
         </thead>
         <tbody>

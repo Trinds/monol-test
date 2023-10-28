@@ -3,7 +3,7 @@
 </div>
 <div class="chart-options input-group-prepend">
     <select class="custom-select" onchange="momentScores(this)">
-        <option value="Inicial" selected>Inicial</option>
+        <option value="Inicial">Inicial</option>
         <option value="Intermédio">Intermédio</option>
         <option value="Final">Final</option>
         <option value="Todos">Todos</option>
@@ -30,7 +30,9 @@
     function momentScores(moment) {
         gradeChart.config.options.parsing.yAxisKey = moment.value
         gradeChart.config.options.plugins.annotation.annotations[0].value = {!! json_encode($techAvg) !!}[moment.value]
+        gradeChart.config.options.plugins.annotation.annotations[0].label.content = ['Média: ' + {!! json_encode($techAvg) !!}[moment.value].toFixed(2)]
         gradeChart.config.options.plugins.annotation.annotations[1].value = {!! json_encode($psychAvg) !!}[moment.value]
+        gradeChart.config.options.plugins.annotation.annotations[1].label.content = ['Média: ' + {!! json_encode($psychAvg) !!}[moment.value].toFixed(2)]
         gradeChart.update()
     }
 
@@ -74,9 +76,25 @@
                                 display: true,
                                 type: 'line',
                                 scaleID: 'y',
+                                label: {
+                                    display: (ctx) => ctx.hovered,
+                                    backgroundColor: 'rgba(56, 118, 191, .7)',
+                                    drawTime: 'afterDatasetsDraw',
+                                    content: ['Média: ' + {!! json_encode($techAvg) !!}['Inicial'].toFixed(2)],
+                                    position: (ctx) => ctx.hoverPosition
+                                },
+                                enter(ctx, event) {
+                                    ctx.hovered = true;
+                                    ctx.hoverPosition = (event.x / ctx.chart.chartArea.width * 100) + '%';
+                                    ctx.chart.update();
+                                },
+                                leave(ctx, event) {
+                                    ctx.hovered = false;
+                                    ctx.chart.update();
+                                },
                                 value: {!! json_encode($techAvg) !!}['Inicial'],
                                 borderColor: 'rgba(56, 118, 191, .4)',
-                                borderWidth: 2,
+                                borderWidth: 4,
                                 drawTime: 'beforeDatasetsDraw',
                                 options: {
                                     z: 10
@@ -86,9 +104,25 @@
                                 display: true,
                                 type: 'line',
                                 scaleID: 'y',
+                                label: {
+                                    display: (ctx) => ctx.hovered,
+                                    backgroundColor: 'rgba(249, 148, 23, .7)',
+                                    drawTime: 'afterDatasetsDraw',
+                                    content: ['Média: ' + {!! json_encode($psychAvg) !!}['Inicial'].toFixed(2)],
+                                    position: (ctx) => ctx.hoverPosition
+                                },
+                                enter(ctx, event) {
+                                    ctx.hovered = true;
+                                    ctx.hoverPosition = (event.x / ctx.chart.chartArea.width * 100) + '%';
+                                    ctx.chart.update();
+                                },
+                                leave(ctx, event) {
+                                    ctx.hovered = false;
+                                    ctx.chart.update();
+                                },
                                 value: {!! json_encode($psychAvg) !!}['Inicial'],
                                 borderColor: 'rgba(249, 148, 23, .4)',
-                                borderWidth: 2,
+                                borderWidth: 4,
                                 drawTime: 'beforeDatasetsDraw',
                                 options: {
                                     z: 10
